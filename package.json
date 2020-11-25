@@ -44,5 +44,6 @@
         "cross-env": "^7.0.2",
         "enzyme": "^3.11.0",
         "jest": "26.6.0"
-    }
+    },
+    "proxy": "http://localhost:5000/api/v1"
 }
