@@ -4,19 +4,27 @@ import { Route, Switch } from "react-router-dom";
 import routes from "./routes";
 import RouteWithSubRoutes from "./RouteWithSubRoutes";
 
-// pages
-import Home from "./components/pages/Home";
-import Dashboard from "./components/pages/Dashboard/Dashboard";
+// MUi stuff
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+
+const theme = createMuiTheme({
+    typography: {
+        useNextVariants: true,
+    },
+});
 
 function App() {
     return (
-        <div className="App">
-            <Switch>
-                {routes.map((route, i) => (
-                    <RouteWithSubRoutes key={i} {...route} />
-                ))}
-            </Switch>
-        </div>
+        <MuiThemeProvider theme={theme}>
+            <div className="App">
+                <Switch>
+                    {routes.map((route, i) => (
+                        <RouteWithSubRoutes key={i} {...route} />
+                    ))}
+                </Switch>
+            </div>
+        </MuiThemeProvider>
     );
 }
 
