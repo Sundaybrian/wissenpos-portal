@@ -5,7 +5,7 @@ import routes from "./routes";
 import RouteWithSubRoutes from "./RouteWithSubRoutes";
 
 // MUi stuff
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 const theme = createMuiTheme({
