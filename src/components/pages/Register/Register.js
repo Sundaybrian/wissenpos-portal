@@ -57,6 +57,10 @@ class Register extends Component {
             loading: true,
         });
 
+        if (this.state.password !== this.state.confirmPassword) {
+            // raise form error for the fields
+        }
+
         axios
             .post("/accounts/register", this.state.user)
             .then((res) => {
