@@ -60,6 +60,7 @@ export class Login extends Component {
         axios
             .post("/accounts/login", userData)
             .then((res) => {
+                localStorage.setItem("token", `Bearer ${res.data.token}`);
                 this.setState({
                     loading: false,
                 });

@@ -64,6 +64,7 @@ class Register extends Component {
         axios
             .post("/accounts/register", this.state.user)
             .then((res) => {
+                localStorage.setItem("token", `Bearer ${res.data.token}`);
                 this.setState({
                     loading: false,
                 });
