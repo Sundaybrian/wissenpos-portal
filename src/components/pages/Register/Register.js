@@ -59,10 +59,11 @@ class Register extends Component {
 
         if (this.state.password !== this.state.confirmPassword) {
             // raise form error for the fields
+            // return
         }
 
         axios
-            .post("/accounts/register", this.state.user)
+            .post("/accounts/register-owner", this.state.user)
             .then((res) => {
                 localStorage.setItem("token", `Bearer ${res.data.token}`);
                 this.setState({
@@ -147,7 +148,8 @@ class Register extends Component {
                         <TextField
                             id="pasword"
                             name="pasword"
-                            type="phonenumber"
+                            type="password"
+                            inputProps={{ minLength: 8 }}
                             label="Password"
                             helperText={errors.message}
                             error={errors.message ? true : false}
@@ -161,8 +163,9 @@ class Register extends Component {
                         <TextField
                             id="phoneNumber"
                             name="phoneNumber"
-                            type="password"
+                            type="text"
                             label="PhoneNumber"
+                            inputProps={{ minLength: 10, maxLength: 15 }}
                             helperText={errors.message}
                             error={errors.message ? true : false}
                             className={classes.textField}
@@ -177,6 +180,7 @@ class Register extends Component {
                             name="confirmPasword"
                             type="password"
                             label="Confirm Password"
+                            inputProps={{ minLength: 8 }}
                             helperText={errors.message}
                             error={errors.message ? true : false}
                             className={classes.textField}

@@ -23,7 +23,9 @@
     },
     "scripts": {
         "start": "BROWSER=none react-scripts start",
-        "build": "react-scripts build",
+        "start:develop": "BROWSER=none REACT_APP_STAGE=develop react-scripts start",
+        "start:local": "BROWSER=none REACT_APP_STAGE=local react-scripts start",
+        "build": "REACT_APP_STAGE=develop react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
