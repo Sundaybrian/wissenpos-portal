@@ -27,7 +27,8 @@ const styles = {
         margin: "10px auto 10px auto",
     },
     button: {
-        marginTop: 20,
+        marginTop: "36px",
+        marginBottom: "10px",
         position: "relative",
     },
     progress: {
@@ -102,96 +103,116 @@ class Register extends Component {
                     <Typography variant="h2" className={classes.pageTitle}>
                         Register
                     </Typography>
+
                     <form onSubmit={this.handleSubmit}>
-                        <TextField
-                            id="firstName"
-                            name="firstName"
-                            type="text"
-                            label="First Name"
-                            helperText={errors.message}
-                            error={errors.message ? true : false}
-                            className={classes.textField}
-                            value={this.state.firstName}
-                            onChange={this.handleChange}
-                            variant="outlined"
-                            fullWidth
-                            required
-                        />
-                        <TextField
-                            id="lastName"
-                            name="lastName"
-                            type="text"
-                            label="Last Name"
-                            helperText={errors.message}
-                            error={errors.message ? true : false}
-                            className={classes.textField}
-                            value={this.state.lastName}
-                            onChange={this.handleChange}
-                            variant="outlined"
-                            fullWidth
-                            required
-                        />
-                        <TextField
-                            id="email"
-                            name="email"
-                            type="email"
-                            label="Email"
-                            helperText={errors.message}
-                            error={errors.message ? true : false}
-                            className={classes.textField}
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                            variant="outlined"
-                            fullWidth
-                            required
-                        />
-                        <TextField
-                            id="pasword"
-                            name="pasword"
-                            type="password"
-                            inputProps={{ minLength: 8 }}
-                            label="Password"
-                            helperText={errors.message}
-                            error={errors.message ? true : false}
-                            className={classes.textField}
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            variant="outlined"
-                            fullWidth
-                            required
-                        />
-                        <TextField
-                            id="phoneNumber"
-                            name="phoneNumber"
-                            type="text"
-                            label="PhoneNumber"
-                            inputProps={{ minLength: 10, maxLength: 15 }}
-                            helperText={errors.message}
-                            error={errors.message ? true : false}
-                            className={classes.textField}
-                            value={this.state.phoneNumber}
-                            onChange={this.handleChange}
-                            variant="outlined"
-                            fullWidth
-                            required
-                        />
-                        <TextField
-                            id="confirmPasword"
-                            name="confirmPasword"
-                            type="password"
-                            label="Confirm Password"
-                            inputProps={{ minLength: 8 }}
-                            helperText={errors.message}
-                            error={errors.message ? true : false}
-                            className={classes.textField}
-                            value={this.state.confirmPassword}
-                            onChange={this.handleChange}
-                            variant="outlined"
-                            fullWidth
-                            required
-                        />
+                        <Grid container spacing={3}>
+                            <Grid item sm={6} xs={12}>
+                                <TextField
+                                    id="firstName"
+                                    name="firstName"
+                                    type="text"
+                                    label="First Name"
+                                    helperText={errors.message}
+                                    error={errors.message ? true : false}
+                                    className={classes.textField}
+                                    value={this.state.firstName}
+                                    onChange={this.handleChange}
+                                    variant="outlined"
+                                    fullWidth
+                                    required
+                                />
+                            </Grid>
+                            <Grid item sm={6} xs={12}>
+                                <TextField
+                                    id="lastName"
+                                    name="lastName"
+                                    type="text"
+                                    label="Last Name"
+                                    helperText={errors.message}
+                                    error={errors.message ? true : false}
+                                    className={classes.textField}
+                                    value={this.state.lastName}
+                                    onChange={this.handleChange}
+                                    variant="outlined"
+                                    fullWidth
+                                    required
+                                />
+                            </Grid>
+                            <Grid item sm={6} xs={12}>
+                                <TextField
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    label="Email"
+                                    helperText={errors.message}
+                                    error={errors.message ? true : false}
+                                    className={classes.textField}
+                                    value={this.state.email}
+                                    onChange={this.handleChange}
+                                    variant="outlined"
+                                    fullWidth
+                                    required
+                                />
+                            </Grid>
+
+                            <Grid item sm={6} xs={12}>
+                                <TextField
+                                    id="phoneNumber"
+                                    name="phoneNumber"
+                                    type="text"
+                                    label="PhoneNumber"
+                                    inputProps={{
+                                        minLength: 10,
+                                        maxLength: 15,
+                                    }}
+                                    helperText={errors.message}
+                                    error={errors.message ? true : false}
+                                    className={classes.textField}
+                                    value={this.state.phoneNumber}
+                                    onChange={this.handleChange}
+                                    variant="outlined"
+                                    fullWidth
+                                    required
+                                />
+                            </Grid>
+                            <Grid item sm={6} xs={12}>
+                                <TextField
+                                    id="pasword"
+                                    name="password"
+                                    type="password"
+                                    inputProps={{ minLength: 8 }}
+                                    label="Password"
+                                    helperText={errors.message}
+                                    error={errors.message ? true : false}
+                                    className={classes.textField}
+                                    value={this.state.password}
+                                    onChange={this.handleChange}
+                                    variant="outlined"
+                                    fullWidth
+                                    required
+                                />
+                            </Grid>
+                            <Grid item sm={6} xs={12}>
+                                <TextField
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    type="password"
+                                    label="Confirm Password"
+                                    inputProps={{ minLength: 8 }}
+                                    helperText={errors.message}
+                                    error={errors.message ? true : false}
+                                    className={classes.textField}
+                                    value={this.state.confirmPassword}
+                                    onChange={this.handleChange}
+                                    variant="outlined"
+                                    fullWidth
+                                    required
+                                />
+                            </Grid>
+                        </Grid>
 
                         <Button
+                            className={classes.button}
                             type="submit"
                             variant="contained"
                             color="primary"
@@ -207,7 +228,7 @@ class Register extends Component {
                         </small>
                     </form>
                 </Grid>
-                <Grid sm />
+                <Grid />
             </Grid>
         );
     }
