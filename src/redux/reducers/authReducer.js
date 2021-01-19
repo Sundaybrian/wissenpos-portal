@@ -1,5 +1,4 @@
 import {
-    SET_ERRORS,
     SET_USER,
     LOADING_UI,
     SET_AUTHENTICATED,

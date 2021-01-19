@@ -48,11 +48,11 @@ export class Login extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.ui.errors) {
-            this.setState({ errors: nextProps.ui.errors });
-        }
-    }
+    // componentDidUpdate(prevProps, prevState) {
+    //     if (this.props.ui.errors) {
+    //         this.setState({ errors: this.props.ui.errors });
+    //     }
+    // }
 
     handleSubmit = (e) => {
         e.preventDefault();

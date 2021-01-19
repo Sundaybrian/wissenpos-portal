@@ -8,6 +8,7 @@ import config from "./utils.js/config";
 // MUi stuff
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import { CssBaseline } from "@material-ui/core";
 
 // components
 import Navbar from "./components/layout/Navbar";
@@ -15,6 +16,8 @@ import Dashboard from "./components/pages/Dashboard/Dashboard";
 import Landing from "./components/pages/Landing/Landing";
 import Login from "./components/pages/Login/Login";
 import Register from "./components/pages/Register/Register";
+import Sidebar from "./components/layout/Sidebar";
+//
 import axios from "axios";
 
 const theme = createMuiTheme({
@@ -31,7 +34,7 @@ if (localStorage.token) {
     const decodeToken = jwtDecode(localStorage.token);
     if (decodeToken.exp * 1000 < Date.now()) {
         authenticated = false;
-        window.location.href = "/login";
+        // window.location.href = "/login";
     } else {
         authenticated = true;
     }
@@ -42,6 +45,7 @@ function App() {
         <MuiThemeProvider theme={theme}>
             <div className="container">
                 <Navbar />
+
                 <Switch>
                     <Route exact path="/" component={Landing} />
                     <Route exact path="/login" component={Login} />
@@ -54,6 +58,7 @@ function App() {
                     />
                 </Switch>
             </div>
+            <CssBaseline />
         </MuiThemeProvider>
     );
 }
