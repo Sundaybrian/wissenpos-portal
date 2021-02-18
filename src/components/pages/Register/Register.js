@@ -117,9 +117,8 @@ class Register extends Component {
     render() {
         const {
             classes,
-            ui: { loading },
+            ui: { loading, errors },
         } = this.props;
-        const { errors } = this.state;
 
         return (
             <Grid container component="main" className={classes.root}>
