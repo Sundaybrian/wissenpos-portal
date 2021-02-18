@@ -22,7 +22,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // redux
 import { connect } from "react-redux";
-import { loginUser } from "../../../redux/actions/authActions";
+import { registerUser } from "../../../redux/actions/authActions";
 
 function Copyright() {
     return (
@@ -94,9 +94,6 @@ class Register extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.setState({
-            loading: true,
-        });
 
         if (this.state.user.password !== this.state.user.confirmPassword) {
             // raise form error for the fields
@@ -108,23 +105,7 @@ class Register extends Component {
             return false;
         }
 
-        axios
-            .post("/accounts/register-owner", this.state.user)
-            .then((res) => {
-                localStorage.setItem("token", `Bearer ${res.data.token}`);
-                this.setState({
-                    loading: false,
-                });
-
-                this.props.history.push("/dashboard");
-            })
-            .catch((err) => {
-                console.log(err);
-                this.setState({
-                    errors: err.response.data,
-                    loading: false,
-                });
-            });
+        this.props.registerUser(this.state.user, this.props.history);
     };
 
     handleChange = (e) => {
@@ -311,6 +292,9 @@ class Register extends Component {
 
 Register.propTypes = {
     classes: PropTypes.object.isRequired,
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    ui: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -319,7 +303,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-    loginUser,
+    registerUser,
 };
 
 export default connect(
