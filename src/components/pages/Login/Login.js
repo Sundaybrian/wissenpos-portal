@@ -1,44 +1,81 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Appicon from "../../../images/logo.png";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
-// MUi stuff
-import withStyles from "@material-ui/core/styles/withStyles";
-import Grid from "@material-ui/core/Grid";
-import Typograpgy from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
+//mui stuff
+import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { createStyles } from "@material-ui/core/styles";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 // redux
 import { connect } from "react-redux";
 import { loginUser } from "../../../redux/actions/authActions";
 
-const styles = {
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {"Copyright © "}
+            <Link color="inherit" href="https://wissensof.com/">
+                Wissenpos
+            </Link>{" "}
+            {new Date().getFullYear()}
+            {"."}
+        </Typography>
+    );
+}
+
+const styles = createStyles((theme) => ({
+    root: {
+        height: "100vh",
+    },
+    image: {
+        backgroundImage: "url(img/wallpaper2-min.PNG)",
+        backgroundRepeat: "no-repeat",
+        backgroundColor:
+            theme.palette.type === "dark"
+                ? theme.palette.grey[900]
+                : theme.palette.grey[50],
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        width: "100%",
+        paddingTop: "40px",
+    },
+    paper: {
+        margin: theme.spacing(8, 8),
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
     form: {
-        textAlign: "center",
-    },
-    pageTitle: {
-        margin: "10px auto 10px auto",
-    },
-    pageIcon: {
-        margin: "20px auto 20px auto",
-        height: "65px",
-    },
-    textField: {
-        margin: "10px auto 10px auto",
-    },
-    button: {
-        marginTop: 20,
-        position: "relative",
+        width: "100%", // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
     },
     progress: {
         position: "absolute",
     },
-};
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
 
-export class Login extends Component {
+export class Login extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -47,12 +84,6 @@ export class Login extends Component {
             errors: {},
         };
     }
-
-    // componentDidUpdate(prevProps, prevState) {
-    //     if (this.props.ui.errors) {
-    //         this.setState({ errors: this.props.ui.errors });
-    //     }
-    // }
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -79,74 +110,110 @@ export class Login extends Component {
         const { errors } = this.state;
 
         return (
-            <Grid container className={classes.form}>
-                <Grid item sm />
-                <Grid item sm>
-                    <img
-                        src={Appicon}
-                        alt="wissensof logo"
-                        className={classes.pageIcon}
-                    />
-                    <Typograpgy variant="h2" className={classes.pageTitle}>
-                        Login
-                    </Typograpgy>
-                    <form noValidate onSubmit={this.handleSubmit}>
-                        <TextField
-                            id="email"
-                            name="email"
-                            type="email"
-                            label="Email"
-                            helperText={errors.message}
-                            error={errors.message ? true : false}
-                            className={classes.textField}
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                            fullWidth
-                            required
-                        />
-                        <TextField
-                            id="password"
-                            name="password"
-                            type="password"
-                            label="Password"
-                            helperText={errors.message}
-                            error={errors.message ? true : false}
-                            className={classes.textField}
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            fullWidth
-                            required
-                        />
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            className={classes.button}
-                            disabled={loading}
-                        >
-                            Login
-                            {loading && (
-                                <CircularProgress
-                                    size={30}
-                                    className={classes.progress}
+            <Grid container component="main" className={classes.root}>
+                <CssBaseline />
+                <Grid container justify="center" className={classes.image}>
+                    <Grid
+                        item
+                        xs={12}
+                        sm={8}
+                        md={5}
+                        component={Paper}
+                        // direction="row"
+                        elevation={6}
+                        square
+                    >
+                        <Grid className={classes.paper}>
+                            <Avatar className={classes.avatar}>
+                                <LockOutlinedIcon />
+                            </Avatar>
+                            <Typography component="h1" variant="h5">
+                                Login
+                            </Typography>
+                            <form
+                                className={classes.form}
+                                noValidate
+                                onSubmit={this.handleSubmit}
+                            >
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    value={this.state.email}
+                                    onChange={this.handleChange}
+                                    helperText={errors.message}
+                                    autoComplete="email"
+                                    autoFocus
                                 />
-                            )}
-                        </Button>
-                        <br />
-                        <small>
-                            dont have an account ? sign up{" "}
-                            <Link to="/register">here</Link>
-                        </small>
-                    </form>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                    helperText={errors.message}
+                                    error={errors.message ? true : false}
+                                    value={this.state.password}
+                                    onChange={this.handleChange}
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            value="remember"
+                                            color="primary"
+                                        />
+                                    }
+                                    label="Remember me"
+                                />
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    color="primary"
+                                    disabled={loading}
+                                    className={classes.submit}
+                                    type="submit"
+                                >
+                                    Sign In
+                                    {loading && (
+                                        <CircularProgress
+                                            size={30}
+                                            className={classes.progress}
+                                        />
+                                    )}
+                                </Button>
+                                <Grid container>
+                                    <Grid item xs>
+                                        <Link href="#" variant="body2">
+                                            Forgot password?
+                                        </Link>
+                                    </Grid>
+                                    <Grid item>
+                                        <Link href="#" variant="body2">
+                                            {"Don't have an account? Sign Up"}
+                                        </Link>
+                                    </Grid>
+                                </Grid>
+                                <Box mt={5}>
+                                    <Copyright />
+                                </Box>
+                            </form>
+                        </Grid>
+                    </Grid>
                 </Grid>
-                <Grid item sm />
             </Grid>
         );
     }
 }
 
 Login.propTypes = {
-    classes: PropTypes.object.isRequired,
     loginUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     ui: PropTypes.object.isRequired,
