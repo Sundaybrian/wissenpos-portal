@@ -42,7 +42,6 @@ const styles = createStyles((theme) => ({
         height: "100vh",
     },
     image: {
-        backgroundImage: "url(img/wallpaper2-min.PNG)",
         backgroundRepeat: "no-repeat",
         backgroundColor:
             theme.palette.type === "dark"
@@ -196,7 +195,7 @@ export class Login extends React.Component {
                                         </Link>
                                     </Grid>
                                     <Grid item>
-                                        <Link href="#" variant="body2">
+                                        <Link href="/register" variant="body2">
                                             {"Don't have an account? Sign Up"}
                                         </Link>
                                     </Grid>
