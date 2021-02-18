@@ -140,7 +140,7 @@ class Register extends Component {
                                 <LockOutlinedIcon />
                             </Avatar>
                             <Typography component="h1" variant="h5">
-                                Login
+                                Register
                             </Typography>
                             <form
                                 className={classes.form}
