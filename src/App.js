@@ -13,11 +13,11 @@ import { CssBaseline } from "@material-ui/core";
 // components
 import Navbar from "./components/layout/Navbar";
 import Dashboard from "./components/pages/Dashboard/Dashboard";
+// pages
 import Landing from "./components/pages/Landing/Landing";
 import Login from "./components/pages/Login/Login";
 import Register from "./components/pages/Register/Register";
-import Sidebar from "./components/layout/Sidebar";
-//
+
 import axios from "axios";
 
 const theme = createMuiTheme({
@@ -44,8 +44,6 @@ function App() {
     return (
         <MuiThemeProvider theme={theme}>
             <div className="container">
-                <Navbar />
-
                 <Switch>
                     <Route exact path="/" component={Landing} />
                     <Route exact path="/login" component={Login} />
