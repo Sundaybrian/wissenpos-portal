@@ -2,13 +2,10 @@
 // 	companyRoutes
 // } from './dashboard.routes';
 
-
-
 // export interface CompanyResponse{
 //     name:string;
 //     owner_id: number;
 // }
-
 
 // export interface UserResponse {
 // 	id: number;
@@ -19,7 +16,6 @@
 //     company?:CompanyResponse
 // }
 
-
 // export function getUserFromLocalStorage(): UserResponse | null {
 // 	return JSON.parse(localStorage.getItem('user') || '{}');
 // }
@@ -28,11 +24,9 @@
 // 	const userResponse = getUserFromLocalStorage();
 // 	return (
 // 		localStorage.getItem('supportRender') === 'true' &&
-// 		!!userResponse &&
-// 		!!userResponse.internal_user
+
 // 	);
 // }
-
 
 // export function getDashboardRoutes():any[]{
 //     if(supportRender()){

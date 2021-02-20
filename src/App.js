@@ -42,8 +42,8 @@ if (localStorage.token) {
 
 function App() {
     return (
-        <MuiThemeProvider theme={theme}>
-            <div className="container">
+        <>
+            <div>
                 <Switch>
                     <Route exact path="/" component={Landing} />
                     <Route exact path="/login" component={Login} />
@@ -57,7 +57,7 @@ function App() {
                 </Switch>
             </div>
             <CssBaseline />
-        </MuiThemeProvider>
+        </>
     );
 }
 

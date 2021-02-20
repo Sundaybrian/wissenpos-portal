@@ -1,9 +1,22 @@
 import React from "react";
-import { Switch } from "react-router-dom";
+// components
+import AppBarAndDrawer from "../../layout/AppBarAndDrawer/AppBarAndDrawer";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { useTheme } from "../../../theme";
 
 function Dashboard() {
-    const home = "home";
-    return <div></div>;
+    const [currentTheme, setCurrentTheme] = useTheme();
+    return (
+        <>
+            <ThemeProvider theme={currentTheme}>
+                <AppBarAndDrawer
+                    currentTheme={currentTheme}
+                    setCurrentTheme={setCurrentTheme}
+                />
+                {/* main app will be here */}
+            </ThemeProvider>
+        </>
+    );
 }
 
 export default Dashboard;
