@@ -16,7 +16,7 @@ export const loginUser = (userData, history) => (dispatch) => {
             history.push("/dashboard");
         })
         .catch((err) => {
-            return dispatch({
+            dispatch({
                 type: SET_ERRORS,
                 payload: err.response.data,
             });
