@@ -1,14 +1,9 @@
 import React from "react";
-import Sidebar from "../../layout/Sidebar";
-import Icon from "@material-ui/core/Icon";
+import { Switch } from "react-router-dom";
+
 function Dashboard() {
     const home = "home";
-    return (
-        <div>
-            <Icon>{home}</Icon>
-            <Sidebar />
-        </div>
-    );
+    return <div></div>;
 }
 
 export default Dashboard;
