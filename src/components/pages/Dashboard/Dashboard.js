@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 // components
+import Main from "./Main";
 import AppBarAndDrawer from "../../layout/AppBarAndDrawer/AppBarAndDrawer";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { useTheme } from "../../../theme";
@@ -28,11 +29,14 @@ function Dashboard(props) {
         <>
             <ThemeProvider theme={currentTheme}>
                 {routes !== null && routes.length !== 0 ? (
-                    <AppBarAndDrawer
-                        currentTheme={currentTheme}
-                        setCurrentTheme={setCurrentTheme}
-                        routes={routes}
-                    />
+                    <>
+                        <AppBarAndDrawer
+                            currentTheme={currentTheme}
+                            setCurrentTheme={setCurrentTheme}
+                            routes={routes}
+                        />
+                        <Main routes={routes} />
+                    </>
                 ) : (
                     <p>{routes}</p>
                 )}

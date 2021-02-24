@@ -1,7 +1,7 @@
 import React from "react";
 
 function Staff() {
-    return <div></div>;
+    return <div>staff</div>;
 }
 
 export default Staff;

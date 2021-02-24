@@ -1,7 +1,7 @@
 import React from "react";
 
 function Metric() {
-    return <div></div>;
+    return <div>hello metric</div>;
 }
 
 export default Metric;
