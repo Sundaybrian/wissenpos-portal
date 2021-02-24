@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -82,26 +82,15 @@ function ResponsiveDrawer(props) {
             <div className={classes.toolbar} />
             <Divider />
             <List>
-                {[
-                    { text: "home", icon: "home" },
-                    { text: "login", icon: "lock" },
-                    { text: "profile", icon: "person" },
-                    { text: "dashboard", icon: "dashboard" },
-                    { text: "people", icon: "people" },
-                    { text: "map", icon: "map" },
-                    { text: "components", icon: "apps" },
-                    { text: "settings", icon: "settings" },
-                ].map(({ text, icon }, index) => (
+                {routes.map(({ text, icon, path, component }, index) => (
                     <ListItem
                         component={RouterLink}
                         selected={pathname === `/${text}`}
-                        to={`/${text}`}
+                        to={`${path}`}
                         button
                         key={text}
                     >
-                        <ListItemIcon>
-                            <Icon>{icon}</Icon>
-                        </ListItemIcon>
+                        {/* <ListItemIcon>{<icon />}</ListItemIcon> */}
                         <ListItemText primary={text.toUpperCase()} />
                     </ListItem>
                 ))}
