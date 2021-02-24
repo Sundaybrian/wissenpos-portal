@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResponsiveDrawer(props) {
-    const { container, setCurrentTheme, currentTheme } = props;
+    const { container, setCurrentTheme, currentTheme, routes } = props;
     const classes = useStyles();
     const theme = useTheme();
     const { pathname } = useLocation();

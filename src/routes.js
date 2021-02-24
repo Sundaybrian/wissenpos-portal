@@ -6,7 +6,7 @@ import Dashboard from "./components/pages/Dashboard/Dashboard";
 const routes = [
     {
         path: "/",
-        component: Home,
+        component: Login,
         routes: [
             {
                 path: "/login",

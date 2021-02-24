@@ -45,14 +45,13 @@ function App() {
         <>
             <div>
                 <Switch>
-                    <Route exact path="/" component={Landing} />
+                    <Route exact path="/" component={Login} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />
                     <PrivateRoute
                         exact
                         path="/dashboard"
                         component={Dashboard}
-                        authenticated={authenticated}
                     />
                 </Switch>
             </div>

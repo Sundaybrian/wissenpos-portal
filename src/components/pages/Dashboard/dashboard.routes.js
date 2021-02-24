@@ -53,7 +53,7 @@ export const companyRoutes = [
     },
     {
         path: "/profile",
-        component: Profile,
+        component: <Profile />,
         text: "profile",
         icon: PersonIcon,
     },
