@@ -3,14 +3,21 @@ import React, { useEffect, useState } from "react";
 import AppBarAndDrawer from "../../layout/AppBarAndDrawer/AppBarAndDrawer";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { useTheme } from "../../../theme";
-//
-// import {} from
+//redux
+import { connect } from "react-redux";
 
-function Dashboard() {
+function Dashboard(props) {
     const [currentTheme, setCurrentTheme] = useTheme();
     const [routes, setRoutess] = useState([]);
 
-    useEffect(() => {}, []);
+    //get user role
+    const {
+        user: { role },
+    } = props;
+
+    useEffect(() => {
+        console.log(role, "========");
+    }, []);
 
     return (
         <>
@@ -25,4 +32,8 @@ function Dashboard() {
     );
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+    user: state.auth.user,
+});
+
+export default connect(mapStateToProps)(Dashboard);
