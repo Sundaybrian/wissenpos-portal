@@ -3,12 +3,15 @@ import React, { useEffect, useState } from "react";
 import AppBarAndDrawer from "../../layout/AppBarAndDrawer/AppBarAndDrawer";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { useTheme } from "../../../theme";
+// helpers
+import getDashboardRoutes from "./helpers";
+
 //redux
 import { connect } from "react-redux";
 
 function Dashboard(props) {
     const [currentTheme, setCurrentTheme] = useTheme();
-    const [routes, setRoutess] = useState([]);
+    const [routes, setRoutes] = useState([]);
 
     //get user role
     const {
@@ -16,16 +19,23 @@ function Dashboard(props) {
     } = props;
 
     useEffect(() => {
-        console.log(role, "========");
+        // fetching user routes based on role
+        const routesResponse = getDashboardRoutes(role);
+        setRoutes(routesResponse);
     }, []);
 
     return (
         <>
             <ThemeProvider theme={currentTheme}>
-                <AppBarAndDrawer
-                    currentTheme={currentTheme}
-                    setCurrentTheme={setCurrentTheme}
-                />
+                {routes !== null && routes.length !== 0 ? (
+                    <AppBarAndDrawer
+                        currentTheme={currentTheme}
+                        setCurrentTheme={setCurrentTheme}
+                        routes={routes}
+                    />
+                ) : (
+                    <p>{routes}</p>
+                )}
                 {/* main app will be here */}
             </ThemeProvider>
         </>
