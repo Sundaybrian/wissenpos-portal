@@ -20,11 +20,14 @@ export class Main extends Component {
 
     render() {
         return (
-            <Switch>
-                {this.props.routes.map((route, i) => (
-                    <RouteWithSubRoutes key={i} {...route} />
-                ))}
-            </Switch>
+            <>
+                <h1>testing</h1>
+                <Switch>
+                    {this.props.routes.map((route, i) => (
+                        <RouteWithSubRoutes key={i} {...route} />
+                    ))}
+                </Switch>
+            </>
         );
     }
 }
