@@ -27,31 +27,31 @@ const dashboardRoutes = [
 
 export const companyRoutes = [
     {
-        path: "/metrics",
+        path: "/dashboard/metrics",
         component: Metric,
         text: "metrics",
         icon: DataUsageIcon,
     },
     {
-        path: "/staff-management",
+        path: "/dashboard/staff-management",
         component: Staff,
         text: "staff-management",
         icon: GroupIcon,
     },
     {
-        path: "/menu",
+        path: "/dashboard/menu",
         component: CompanyMenu,
         text: "menu",
         icon: BusinessIcon,
     },
     {
-        path: "/orders",
+        path: "/dashboard/orders",
         component: Orders,
         text: "orders",
         icon: ShoppingBasketIcon,
     },
     {
-        path: "/profile",
+        path: "/dashboard/profile",
         component: Profile,
         text: "profile",
         icon: PersonIcon,
