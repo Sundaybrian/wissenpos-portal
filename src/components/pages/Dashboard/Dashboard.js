@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // components
 import Main from "./Main";
+import { BrowserRouter, withRouter } from "react-router-dom";
 import AppBarAndDrawer from "../../layout/AppBarAndDrawer/AppBarAndDrawer";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { useTheme } from "../../../theme";
@@ -12,37 +13,25 @@ import { connect } from "react-redux";
 
 function Dashboard(props) {
     const [currentTheme, setCurrentTheme] = useTheme();
-    const [routes, setRoutes] = useState([]);
 
     //get user role
     const {
         user: { role },
     } = props;
 
-    useEffect(() => {
-        // fetching user routes based on role
-        const routesResponse = getDashboardRoutes(role);
-        setRoutes(routesResponse);
-    }, []);
-
     return (
-        <>
-            <ThemeProvider theme={currentTheme}>
-                {routes !== null && routes.length !== 0 ? (
-                    <>
-                        <AppBarAndDrawer
-                            currentTheme={currentTheme}
-                            setCurrentTheme={setCurrentTheme}
-                            routes={routes}
-                        />
-                        <Main routes={routes} />
-                    </>
-                ) : (
-                    <p>{routes}</p>
-                )}
-                {/* main app will be here */}
-            </ThemeProvider>
-        </>
+        <ThemeProvider theme={currentTheme}>
+            <BrowserRouter>
+                <AppBarAndDrawer
+                    currentTheme={currentTheme}
+                    setCurrentTheme={setCurrentTheme}
+                    routes={getDashboardRoutes(role)}
+                />
+
+                <Main routes={getDashboardRoutes(role)} />
+            </BrowserRouter>
+            {/* main app will be here */}
+        </ThemeProvider>
     );
 }
 
