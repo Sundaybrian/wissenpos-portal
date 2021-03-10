@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // components
 import Main from "./Main";
 import { BrowserRouter, withRouter } from "react-router-dom";
-import AppBarAndDrawer from "../../layout/AppBarAndDrawer/AppBarAndDrawer";
+import AppBarAndDrawer from "../../Layout/AppBarAndDrawer/AppBarAndDrawer";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { useTheme } from "../../../theme";
 // helpers

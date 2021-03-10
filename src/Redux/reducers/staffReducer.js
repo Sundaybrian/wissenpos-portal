@@ -3,10 +3,10 @@ import {
     CLEAR_CURRENT,
     LOAD_STAFF,
     SET_CURRENT,
-    CLEAR_CURRENT,
     SET_STAFF,
     DELETE_STAFF,
     STAFF_ERROR,
+    UPDATE_STAFF,
 } from "../types";
 
 const initialState = {
@@ -17,7 +17,7 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-    switch (key) {
+    switch (action.type) {
         case LOAD_STAFF:
             return {
                 ...state,

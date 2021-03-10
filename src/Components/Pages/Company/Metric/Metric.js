@@ -1,7 +1,7 @@
 import React from "react";
-import Content from "../../../layout/Content/Content";
+import Content from "../../../Layout/Content/Content";
 
-function Metric() {
+function Metric(props) {
     return (
         <Content>
             <div>hello metric</div>;

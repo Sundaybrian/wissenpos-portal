@@ -1,22 +1,21 @@
 import React, { Component } from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
-import PrivateRoute from "./utils.js/PrivateRoute";
+import PrivateRoute from "./Utils/PrivateRoute";
 import jwtDecode from "jwt-decode";
 // utils
-import config from "./utils.js/config";
+import config from "./Utils/config";
 // MUi stuff
-import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
+
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { CssBaseline } from "@material-ui/core";
 
 // components
-import Navbar from "./components/layout/Navbar";
-import Dashboard from "./components/pages/Dashboard/Dashboard";
+import Dashboard from "./Components/Pages/Dashboard/Dashboard";
 // pages
-import Landing from "./components/pages/Landing/Landing";
-import Login from "./components/pages/Login/Login";
-import Register from "./components/pages/Register/Register";
+import Landing from "./Components/Pages/Landing/Landing";
+import Login from "./Components/Pages/Login/Login";
+import Register from "./Components/Pages/Register/Register";
 
 import axios from "axios";
 
@@ -48,11 +47,7 @@ function App() {
                     <Route exact path="/" component={Login} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />
-                    <PrivateRoute
-                        exact
-                        path="/dashboard"
-                        component={Dashboard}
-                    />
+                    <PrivateRoute path="/dashboard" component={Dashboard} />
                 </Switch>
             </div>
             <CssBaseline />

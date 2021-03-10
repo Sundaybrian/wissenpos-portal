@@ -24,12 +24,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Meal(props) {
+function MealItem(props) {
     // holds the meal item
     // holds a single category
-    const { meal } = props;
+    const { meal, onClick } = props;
     return (
-        <ListItem button={true}>
+        <ListItem button={true} onClick={() => onClick(meal)}>
             <ListItemText primary={meal.name} />
         </ListItem>
     );
@@ -46,7 +46,7 @@ export function MenuCategory(props) {
 }
 
 function MenuCategoriesList(props) {
-    const { categories, dualPanel, menuID } = props;
+    const { categories, dualPanel, menuID, setMeal } = props;
     const classes = useStyles();
 
     const [menuState, setMenuState] = useState({
@@ -69,7 +69,7 @@ function MenuCategoriesList(props) {
             },
             {
                 id: 2,
-                name: "Boiled meat",
+                name: "Boiled meat 2",
                 price: 200,
                 description: "Best meat to salivate over",
                 category_id: 1,
@@ -92,7 +92,7 @@ function MenuCategoriesList(props) {
                         <MenuCategory
                             category={category}
                             key={i}
-                            onClick={() => findMenuCategoryItems(category.id)}
+                            onClick={findMenuCategoryItems}
                         />
                     ))}
                 </List>
@@ -104,11 +104,11 @@ function MenuCategoriesList(props) {
             <div className={classes.mealList}>
                 <List component="nav" aria-label="secondary mailbox folders">
                     {menuState.meals.map((meal, i) => (
-                        <Meal meal={meal} key={i} />
+                        <MealItem meal={meal} key={i} onClick={setMeal} />
                     ))}
                 </List>
                 <ListItem button>
-                    <ListItemText primary="Add Category" />
+                    <ListItemText primary="Add Meal" />
                 </ListItem>
             </div>
         </div>

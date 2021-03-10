@@ -4,13 +4,13 @@ import {
     CLEAR_CURRENT,
     LOAD_STAFF,
     SET_CURRENT,
-    CLEAR_CURRENT,
     SET_STAFF,
     DELETE_STAFF,
     STAFF_ERROR,
     LOADING_UI,
     CLEAR_ERRORS,
     SET_ERRORS,
+    LOADING_DATA,
 } from "../types";
 
 //addstaff
@@ -31,8 +31,13 @@ export const addStaff = (staffData) => (dispatch) => {
             });
         });
 };
+// fetch staff
+
+export const fetchStaff = () => (dispatch) => {
+    dispatch({ type: LOADING_DATA });
+    axios.get("/");
+};
 
 // get staff by id
 // delete staff
 // edit staff
-// fetch staff

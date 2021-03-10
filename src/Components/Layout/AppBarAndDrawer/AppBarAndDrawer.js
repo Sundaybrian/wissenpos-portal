@@ -90,7 +90,9 @@ function ResponsiveDrawer(props) {
                         button
                         key={text}
                     >
-                        <ListItemIcon>{/* <Icon>{icon}</Icon> */}</ListItemIcon>
+                        <ListItemIcon>
+                            <Icon>home</Icon>
+                        </ListItemIcon>
                         <ListItemText primary={text.toUpperCase()} />
                     </ListItem>
                 ))}

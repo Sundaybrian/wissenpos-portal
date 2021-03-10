@@ -1,36 +1,38 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import { add, remove, selectPeople, selectLoading } from "./peopleSlice";
-// mui staff
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import {
+    add,
+    remove,
+    selectPeople,
+    selectLoading,
+} from "../People/peopleSlice";
+// mui stuff
 import MuiAlert from "@material-ui/lab/Alert";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import Checkbox from "@material-ui/core/Checkbox";
+import { lighten, makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Snackbar from "@material-ui/core/Snackbar";
+import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import Tooltip from "@material-ui/core/Tooltip";
-import { lighten, makeStyles } from "@material-ui/core/styles";
-import Content from "../../../layout/Content/Content";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Snackbar from "@material-ui/core/Snackbar";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Toolbar from "@material-ui/core/Toolbar";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
+import DeleteIcon from "@material-ui/icons/Delete";
 import Avatar from "@material-ui/core/Avatar";
-import TablePagination from "@material-ui/core/TablePagination";
+import Checkbox from "@material-ui/core/Checkbox";
 // components
+import Content from "../../Layout/Content/Content";
 import PeopleDialog from "../People/PeopleDialog";
 import DeletePeopleDialog from "../People/DeletePeopleDialog";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { SummaryCard } from "../People/Driver";
-
-// redux
-import { useSelector, useDispatch, connect } from "react-redux";
-import { addStaff } from "../../../../redux/actions/staffManagementActions";
+import EnhancedTableHead from "./EnhancedTableHead";
+// table components
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TablePagination from "@material-ui/core/TablePagination";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -62,91 +64,6 @@ function stableSort(array, comparator) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-    {
-        id: "avatar",
-        numeric: false,
-        disablePadding: true,
-        label: "",
-    },
-    {
-        id: "name",
-        numeric: false,
-        disablePadding: true,
-        label: "Name",
-    },
-    { id: "id", numeric: true, disablePadding: false, label: "ID" },
-    { id: "email", numeric: false, disablePadding: false, label: "Email" },
-    {
-        id: "phoneNumber",
-        numeric: false,
-        disablePadding: false,
-        label: "PhoneNumber",
-    },
-];
-
-function EnhancedTableHead(props) {
-    const {
-        classes,
-        onSelectAllClick,
-        order,
-        orderBy,
-        numSelected,
-        rowCount,
-        onRequestSort,
-    } = props;
-    const createSortHandler = (property) => (event) => {
-        onRequestSort(event, property);
-    };
-
-    return (
-        <TableHead>
-            <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{ "aria-label": "select all desserts" }}
-                    />
-                </TableCell>
-                {headCells.map((headCell) => (
-                    <TableCell
-                        key={headCell.id}
-                        align={headCell.numeric ? "right" : "left"}
-                        padding={headCell.disablePadding ? "none" : "default"}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                        <TableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : "asc"}
-                            onClick={createSortHandler(headCell.id)}
-                        >
-                            {headCell.label}
-                            {orderBy === headCell.id ? (
-                                <span className={classes.visuallyHidden}>
-                                    {order === "desc"
-                                        ? "sorted descending"
-                                        : "sorted ascending"}
-                                </span>
-                            ) : null}
-                        </TableSortLabel>
-                    </TableCell>
-                ))}
-            </TableRow>
-        </TableHead>
-    );
-}
-
-EnhancedTableHead.propTypes = {
-    classes: PropTypes.object.isRequired,
-    numSelected: PropTypes.number.isRequired,
-    onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
-    order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-    orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired,
-};
-
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "100%",
@@ -177,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function People() {
+export default function PeopleTable(props) {
     const classes = useStyles();
     const [order, setOrder] = React.useState("asc");
     const [orderBy, setOrderBy] = React.useState("calories");
@@ -192,6 +109,8 @@ function People() {
     const dispatch = useDispatch();
 
     let history = useHistory();
+
+    const { headCells } = props;
 
     if (loading) {
         return (
@@ -336,6 +255,7 @@ function People() {
                                         onSelectAllClick={handleSelectAllClick}
                                         onRequestSort={handleRequestSort}
                                         rowCount={rows.length}
+                                        headCells={headCells}
                                     />
                                     <TableBody>
                                         {stableSort(
@@ -450,19 +370,6 @@ function People() {
     );
 }
 
-People.propTypes = {
-    addStaff: PropTypes.func.isRequired,
-    ui: PropTypes.object.isRequired,
-    staffManagement: PropTypes.object.isRequired,
+PeopleTable.propTypes = {
+    headCells: PropTypes.array.isRequired,
 };
-
-const mapStateToProps = (state) => ({
-    ui: state.ui,
-    staffManagement: state.staffManagement,
-});
-
-const mapActionsToProps = {
-    addStaff,
-};
-
-export default connect(mapStateToProps, mapActionsToProps)(People);

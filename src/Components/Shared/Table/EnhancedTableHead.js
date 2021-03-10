@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 // table components
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
@@ -86,3 +87,5 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
     headCells: PropTypes.array.isRequired,
 };
+
+export default EnhancedTableHead;

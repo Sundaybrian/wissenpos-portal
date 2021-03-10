@@ -31,30 +31,35 @@ export const companyRoutes = [
         component: Metric,
         text: "metrics",
         icon: DataUsageIcon,
+        layout:"/company"
     },
     {
         path: "/dashboard/staff-management",
         component: Staff,
         text: "staff-management",
         icon: GroupIcon,
+        layout:"/company"
     },
     {
-        path: "/dashboard/menu",
+        path: "/dashboard/menus",
         component: CompanyMenu,
-        text: "menu",
+        text: "menus",
         icon: BusinessIcon,
+        layout:"/company"
     },
     {
         path: "/dashboard/orders",
         component: Orders,
         text: "orders",
         icon: ShoppingBasketIcon,
+        layout:"/company"
     },
     {
         path: "/dashboard/profile",
         component: Profile,
         text: "profile",
         icon: PersonIcon,
+        layout:"/company"
     },
 ];
 
