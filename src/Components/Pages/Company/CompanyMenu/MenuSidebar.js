@@ -6,9 +6,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         flexDirection: "column",
-        maxWidth: "300px",
+        maxWidth: "320px",
         height: "100vh",
-        overflowX: "scroll",
+        overflowY: "auto",
         backgroundColor: "#fb3",
     },
 }));
@@ -18,7 +18,6 @@ function MenuSidebar(props) {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <Typography variant="h5">{title}</Typography>
             <Typography variant="h5">{title}</Typography>
             <div>{children}</div>
         </div>
