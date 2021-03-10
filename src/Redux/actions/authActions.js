@@ -7,9 +7,7 @@ export const loginUser = (userData, history) => (dispatch) => {
     axios
         .post("/accounts/login", userData)
         .then((res) => {
-            const token = `Bearer ${res.data.token}`;
-            localStorage.setItem("token", token);
-            axios.defaults.headers.common["Authorization"] = token;
+            setAuthorizationHeader(res.data.token);
 
             setUserData(res.data.user);
             dispatch({ type: CLEAR_ERRORS });
@@ -29,11 +27,9 @@ export const registerUser = (userData, history) => (dispatch) => {
     axios
         .post("/accounts/register-owner", userData)
         .then((res) => {
-            const token = `Bearer ${res.data.token}`;
-            localStorage.setItem("token", token);
-            axios.defaults.headers.common["Authorization"] = token;
+            setAuthorizationHeader(res.data.token);
 
-            dispatch(setUserData(res.data.user));
+            setUserData(res.data.user);
             dispatch({ type: CLEAR_ERRORS });
             history.push("/dashboard");
         })
@@ -50,4 +46,10 @@ const setUserData = (user) => (dispatch) => {
         type: SET_USER,
         payload: user,
     });
+};
+
+const setAuthorizationHeader = (token) => {
+    const _token = `Bearer ${token}`;
+    localStorage.setItem("token", _token);
+    axios.defaults.headers.common["Authorization"] = _token;
 };
