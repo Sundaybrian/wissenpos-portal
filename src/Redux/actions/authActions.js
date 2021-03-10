@@ -11,7 +11,7 @@ export const loginUser = (userData, history) => (dispatch) => {
             localStorage.setItem("token", token);
             axios.defaults.headers.common["Authorization"] = token;
 
-            dispatch(setUserData(res.data.user));
+            setUserData(res.data.user);
             dispatch({ type: CLEAR_ERRORS });
             history.push("/dashboard");
         })
@@ -45,9 +45,9 @@ export const registerUser = (userData, history) => (dispatch) => {
         });
 };
 
-const setUserData = (user) => {
-    return {
+const setUserData = (user) => (dispatch) => {
+    dispatch({
         type: SET_USER,
         payload: user,
-    };
+    });
 };
