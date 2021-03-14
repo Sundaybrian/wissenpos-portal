@@ -29,9 +29,9 @@ export default function DeletePeopleDialog({ ids, render, onSave }) {
                 onClose={handleClose}
                 aria-labelledby="form-dialog-title"
             >
-                <DialogTitle id="form-dialog-title">Delete Drivers</DialogTitle>
+                <DialogTitle id="form-dialog-title">Delete User</DialogTitle>
                 <DialogContent>
-                    Are you sure you want to delete {ids.length} driver
+                    Are you sure you want to delete {ids.length} user
                     {ids.length > 1 && "s"}?
                 </DialogContent>
                 <DialogActions>
