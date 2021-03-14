@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Appicon from "../../../images/logo.png";
 import { Link as RouterLink } from "react-router-dom";
 
 //mui stuff

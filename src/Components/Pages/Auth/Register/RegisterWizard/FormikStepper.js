@@ -3,26 +3,48 @@ import { Formik, Form } from "formik";
 import Button from "@material-ui/core/Button";
 import { Step, StepLabel, Stepper } from "@material-ui/core";
 
+{
+    /* <Button
+fullWidth
+variant="contained"
+color="primary"
+disabled={loading}
+className={classes.submit}
+type="submit"
+>
+Register
+{loading && (
+    <CircularProgress
+        size={30}
+        className={classes.progress}
+    />
+)}
+</Button> */
+}
+
 export function FormikStep({ children, ...props }) {
     return <>{children}</>;
 }
 
-function FormikStepper({ children, onSubmit, ...props }) {
-    const childrenArray = React.Children.toArray(children);
+export function FormikStepper({ children, ...props }) {
+    const childrenArray = React.Children.toArray(children).slice(0, 2);
 
     const [step, setStep] = useState(0);
     const currentChild = childrenArray[step];
-    const [completed, setCompleted] = useState(false);
-
-    const isLastStep = () => {
+    function isLastStep() {
         return step == childrenArray.length - 1;
-    };
-
+    }
     return (
         <Formik
             {...props}
-            validationsSchema={currentChild.props.validationsSchema}
-            onSubmit={() => onSubmit(isLastStep)}
+            validationSchema={currentChild.props.validationSchema}
+            onSubmit={async (values, helpers) => {
+                if (isLastStep()) {
+                    await props.onSubmit(values, helpers);
+                } else {
+                    setStep((s) => s + 1);
+                }
+            }}
         >
             <Form>
                 <Stepper alternativeLabel activeStep={step}>
@@ -35,7 +57,8 @@ function FormikStepper({ children, onSubmit, ...props }) {
                         </Step>
                     ))}
                 </Stepper>
-                {children}
+                {currentChild}
+
                 {step > 0 ? (
                     <Button onClick={() => setStep((s) => s - 1)}>Back</Button>
                 ) : null}
@@ -46,5 +69,3 @@ function FormikStepper({ children, onSubmit, ...props }) {
         </Formik>
     );
 }
-
-export default FormikStepper;
