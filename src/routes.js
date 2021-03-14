@@ -1,12 +1,12 @@
-import Login from "./components/pages/Login/Login";
-import Register from "./components/pages/Register/Register";
-import Home from "./components/pages/Home";
-import Dashboard from "./components/pages/Dashboard/Dashboard";
+import Login from "./Components/Pages/Auth/Login/Login";
+import Register from "./Components/Pages/Auth/Register/Register";
+import Home from "./Components/Pages/Home";
+import Dashboard from "./Components/Pages/Dashboard/Dashboard";
 
 const routes = [
     {
         path: "/",
-        component: Home,
+        component: Login,
         routes: [
             {
                 path: "/login",
