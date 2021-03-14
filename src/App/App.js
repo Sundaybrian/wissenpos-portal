@@ -13,8 +13,8 @@ import { CssBaseline } from "@material-ui/core";
 // components
 // pages
 import Dashboard from "../Components/Pages/Dashboard/Dashboard";
-import Login from "../Components/Pages/Login/Login";
-import Register from "../Components/Pages/Register/Register";
+import Login from "../Components/Pages/Auth/Login/Login";
+import Register from "../Components/Pages/Auth/Register/Register";
 
 import axios from "axios";
 

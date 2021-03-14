@@ -3,8 +3,8 @@ import { Switch, Route } from "react-router-dom";
 
 // components
 import Navbar from "../Layout/Navbar";
-import Login from "./Login/Login";
-import Register from "./Register/Register";
+import Login from "./Auth/Login/Login";
+import Register from "./Auth/Register/Register";
 import Landing from "./Landing/Landing";
 
 export class Home extends Component {

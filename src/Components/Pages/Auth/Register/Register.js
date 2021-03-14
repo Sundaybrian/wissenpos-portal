@@ -21,11 +21,11 @@ import { createStyles } from "@material-ui/core/styles";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 //components
-import Copyright from "../../Base/Copyright";
+import Copyright from "../../../Base/Copyright";
 
 // redux
 import { connect } from "react-redux";
-import { registerUser } from "../../../Redux/actions/authActions";
+import { registerUser } from "../../../../Redux/actions/authActions";
 
 const styles = createStyles((theme) => ({
     root: {
