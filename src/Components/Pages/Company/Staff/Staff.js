@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 //
-import PeopleTable from "../../../Shared/Table/PeopleTable";
+import PeopleTable from "../../../Base/Table/PeopleTable";
 // redux
 import { useSelector, useDispatch, connect } from "react-redux";
 import { addStaff } from "../../../../Redux/actions/staffManagementActions";

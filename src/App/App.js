@@ -1,21 +1,20 @@
 import React, { Component } from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
-import PrivateRoute from "./Utils/PrivateRoute";
+import PrivateRoute from "../Utils/PrivateRoute";
 import jwtDecode from "jwt-decode";
 // utils
-import config from "./Utils/config";
+import config from "../Utils/config";
 // MUi stuff
 
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { CssBaseline } from "@material-ui/core";
 
 // components
-import Dashboard from "./Components/Pages/Dashboard/Dashboard";
 // pages
-import Landing from "./Components/Pages/Landing/Landing";
-import Login from "./Components/Pages/Login/Login";
-import Register from "./Components/Pages/Register/Register";
+import Dashboard from "../Components/Pages/Dashboard/Dashboard";
+import Login from "../Components/Pages/Login/Login";
+import Register from "../Components/Pages/Register/Register";
 
 import axios from "axios";
 

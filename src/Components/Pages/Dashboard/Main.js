@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import RouteWithSubRoutes from "../../../RouteWithSubRoutes";
+import RouteWithSubRoutes from "../../../Utils/RouteWithSubRoutes";
 import { Switch, withRouter } from "react-router-dom";
 
 export class Main extends Component {

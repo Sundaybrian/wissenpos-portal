@@ -21,7 +21,7 @@ import { createStyles } from "@material-ui/core/styles";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 //components
-import Copyright from "../../Shared/Copyright";
+import Copyright from "../../Base/Copyright";
 
 // redux
 import { connect } from "react-redux";
