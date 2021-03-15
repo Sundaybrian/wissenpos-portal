@@ -3,7 +3,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 
 import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
+
 import TablePagination from "@material-ui/core/TablePagination";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -153,7 +153,7 @@ export default function useTable(records, headCells, filterFn) {
         setOrderBy(cellId);
     };
 
-    const handleSelectAllClick = (event) => {
+    const handleSelectAllClick = (event, rows) => {
         if (event.target.checked) {
             const newSelecteds = rows.map((n) => n.id);
             setSelected(newSelecteds);
@@ -241,6 +241,8 @@ export default function useTable(records, headCells, filterFn) {
     };
 
     return {
+        handleSelectAllClick,
+        selected,
         selectTableRow,
         TblContainer,
         TblHead,
