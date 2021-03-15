@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { PrivateRouteWithSubRoutes } from "../../../Utils/RouteWithSubRoutes";
+import RouteWithSubRoutes from "../../../Utils/RouteWithSubRoutes";
 import { Switch, withRouter } from "react-router-dom";
 
 export class Main extends Component {
@@ -12,8 +12,9 @@ export class Main extends Component {
     };
 
     componentDidMount() {
+        console.log(this.props.location.pathname === "/", this.props.location);
         // redirect to the first available link
-        if (this.props.location.pathname === "/dashboard") {
+        if (this.props.location.pathname === "/") {
             this.goHome();
         }
     }
@@ -22,7 +23,7 @@ export class Main extends Component {
         return (
             <Switch>
                 {this.props.routes.map((route, index) => (
-                    <PrivateRouteWithSubRoutes key={index} {...route} />
+                    <RouteWithSubRoutes key={index} {...route} />
                 ))}
             </Switch>
         );

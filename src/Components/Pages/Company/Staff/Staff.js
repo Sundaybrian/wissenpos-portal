@@ -250,7 +250,7 @@ function Staff(props) {
                                                             return;
                                                         }
                                                         history.push(
-                                                            `/dashboard/staff-management/profile/${row.id}`
+                                                            `staff-management/${row.id}/profile`
                                                         );
                                                     }}
                                                     key={`person-${row.id}`}

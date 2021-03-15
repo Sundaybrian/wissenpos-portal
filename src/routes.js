@@ -5,11 +5,6 @@ import Dashboard from "./Components/Pages/Dashboard/Dashboard";
 
 const routes = [
     {
-        path: "/",
-        exact: true,
-        component: Login,
-    },
-    {
         path: "/register",
         exact: true,
         component: Register,
@@ -20,7 +15,7 @@ const routes = [
         component: Login,
     },
     {
-        path: "/dashboard",
+        path: "/",
         component: Dashboard,
     },
 ];

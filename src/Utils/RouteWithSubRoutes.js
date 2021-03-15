@@ -3,7 +3,7 @@ import { Route, withRouter, Redirect } from "react-router-dom";
 
 function RouteWithSubRoutes(route) {
     const { component: Component } = route;
-    console.log(route);
+
     return (
         <Route
             path={route.path}
