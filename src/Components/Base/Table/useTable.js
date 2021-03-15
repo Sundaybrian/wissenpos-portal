@@ -1,0 +1,204 @@
+// table components
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TablePagination from "@material-ui/core/TablePagination";
+import makeSttyles from "@material-ui/core/styles/makeStyles";
+
+const useStyles = makeStyles((theme) => ({
+    table: {
+        minWidth: 700,
+        marginTop: theme.spacing(3),
+        "& thead th": {
+            fontWeight: "600",
+            color: theme.palette.primary.main,
+            backgroundColor: theme.palette.primary.light,
+        },
+        "& tbody td": {
+            fontWeight: "300",
+        },
+        "& tbody tr:hover": {
+            backgroundColor: "#fffbf2",
+            cursor: "pointer",
+        },
+    },
+
+    root: {
+        width: "100%",
+    },
+    paper: {
+        width: "100%",
+        marginBottom: theme.spacing(2),
+    },
+
+    visuallyHidden: {
+        border: 0,
+        clip: "rect(0 0 0 0)",
+        height: 1,
+        margin: -1,
+        overflow: "hidden",
+        padding: 0,
+        position: "absolute",
+        top: 20,
+        width: 1,
+    },
+    grow: {
+        flexGrow: 1,
+    },
+    deleteButton: {
+        marginLeft: theme.spacing(1),
+    },
+}));
+
+const EnhancedTableHead = (props) => {
+    const {
+        classes,
+        onSelectAllClick,
+        order,
+        orderBy,
+        numSelected,
+        rowCount,
+        onRequestSort,
+    };
+
+    const createSortHandler = (property) => (event) => {
+        onRequestSort(event, property);
+    };
+
+    return (
+        <TableHead>
+            <TableRow>
+                <TableCell padding="checkbox">
+                    <Checkbox
+                        checked={rowCount > 0 && numSelected === rowCount}
+                        onChange={onSelectAllClick}
+                        inputProps={{ "aria-label": "select all desserts" }}
+                    />
+                </TableCell>
+                {headCells.map((headCell) => (
+                    <TableCell
+                        key={headCell.id}
+                        align={headCell.numeric ? "right" : "left"}
+                        padding={headCell.disablePadding ? "none" : "default"}
+                        sortDirection={orderBy === headCell.id ? order : false}
+                    >
+                        {headCell.disableSorting ? (
+                            headCell.label
+                        ) : (
+                            <TableSortLabel
+                                active={orderBy === headCell.id}
+                                direction={
+                                    orderBy === headCell.id ? order : "asc"
+                                }
+                                onClick={createSortHandler(headCell.id)}
+                            >
+                                {headCell.label}
+                                {orderBy === headCell.id ? (
+                                    <span className={classes.visuallyHidden}>
+                                        {order === "desc"
+                                            ? "sorted descending"
+                                            : "sorted ascending"}
+                                    </span>
+                                ) : null}
+                            </TableSortLabel>
+                        )}
+                    </TableCell>
+                ))}
+            </TableRow>
+        </TableHead>
+    );
+};
+
+EnhancedTableHead.propTypes = {
+    classes: PropTypes.object.isRequired,
+    numSelected: PropTypes.number.isRequired,
+    onRequestSort: PropTypes.func.isRequired,
+    onSelectAllClick: PropTypes.func.isRequired,
+    order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+    orderBy: PropTypes.string.isRequired,
+    rowCount: PropTypes.number.isRequired,
+};
+
+export default function useTable(records, headCells, filterFn) {
+    const pages = [5, 10, 25];
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
+    const [selected, setSelected] = React.useState([]);
+    const [order, setOrder] = useState();
+    const [orderBy, setOrderBy] = useState();
+
+    const TblContainer = (props) => (
+        <Table className={classes.table}>{props.children}</Table>
+    );
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
+    const handleSortRequest = (cellId) => {
+        const isAsc = orderBy === cellId && order === "asc";
+        setOrder(isAsc ? "desc" : "asc");
+        setOrderBy(cellId);
+    };
+
+    const TblHeader = () => {};
+
+    const TblPagination = () => (
+        <TablePagination
+            component="div"
+            page={page}
+            rowsPerPageOptions={pages}
+            rowsPerPage={rowsPerPage}
+            count={records.length}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+    );
+
+    function stableSort(array, comparator) {
+        const stabilizedThis = array.map((el, index) => [el, index]);
+        stabilizedThis.sort((a, b) => {
+            const order = comparator(a[0], b[0]);
+            if (order !== 0) return order;
+            return a[1] - b[1];
+        });
+        return stabilizedThis.map((el) => el[0]);
+    }
+
+    function getComparator(order, orderBy) {
+        return order === "desc"
+            ? (a, b) => descendingComparator(a, b, orderBy)
+            : (a, b) => -descendingComparator(a, b, orderBy);
+    }
+
+    function descendingComparator(a, b, orderBy) {
+        if (b[orderBy] < a[orderBy]) {
+            return -1;
+        }
+        if (b[orderBy] > a[orderBy]) {
+            return 1;
+        }
+        return 0;
+    }
+
+    const recordsAfterPagingAndSorting = () => {
+        return stableSort(
+            filterFn.fn(records),
+            getComparator(order, orderBy)
+        ).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+    };
+
+    return {
+        TblContainer,
+        TblHeader,
+        TblPagination,
+        recordsAfterPagingAndSorting,
+    };
+}

@@ -9,7 +9,7 @@ import { add, update } from "./peopleSlice";
 import { useDispatch } from "react-redux";
 import { nextID } from "./peopleSlice";
 
-export default function PeopleDialog({ data, render, onSave }) {
+export default function PeopleDialog({ data, render, onSave, children }) {
     const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch();
 
@@ -50,6 +50,7 @@ export default function PeopleDialog({ data, render, onSave }) {
                     {data ? "Edit" : "Add"} Driver{" "}
                 </DialogTitle>
                 <DialogContent>
+                    {children}
                     <TextField
                         autoFocus
                         margin="dense"
