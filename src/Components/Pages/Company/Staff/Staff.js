@@ -249,7 +249,7 @@ function Staff(props) {
                                                             return;
                                                         }
                                                         history.push(
-                                                            `/people/${row.id}`
+                                                            `${props.location.pathname}/people/${row.id}`
                                                         );
                                                     }}
                                                     key={`person-${row.id}`}
