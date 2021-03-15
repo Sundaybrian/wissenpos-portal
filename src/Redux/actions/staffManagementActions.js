@@ -40,4 +40,22 @@ export const fetchStaff = () => (dispatch) => {
 
 // get staff by id
 // delete staff
+//addstaff
+export const deleteStaff = (staffData) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+
+    axios
+        .post("/account/delete-staff", staffData)
+        .then((res) => {
+            const staff = res.data;
+            dispatch({ type: DELETE_STAFF, payload: staffData });
+            dispatch({ type: CLEAR_ERRORS });
+        })
+        .catch((err) => {
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data,
+            });
+        });
+};
 // edit staff
