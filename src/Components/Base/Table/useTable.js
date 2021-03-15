@@ -1,11 +1,12 @@
 // table components
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
+
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TablePagination from "@material-ui/core/TablePagination";
-import makeSttyles from "@material-ui/core/styles/makeStyles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import TableContainer from "@material-ui/core/TableContainer";
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -61,6 +62,7 @@ const EnhancedTableHead = (props) => {
         numSelected,
         rowCount,
         onRequestSort,
+        headCells,
     };
 
     const createSortHandler = (property) => (event) => {
@@ -119,6 +121,7 @@ EnhancedTableHead.propTypes = {
     order: PropTypes.oneOf(["asc", "desc"]).isRequired,
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
+    headCells: PropTypes.array.isRequired,
 };
 
 export default function useTable(records, headCells, filterFn) {
@@ -130,7 +133,9 @@ export default function useTable(records, headCells, filterFn) {
     const [orderBy, setOrderBy] = useState();
 
     const TblContainer = (props) => (
-        <Table className={classes.table}>{props.children}</Table>
+        <TableContainer>
+            <Table className={classes.table}>{props.children}</Table>
+        </TableContainer>
     );
 
     const handleChangePage = (event, newPage) => {
@@ -148,7 +153,47 @@ export default function useTable(records, headCells, filterFn) {
         setOrderBy(cellId);
     };
 
-    const TblHeader = () => {};
+    const handleSelectAllClick = (event) => {
+        if (event.target.checked) {
+            const newSelecteds = rows.map((n) => n.id);
+            setSelected(newSelecteds);
+            return;
+        }
+        setSelected([]);
+    };
+
+    const selectTableRow = (id) => {
+        const selectedIndex = selected.indexOf(id);
+        let newSelected = [];
+
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, id);
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(
+                selected.slice(0, selectedIndex),
+                selected.slice(selectedIndex + 1)
+            );
+        }
+
+        setSelected(newSelected);
+    };
+
+    const TblHead = () => {
+        <EnhancedTableHead
+            headCells={headCells}
+            classes={classes}
+            numSelected={selected.length}
+            order={order}
+            orderBy={orderBy}
+            onSelectAllClick={handleSelectAllClick}
+            onRequestSort={handleSortRequest}
+            rowCount={rows.length}
+        />;
+    };
 
     const TblPagination = () => (
         <TablePagination
@@ -196,8 +241,9 @@ export default function useTable(records, headCells, filterFn) {
     };
 
     return {
+        selectTableRow,
         TblContainer,
-        TblHeader,
+        TblHead,
         TblPagination,
         recordsAfterPagingAndSorting,
     };
