@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 // mui
+import Checkbox from "@material-ui/core/Checkbox";
 import Snackbar from "@material-ui/core/Snackbar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import Tooltip from "@material-ui/core/Tooltip";
+import Avatar from "@material-ui/core/Avatar";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Content from "../Dashboard/Content";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TableBody from "@material-ui/core/TableBody";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
 // component
 import Alert from "../../../Base/Alert";
 import DeletePeopleDialog from "../../../Base/People/DeletePeopleDialog";
@@ -56,6 +59,14 @@ const headCells = [
         label: "Name",
     },
     { id: "id", numeric: true, disablePadding: false, label: "ID" },
+
+    {
+        id: "department",
+        numeric: false,
+        disablePadding: true,
+        label: "Department",
+    },
+
     { id: "email", numeric: false, disablePadding: false, label: "Email" },
     {
         id: "phoneNumber",
@@ -86,32 +97,37 @@ const records = [
     },
 ];
 
-export default function Staff(props) {
+function Staff(props) {
     const classes = useStyles();
 
-    const { staff, addStaff, deleteStaff } = props;
+    const {
+        staff: { rows },
+        addStaff,
+        deleteStaff,
+    } = props;
 
     const [filterFn, setFilterFn] = useState({
         fn: (items) => {
             return items;
         },
     });
+
     const {
         handleSelectAllClick,
         selected,
+        setSelected,
         selectTableRow,
         TblContainer,
         TblHead,
         TblPagination,
         recordsAfterPagingAndSorting,
-    } = useTable(records, headCells, filterFn);
+    } = useTable(records, rows, headCells, filterFn);
     const [snackOpen, setSnackOpen] = React.useState(false);
 
-    const rows = [...records];
     const [loading, setLoading] = useState(false);
     const error = false;
     // todo with snacks
-    const [snackOpen, setSnackOpen] = React.useState(false);
+
     const dispatch = useDispatch();
 
     let history = useHistory();
@@ -282,8 +298,17 @@ export default function Staff(props) {
                                                     <TableCell align="right">
                                                         {row.id}
                                                     </TableCell>
-                                                    <TableCell align="right">
+                                                    <TableCell
+                                                        scope="row"
+                                                        padding="none"
+                                                    >
                                                         {row.department}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {row.email}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {row.phoneNumber}
                                                     </TableCell>
                                                 </TableRow>
                                             );

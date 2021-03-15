@@ -1,9 +1,12 @@
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 // table components
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-
 import Table from "@material-ui/core/Table";
-
+import TableSortLabel from "@material-ui/core/TableSortLabel";
+import TableHead from "@material-ui/core/TableHead";
+import Checkbox from "@material-ui/core/Checkbox";
 import TablePagination from "@material-ui/core/TablePagination";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -11,12 +14,12 @@ import TableContainer from "@material-ui/core/TableContainer";
 const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 700,
-        marginTop: theme.spacing(3),
-        "& thead th": {
-            fontWeight: "600",
-            color: theme.palette.primary.main,
-            backgroundColor: theme.palette.primary.light,
-        },
+        // marginTop: theme.spacing(3),
+        // "& thead th": {
+        //     fontWeight: "600",
+        //     color: theme.palette.primary.main,
+        //     backgroundColor: theme.palette.primary.light,
+        // },
         "& tbody td": {
             fontWeight: "300",
         },
@@ -24,14 +27,6 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: "#fffbf2",
             cursor: "pointer",
         },
-    },
-
-    root: {
-        width: "100%",
-    },
-    paper: {
-        width: "100%",
-        marginBottom: theme.spacing(2),
     },
 
     visuallyHidden: {
@@ -45,12 +40,6 @@ const useStyles = makeStyles((theme) => ({
         top: 20,
         width: 1,
     },
-    grow: {
-        flexGrow: 1,
-    },
-    deleteButton: {
-        marginLeft: theme.spacing(1),
-    },
 }));
 
 const EnhancedTableHead = (props) => {
@@ -63,7 +52,7 @@ const EnhancedTableHead = (props) => {
         rowCount,
         onRequestSort,
         headCells,
-    };
+    } = props;
 
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
@@ -124,17 +113,25 @@ EnhancedTableHead.propTypes = {
     headCells: PropTypes.array.isRequired,
 };
 
-export default function useTable(records, headCells, filterFn) {
+export default function useTable(records, rows, headCells, filterFn) {
+    const classes = useStyles();
     const pages = [5, 10, 25];
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
     const [selected, setSelected] = React.useState([]);
-    const [order, setOrder] = useState();
-    const [orderBy, setOrderBy] = useState();
+    const [order, setOrder] = useState("asc");
+    const [orderBy, setOrderBy] = useState("firstName");
 
     const TblContainer = (props) => (
         <TableContainer>
-            <Table className={classes.table}>{props.children}</Table>
+            <Table
+                className={classes.table}
+                aria-labelledby="tableTitle"
+                size={"small"}
+                aria-label="enhanced table"
+            >
+                {props.children}
+            </Table>
         </TableContainer>
     );
 
@@ -153,7 +150,7 @@ export default function useTable(records, headCells, filterFn) {
         setOrderBy(cellId);
     };
 
-    const handleSelectAllClick = (event, rows) => {
+    const handleSelectAllClick = (event) => {
         if (event.target.checked) {
             const newSelecteds = rows.map((n) => n.id);
             setSelected(newSelecteds);
@@ -182,7 +179,7 @@ export default function useTable(records, headCells, filterFn) {
         setSelected(newSelected);
     };
 
-    const TblHead = () => {
+    const TblHead = () => (
         <EnhancedTableHead
             headCells={headCells}
             classes={classes}
@@ -192,8 +189,8 @@ export default function useTable(records, headCells, filterFn) {
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleSortRequest}
             rowCount={rows.length}
-        />;
-    };
+        />
+    );
 
     const TblPagination = () => (
         <TablePagination
@@ -243,6 +240,7 @@ export default function useTable(records, headCells, filterFn) {
     return {
         handleSelectAllClick,
         selected,
+        setSelected,
         selectTableRow,
         TblContainer,
         TblHead,
