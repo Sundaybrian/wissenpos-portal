@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import RouteWithSubRoutes from "../../../Utils/RouteWithSubRoutes";
+import { PrivateRouteWithSubRoutes } from "../../../Utils/RouteWithSubRoutes";
 import { Switch, withRouter } from "react-router-dom";
 
 export class Main extends Component {
@@ -22,7 +22,7 @@ export class Main extends Component {
         return (
             <Switch>
                 {this.props.routes.map((route, index) => (
-                    <RouteWithSubRoutes key={index} {...route} />
+                    <PrivateRouteWithSubRoutes key={index} {...route} />
                 ))}
             </Switch>
         );

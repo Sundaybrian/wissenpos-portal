@@ -18,7 +18,7 @@ import TableCell from "@material-ui/core/TableCell";
 // component
 import Alert from "../../../Base/Alert";
 import DeletePeopleDialog from "../../../Base/People/DeletePeopleDialog";
-import PeopleDialog from "../../../Base/People/PeopleDialog";
+
 import SummaryCard from "../../../Base/SummaryCard";
 import Content from "../../../Layout/Content/Content";
 import useTable from "../../../Base/Table/useTable";
@@ -132,6 +132,7 @@ function Staff(props) {
     const dispatch = useDispatch();
 
     let history = useHistory();
+    console.log(history);
 
     if (loading) {
         return (
@@ -166,7 +167,7 @@ function Staff(props) {
             <div className={classes.root}>
                 <Toolbar>
                     <div edge="start" className={classes.grow} />
-                    <PeopleDialog
+                    {/* <PeopleDialog
                         edge="end"
                         onSave={() => {
                             setSnackOpen("Person added");
@@ -182,7 +183,7 @@ function Staff(props) {
                                 Add Person
                             </Button>
                         )}
-                    />
+                    /> */}
                     {selected.length > 0 && (
                         <Tooltip title={"Delete"}>
                             <DeletePeopleDialog
@@ -249,7 +250,7 @@ function Staff(props) {
                                                             return;
                                                         }
                                                         history.push(
-                                                            `${props.location.pathname}/people/${row.id}`
+                                                            `/dashboard/staff-management/profile/${row.id}`
                                                         );
                                                     }}
                                                     key={`person-${row.id}`}

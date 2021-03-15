@@ -14,6 +14,7 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 
 //pages company
 import Staff from "../Company/Staff/Staff";
+import StaffProfile from "../Company/Staff/StaffProfile";
 import CompanyMenu from "../Company/CompanyMenu/CompanyMenu";
 import Orders from "../Company/Orders/Orders";
 import Profile from "../Company/Profile/Profile";
@@ -38,7 +39,14 @@ export const companyRoutes = [
         component: Staff,
         text: "staff-management",
         icon: GroupIcon,
-        layout:"/company"
+        layout:"/company",
+        routes:[
+            {
+                path: "/dashboard/staff-management/profile/:id",
+                component: StaffProfile
+               
+            }
+        ]
     },
     {
         path: "/dashboard/menus",

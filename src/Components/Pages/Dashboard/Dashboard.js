@@ -21,15 +21,14 @@ function Dashboard(props) {
 
     return (
         <ThemeProvider theme={currentTheme}>
-            <BrowserRouter>
-                <AppBarAndDrawer
-                    currentTheme={currentTheme}
-                    setCurrentTheme={setCurrentTheme}
-                    routes={getDashboardRoutes(role)}
-                />
+            <AppBarAndDrawer
+                currentTheme={currentTheme}
+                setCurrentTheme={setCurrentTheme}
+                routes={getDashboardRoutes(role)}
+            />
 
-                <Main routes={getDashboardRoutes(role)} />
-            </BrowserRouter>
+            <Main routes={getDashboardRoutes(role)} />
+
             {/* main app will be here */}
         </ThemeProvider>
     );

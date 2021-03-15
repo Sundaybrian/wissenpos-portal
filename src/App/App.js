@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "../Utils/PrivateRoute";
+import RouteWithSubRoutes from "../Utils/RouteWithSubRoutes";
+import routes from "../routes";
 import jwtDecode from "jwt-decode";
 // utils
 import config from "../Utils/config";
@@ -43,10 +45,13 @@ function App() {
         <>
             <div>
                 <Switch>
-                    <Route exact path="/" component={Login} />
+                    {routes.map((route, index) => (
+                        <RouteWithSubRoutes key={index} {...route} />
+                    ))}
+                    {/* <Route exact path="/" component={Login} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />
-                    <PrivateRoute path="/dashboard" component={Dashboard} />
+                    <PrivateRoute path="/dashboard" component={Dashboard} /> */}
                 </Switch>
             </div>
             <CssBaseline />
