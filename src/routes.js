@@ -14,10 +14,6 @@ const routes = [
         exact: true,
         component: Login,
     },
-    {
-        path: "/",
-        component: Dashboard,
-    },
 ];
 
 export default routes;
