@@ -9,7 +9,7 @@ export const loginUser = (userData, history) => (dispatch) => {
         .then((res) => {
             setAuthorizationHeader(res.data.token);
 
-            setUserData(res.data.user);
+            dispatch(setUserData(res.data.user));
             dispatch({ type: CLEAR_ERRORS });
             history.push("/dashboard");
         })
