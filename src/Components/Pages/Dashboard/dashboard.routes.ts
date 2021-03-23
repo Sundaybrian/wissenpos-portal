@@ -28,42 +28,42 @@ const dashboardRoutes = [
 
 export const companyRoutes = [
     {
-        path: "/metrics",
+        path: "metrics",
         component: Metric,
         text: "metrics",
         icon: DataUsageIcon,
         layout:"/company"
     },
     {
-        path: "/staff-management",
+        path: "staff-management",
         component: Staff,
         text: "staff-management",
         icon: GroupIcon,
         layout:"/company",
         routes:[
             {
-                path: "/staff-management/:id/profile",
+                path: ":id/profile",
                 component: StaffProfile
                
             }
         ]
     },
     {
-        path: "/menus",
+        path: "menus",
         component: CompanyMenu,
         text: "menus",
         icon: BusinessIcon,
         layout:"/company"
     },
     {
-        path: "/orders",
+        path: "orders",
         component: Orders,
         text: "orders",
         icon: ShoppingBasketIcon,
         layout:"/company"
     },
     {
-        path: "/profile",
+        path: "profile",
         component: Profile,
         text: "profile",
         icon: PersonIcon,

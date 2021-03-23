@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import RouteWithSubRoutes from "../../../Utils/RouteWithSubRoutes";
-import { Switch, withRouter } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 export class Main extends Component {
     constructor(props) {
@@ -8,24 +7,34 @@ export class Main extends Component {
     }
 
     goHome = () => {
-        this.props.history.push(this.props.routes[0].path);
+        // redirect to menus pages
+        this.props.history.push(
+            `${this.props.matchPath}/${this.props.routes[2].path}`
+        );
     };
 
     componentDidMount() {
-        console.log(this.props.location.pathname === "/", this.props.location);
-        // redirect to the first available link
-        if (this.props.location.pathname === "/") {
-            this.goHome();
-        }
+        this.goHome();
     }
 
     render() {
+        const { matchPath, routes } = this.props;
         return (
-            <Switch>
-                {this.props.routes.map((route, index) => (
-                    <RouteWithSubRoutes key={index} {...route} />
-                ))}
-            </Switch>
+            <Route
+                path={`${matchPath}/:id`} // equivalent /dashboard/menu menu is the dynamic part
+                render={(props) => {
+                    let page = routes.find((p) => {
+                        return p.text === props.match.params.id;
+                    });
+
+                    return (
+                        <page.component
+                            routes={page.routes !== null ? goToPage.routes : []}
+                            {...props}
+                        />
+                    );
+                }}
+            />
         );
     }
 }
