@@ -16,6 +16,8 @@ import { CssBaseline } from "@material-ui/core";
 // components
 // pages
 import Dashboard from "../Components/Pages/Dashboard/Dashboard";
+import store from "../Redux/store";
+import { logoutUser } from "../Redux/actions/authActions";
 
 import axios from "axios";
 
@@ -32,10 +34,11 @@ let authenticated;
 if (localStorage.token) {
     const decodeToken = jwtDecode(localStorage.token);
     if (decodeToken.exp * 1000 < Date.now()) {
-        authenticated = false;
-        // window.location.href = "/login";
+        store.dispatch(logoutUser());
+        window.location.href = "/login";
     } else {
-        authenticated = true;
+        store.dispatch({ type: SET_AUTHENTICATED });
+        axios.defaults.headers.common["Authorization"] = localStorage.token;
     }
 }
 
