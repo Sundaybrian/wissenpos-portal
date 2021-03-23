@@ -18,6 +18,7 @@ import { CssBaseline } from "@material-ui/core";
 import Dashboard from "../Components/Pages/Dashboard/Dashboard";
 import store from "../Redux/store";
 import { logoutUser } from "../Redux/actions/authActions";
+import { SET_AUTHENTICATED } from "../Redux/types";
 
 import axios from "axios";
 
