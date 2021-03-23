@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "../Utils/PrivateRoute";
-import RouteWithSubRoutes from "../Utils/RouteWithSubRoutes";
+
 import routes from "../routes";
 import jwtDecode from "jwt-decode";
 // utils
@@ -15,8 +15,7 @@ import { CssBaseline } from "@material-ui/core";
 // components
 // pages
 import Dashboard from "../Components/Pages/Dashboard/Dashboard";
-import Login from "../Components/Pages/Auth/Login/Login";
-import Register from "../Components/Pages/Auth/Register/Register";
+import { ThemeProvider } from "@material-ui/core/styles";
 
 import axios from "axios";
 
@@ -34,28 +33,34 @@ if (localStorage.token) {
     const decodeToken = jwtDecode(localStorage.token);
     if (decodeToken.exp * 1000 < Date.now()) {
         authenticated = false;
-        // window.location.href = "/login";
+        window.location.href = "/login";
     } else {
         authenticated = true;
     }
 }
 
 function App() {
+    const [currentTheme, setCurrentTheme] = useTheme();
     return (
-        <>
-            <div>
-                <Switch>
-                    {routes.map((route, index) => (
-                        <RouteWithSubRoutes key={index} {...route} />
-                    ))}
-                    {/* <Route exact path="/" component={Login} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/register" component={Register} />
-                    <PrivateRoute path="/dashboard" component={Dashboard} /> */}
-                </Switch>
-            </div>
+        <ThemeProvider theme={currentTheme}>
+            <Switch>
+                {routes.map((route, index) => (
+                    <Route
+                        key={index}
+                        path={route.path}
+                        component={route.component}
+                    />
+                ))}
+                <PrivateRoute path="/dashboard" component={Dashboard} />
+                <Route
+                    exact
+                    path="/"
+                    render={() => <Redirect to="/dashboard" />}
+                />
+            </Switch>
+
             <CssBaseline />
-        </>
+        </ThemeProvider>
     );
 }
 
