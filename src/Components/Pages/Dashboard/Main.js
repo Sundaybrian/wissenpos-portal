@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 export class Main extends Component {
     constructor(props) {
@@ -7,10 +8,22 @@ export class Main extends Component {
     }
 
     goHome = () => {
-        // redirect to menus pages
-        this.props.history.push(
-            `${this.props.matchPath}/${this.props.routes[2].path}`
+        console.log(
+            `${this.props.location.pathname}/${this.props.routes[0].path}`
         );
+
+        console.log(`${this.props.match.path}/${this.props.routes[0].path}`);
+
+        // /dashboard/metrics
+        this.props.history.push({
+            pathname: `${this.props.matchPath}/${this.props.routes[0].path}`,
+        });
+
+        // this.props.history.replaceState(
+        //     null,
+        //     null,
+        //     `${this.props.matchPath}/${this.props.routes[0].path}`
+        // );
     };
 
     componentDidMount() {
@@ -18,10 +31,10 @@ export class Main extends Component {
     }
 
     render() {
-        const { matchPath, routes } = this.props;
+        const { matchPath, routes, location } = this.props;
         return (
             <Route
-                path={`${matchPath}/:id`} // equivalent /dashboard/menu menu is the dynamic part
+                path={`${matchPath.pathname}/:id`} // equivalent /dashboard/menu menu is the dynamic part
                 render={(props) => {
                     let page = routes.find((p) => {
                         return p.text === props.match.params.id;
@@ -29,7 +42,7 @@ export class Main extends Component {
 
                     return (
                         <page.component
-                            routes={page.routes !== null ? goToPage.routes : []}
+                            routes={page.routes !== null ? page.routes : []}
                             {...props}
                         />
                     );
@@ -39,4 +52,4 @@ export class Main extends Component {
     }
 }
 
-export default withRouter(Main);
+export default Main;
