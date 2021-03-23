@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import "./App.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import PrivateRoute from "../Utils/PrivateRoute";
 
 import routes from "../routes";
@@ -9,10 +9,10 @@ import jwtDecode from "jwt-decode";
 import config from "../Utils/config";
 // MUi stuff
 
-import { ThemeProvider } from "@material-ui/core/styles";
+// import { ThemeProvider } from "@material-ui/core/styles";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { CssBaseline } from "@material-ui/core";
-import { useTheme } from "../Theme/theme";
+
 // components
 // pages
 import Dashboard from "../Components/Pages/Dashboard/Dashboard";
@@ -33,16 +33,15 @@ if (localStorage.token) {
     const decodeToken = jwtDecode(localStorage.token);
     if (decodeToken.exp * 1000 < Date.now()) {
         authenticated = false;
-        window.location.href = "/login";
+        // window.location.href = "/login";
     } else {
         authenticated = true;
     }
 }
 
 function App() {
-    const [currentTheme, setCurrentTheme] = useTheme();
     return (
-        <ThemeProvider theme={currentTheme} setCurrentTheme={setCurrentTheme}>
+        <>
             <Switch>
                 {routes.map((route, index) => (
                     <Route
@@ -60,7 +59,7 @@ function App() {
             </Switch>
 
             <CssBaseline />
-        </ThemeProvider>
+        </>
     );
 }
 
