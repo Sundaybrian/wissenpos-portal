@@ -6,15 +6,8 @@ import {
 } from "../types";
 
 const initialState = {
-    user: {
-        id: 1,
-        firstName: "sunday",
-        lastName: "owner",
-        email: "sunday@owner.com",
-        role: "owner",
-        isVerified: false,
-    },
-    authenticated: true,
+    user: {},
+    authenticated: false,
 };
 
 const auth = (state = initialState, action) => {
