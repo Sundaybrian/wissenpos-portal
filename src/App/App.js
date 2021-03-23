@@ -9,13 +9,13 @@ import jwtDecode from "jwt-decode";
 import config from "../Utils/config";
 // MUi stuff
 
+import { ThemeProvider } from "@material-ui/core/styles";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { CssBaseline } from "@material-ui/core";
-
+import { useTheme } from "../Theme/theme";
 // components
 // pages
 import Dashboard from "../Components/Pages/Dashboard/Dashboard";
-import { ThemeProvider } from "@material-ui/core/styles";
 
 import axios from "axios";
 
@@ -42,7 +42,7 @@ if (localStorage.token) {
 function App() {
     const [currentTheme, setCurrentTheme] = useTheme();
     return (
-        <ThemeProvider theme={currentTheme}>
+        <ThemeProvider theme={currentTheme} setCurrentTheme={setCurrentTheme}>
             <Switch>
                 {routes.map((route, index) => (
                     <Route

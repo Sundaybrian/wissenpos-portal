@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 // components
 import Main from "./Main";
-import { BrowserRouter, withRouter } from "react-router-dom";
+
 import AppBarAndDrawer from "../../Layout/AppBarAndDrawer/AppBarAndDrawer";
-import { ThemeProvider } from "@material-ui/core/styles";
-import { useTheme } from "../../../theme";
+
 // helpers
 import getDashboardRoutes from "./helpers";
 
@@ -12,26 +11,24 @@ import getDashboardRoutes from "./helpers";
 import { connect } from "react-redux";
 
 function Dashboard(props) {
-    const [currentTheme, setCurrentTheme] = useTheme();
-
-    //get user role
     const {
         user: { role },
+        match: { path },
+        currentTheme,
+        setCurrentTheme,
     } = props;
 
     return (
-        <ThemeProvider theme={currentTheme}>
-            <>
-                <AppBarAndDrawer
-                    currentTheme={currentTheme}
-                    setCurrentTheme={setCurrentTheme}
-                    routes={getDashboardRoutes(role)}
-                />
+        <>
+            <AppBarAndDrawer
+                currentTheme={currentTheme}
+                setCurrentTheme={setCurrentTheme}
+                routes={getDashboardRoutes(role)}
+                matchPath={path}
+            />
 
-                <Main routes={getDashboardRoutes(role)} />
-            </>
-            {/* main app will be here */}
-        </ThemeProvider>
+            <Main routes={getDashboardRoutes(role)} matchPath={path} />
+        </>
     );
 }
 
