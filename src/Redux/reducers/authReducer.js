@@ -2,7 +2,7 @@ import {
     SET_USER,
     LOADING_UI,
     SET_AUTHENTICATED,
-    SET_UAUTHENTICATED,
+    SET_UNAUTHENTICATED,
 } from "../types";
 
 const initialState = {
@@ -17,8 +17,11 @@ const auth = (state = initialState, action) => {
                 ...state,
                 authenticated: true,
             };
-        case SET_UAUTHENTICATED:
-            return initialState;
+        case SET_UNAUTHENTICATED:
+            return {
+                user: {},
+                authenticated: false,
+            };
         case SET_USER:
             return {
                 ...state,
