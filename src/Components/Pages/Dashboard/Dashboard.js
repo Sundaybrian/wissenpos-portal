@@ -9,26 +9,43 @@ import getDashboardRoutes from "./helpers";
 
 //redux
 import { connect } from "react-redux";
+import { ThemeProvider } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
+import { useTheme } from "../../../Theme/theme";
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: "flex",
+    },
+}));
 
 function Dashboard(props) {
+    const [currentTheme, setCurrentTheme] = useTheme();
     const {
         user: { role },
         match: { path },
-        currentTheme,
-        setCurrentTheme,
+        location,
     } = props;
 
-    return (
-        <>
-            <AppBarAndDrawer
-                currentTheme={currentTheme}
-                setCurrentTheme={setCurrentTheme}
-                routes={getDashboardRoutes(role)}
-                matchPath={path}
-            />
+    const classes = useStyles();
 
-            <Main routes={getDashboardRoutes(role)} matchPath={path} />
-        </>
+    return (
+        <d>
+            <ThemeProvider theme={currentTheme}>
+                <AppBarAndDrawer
+                    currentTheme={currentTheme}
+                    setCurrentTheme={setCurrentTheme}
+                    routes={getDashboardRoutes(role)}
+                    matchPath={path}
+                />
+
+                <Main
+                    routes={getDashboardRoutes(role)}
+                    matchPath={path}
+                    {...props}
+                />
+            </ThemeProvider>
+        </d>
     );
 }
 
