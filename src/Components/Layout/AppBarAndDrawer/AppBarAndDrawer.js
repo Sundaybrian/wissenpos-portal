@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
+import Tooltip from "@material-ui/core/Tooltip";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
@@ -63,7 +64,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResponsiveDrawer(props) {
-    const { container, setCurrentTheme, currentTheme, routes } = props;
+    const {
+        container,
+        setCurrentTheme,
+        currentTheme,
+        routes,
+        matchPath,
+    } = props;
     const classes = useStyles();
     const theme = useTheme();
     const { pathname } = useLocation();
@@ -82,17 +89,21 @@ function ResponsiveDrawer(props) {
             <div className={classes.toolbar} />
             <Divider />
             <List>
-                {routes.map(({ text, icon, path, component }, index) => (
+                {routes.map(({ text, icon: XIcon, path, component }, index) => (
                     <ListItem
                         component={RouterLink}
-                        selected={pathname === `/${text}`}
-                        to={`${path}`}
+                        selected={pathname === `${matchPath}/${text}`}
+                        to={`${matchPath}/${path}`}
                         button
-                        key={text}
+                        key={index}
                     >
-                        <ListItemIcon>
-                            <Icon>home</Icon>
-                        </ListItemIcon>
+                        <Tooltip title={text} placement="right-start">
+                            <ListItemIcon>
+                                <Icon>
+                                    <XIcon />
+                                </Icon>
+                            </ListItemIcon>
+                        </Tooltip>
                         <ListItemText primary={text.toUpperCase()} />
                     </ListItem>
                 ))}
@@ -138,10 +149,10 @@ function ResponsiveDrawer(props) {
                         Material World
                     </Typography>
                     <div style={{ flexGrow: 1 }}></div>
-                    <PalettePicker
+                    {/* <PalettePicker
                         setCurrentTheme={setCurrentTheme}
                         currentTheme={currentTheme}
-                    />
+                    /> */}
                     <Badge badgeContent={4} color="primary">
                         <MailIcon />
                     </Badge>

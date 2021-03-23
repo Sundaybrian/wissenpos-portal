@@ -14,6 +14,7 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 
 //pages company
 import Staff from "../Company/Staff/Staff";
+import StaffProfile from "../Company/Staff/StaffProfile";
 import CompanyMenu from "../Company/CompanyMenu/CompanyMenu";
 import Orders from "../Company/Orders/Orders";
 import Profile from "../Company/Profile/Profile";
@@ -27,35 +28,42 @@ const dashboardRoutes = [
 
 export const companyRoutes = [
     {
-        path: "/dashboard/metrics",
+        path: "metrics",
         component: Metric,
         text: "metrics",
         icon: DataUsageIcon,
         layout:"/company"
     },
     {
-        path: "/dashboard/staff-management",
+        path: "staff-management",
         component: Staff,
         text: "staff-management",
         icon: GroupIcon,
-        layout:"/company"
+        layout:"/company",
+        routes:[
+            {
+                path: ":id/profile",
+                component: StaffProfile
+               
+            }
+        ]
     },
     {
-        path: "/dashboard/menus",
+        path: "menus",
         component: CompanyMenu,
         text: "menus",
         icon: BusinessIcon,
         layout:"/company"
     },
     {
-        path: "/dashboard/orders",
+        path: "orders",
         component: Orders,
         text: "orders",
         icon: ShoppingBasketIcon,
         layout:"/company"
     },
     {
-        path: "/dashboard/profile",
+        path: "profile",
         component: Profile,
         text: "profile",
         icon: PersonIcon,

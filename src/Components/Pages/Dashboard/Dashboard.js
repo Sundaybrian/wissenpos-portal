@@ -1,37 +1,51 @@
 import React, { useState } from "react";
 // components
 import Main from "./Main";
-import { BrowserRouter, withRouter } from "react-router-dom";
+
 import AppBarAndDrawer from "../../Layout/AppBarAndDrawer/AppBarAndDrawer";
-import { ThemeProvider } from "@material-ui/core/styles";
-import { useTheme } from "../../../theme";
+
 // helpers
 import getDashboardRoutes from "./helpers";
 
 //redux
 import { connect } from "react-redux";
+import { ThemeProvider } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
+import { useTheme } from "../../../Theme/theme";
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: "flex",
+    },
+}));
 
 function Dashboard(props) {
     const [currentTheme, setCurrentTheme] = useTheme();
-
-    //get user role
     const {
         user: { role },
+        match: { path },
+        location,
     } = props;
 
+    const classes = useStyles();
+
     return (
-        <ThemeProvider theme={currentTheme}>
-            <BrowserRouter>
+        <d>
+            <ThemeProvider theme={currentTheme}>
                 <AppBarAndDrawer
                     currentTheme={currentTheme}
                     setCurrentTheme={setCurrentTheme}
                     routes={getDashboardRoutes(role)}
+                    matchPath={path}
                 />
 
-                <Main routes={getDashboardRoutes(role)} />
-            </BrowserRouter>
-            {/* main app will be here */}
-        </ThemeProvider>
+                <Main
+                    routes={getDashboardRoutes(role)}
+                    matchPath={path}
+                    {...props}
+                />
+            </ThemeProvider>
+        </d>
     );
 }
 

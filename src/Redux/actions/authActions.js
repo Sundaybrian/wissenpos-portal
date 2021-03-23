@@ -1,4 +1,10 @@
-import { SET_ERRORS, SET_USER, LOADING_UI, CLEAR_ERRORS } from "../types";
+import {
+    SET_ERRORS,
+    SET_UNAUTHENTICATED,
+    SET_USER,
+    LOADING_UI,
+    CLEAR_ERRORS,
+} from "../types";
 import axios from "axios";
 
 export const loginUser = (userData, history) => (dispatch) => {
@@ -9,7 +15,7 @@ export const loginUser = (userData, history) => (dispatch) => {
         .then((res) => {
             setAuthorizationHeader(res.data.token);
 
-            setUserData(res.data.user);
+            dispatch(setUserData(res.data.user));
             dispatch({ type: CLEAR_ERRORS });
             history.push("/dashboard");
         })
@@ -52,4 +58,11 @@ const setAuthorizationHeader = (token) => {
     const _token = `Bearer ${token}`;
     localStorage.setItem("token", _token);
     axios.defaults.headers.common["Authorization"] = _token;
+};
+
+export const logoutUser = () => (dispatch) => {
+    localStorage.removeItem("token");
+    delete axios.defaults.headers.common["Authorization"];
+    dispatch({ type: SET_UNAUTHENTICATED });
+    window.location.href = "/login";
 };

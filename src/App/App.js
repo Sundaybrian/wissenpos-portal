@@ -1,20 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
 import "./App.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import PrivateRoute from "../Utils/PrivateRoute";
+
+import routes from "../routes";
 import jwtDecode from "jwt-decode";
 // utils
 import config from "../Utils/config";
 // MUi stuff
 
+// import { ThemeProvider } from "@material-ui/core/styles";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { CssBaseline } from "@material-ui/core";
 
 // components
 // pages
 import Dashboard from "../Components/Pages/Dashboard/Dashboard";
-import Login from "../Components/Pages/Auth/Login/Login";
-import Register from "../Components/Pages/Auth/Register/Register";
+import store from "../Redux/store";
+import { logoutUser } from "../Redux/actions/authActions";
+import { SET_AUTHENTICATED } from "../Redux/types";
 
 import axios from "axios";
 
@@ -31,24 +35,33 @@ let authenticated;
 if (localStorage.token) {
     const decodeToken = jwtDecode(localStorage.token);
     if (decodeToken.exp * 1000 < Date.now()) {
-        authenticated = false;
-        // window.location.href = "/login";
+        store.dispatch(logoutUser());
+        window.location.href = "/login";
     } else {
-        authenticated = true;
+        store.dispatch({ type: SET_AUTHENTICATED });
+        axios.defaults.headers.common["Authorization"] = localStorage.token;
     }
 }
 
 function App() {
     return (
         <>
-            <div>
-                <Switch>
-                    <Route exact path="/" component={Login} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/register" component={Register} />
-                    <PrivateRoute path="/dashboard" component={Dashboard} />
-                </Switch>
-            </div>
+            <Switch>
+                {routes.map((route, index) => (
+                    <Route
+                        key={index}
+                        path={route.path}
+                        component={route.component}
+                    />
+                ))}
+                <PrivateRoute path="/dashboard" component={Dashboard} />
+                <Route
+                    exact
+                    path="/"
+                    render={() => <Redirect to="/dashboard" />}
+                />
+            </Switch>
+
             <CssBaseline />
         </>
     );
