@@ -43,6 +43,8 @@ function CompanyMenu() {
         ],
     });
 
+    console.log("company menu");
+
     const [dualPanel, setDualPane] = useState(false);
     const [mealCurrent, setMealCurrent] = useState(null);
 

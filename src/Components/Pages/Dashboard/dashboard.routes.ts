@@ -19,7 +19,7 @@ import CompanyMenuContainer from "../Company/CompanyMenu/CompanyMenuContainer";
 import Orders from "../Company/Orders/Orders";
 import Profile from "../Company/Profile/Profile";
 import Metric from "../Company/Metric/Metric";
-import CompanyMenu from "../Company/CompanyMenu/CompanyMenuContainer";
+import CompanyMenu from "../Company/CompanyMenu/CompanyMenu";
 import AddRecipe from "../Company/CompanyMenu/AddRecipe";
 
 const dashboardRoutes = [

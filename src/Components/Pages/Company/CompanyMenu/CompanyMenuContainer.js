@@ -11,7 +11,7 @@ function CompanyMenuContainer(props) {
                 <Route
                     path={`${url}/${path}`}
                     component={component}
-                    key={inde}
+                    key={index}
                 />
             ))}
         </div>
