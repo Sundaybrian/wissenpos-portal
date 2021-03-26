@@ -16,10 +16,9 @@ const company = (state = initialState, action) => {
         case EDIT_COMPANY:
             return {
                 ...state,
-                compay: {
-                    ...state.company,
-                    ...action.payload,
-                },
+                compay: state.company.map((company) =>
+                    company.id == action.payload.id ? action.payload : company
+                ),
             };
 
         default:
