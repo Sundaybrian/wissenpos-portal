@@ -22,3 +22,10 @@ export const STAFF_ERROR = "STAFF_ERROR";
 export const EDIT_STAFF = "EDIT_STAFF";
 export const LOADING_DATA = "LOADING_DATA";
 export const UPDATE_STAFF = "UPDATE_STAFF";
+
+// company types
+export const ADD_COMPANY = "ADD_COMPANY";
+export const DELETE_COMPANY = "DELETE_COMPANY";
+export const SET_CURRENT_COMPANY = "SET_CURRENT_COMPANY";
+export const LOAD_COMPANY = "LOAD_COMPANY";
+export const EDIT_COMPANY = "EDIT_COMPANY";
