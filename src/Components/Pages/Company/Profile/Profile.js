@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import PeopleDialog from "../../../Base/People/PeopleDialog";
 import { Button, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import CompanyForm from "./CompanyForm";
 
 const useStyles = makeStyles((theme) => ({
     headerContainer: {
@@ -77,7 +78,7 @@ function Profile(props) {
                                 </Button>
                             )}
                         >
-                            <Typography variant={"h5"}>username</Typography>
+                            <CompanyForm />
                         </PeopleDialog>
                     </div>
                 </div>
