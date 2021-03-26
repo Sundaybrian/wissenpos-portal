@@ -23,8 +23,6 @@ export default function PeopleDialog({
     };
 
     const handleSave = () => {
-        // const action = data ? update : add;
-        // dispatch(action({ name, id: id || nextID(), img }));
         onSave && onSave();
         handleClose();
     };
