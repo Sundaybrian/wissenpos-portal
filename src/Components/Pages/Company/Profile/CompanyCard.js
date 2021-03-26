@@ -95,20 +95,6 @@ function CompanyCard(props) {
                         subheader={website_url}
                     />
                 </CardActionArea>
-                <CardActionArea>
-                    <CardHeader
-                        avatar={
-                            <Avatar
-                                aria-label="recipe"
-                                className={classes.pink}
-                            >
-                                <ContactSupport />
-                            </Avatar>
-                        }
-                        title="Joined"
-                        subheader={formatDate(created_at)}
-                    />
-                </CardActionArea>
             </>
         </>
     );
