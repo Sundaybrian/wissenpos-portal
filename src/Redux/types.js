@@ -8,6 +8,9 @@ export const LOADING_USER = "LOADING_USER";
 export const SET_ERRORS = "SET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const LOADING_UI = "LOADING_UI";
+export const SET_SUCCESS = "SET_SUCCESS";
+export const LOADING_DATA = "LOADING_DATA";
+export const STOP_LOADING_DATA = "STOP_LOADING_DATA";
 
 // SHARED TYPES
 export const SET_CURRENT = "SET_CURRENT";
@@ -20,7 +23,6 @@ export const SET_STAFF = "SET_STAFF";
 export const LOAD_STAFF = "LOAD_STAFF";
 export const STAFF_ERROR = "STAFF_ERROR";
 export const EDIT_STAFF = "EDIT_STAFF";
-export const LOADING_DATA = "LOADING_DATA";
 export const UPDATE_STAFF = "UPDATE_STAFF";
 
 // company types
