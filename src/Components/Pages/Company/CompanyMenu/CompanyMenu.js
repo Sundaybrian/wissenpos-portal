@@ -10,19 +10,38 @@ import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import Grid from "@material-ui/core/Grid";
 import MenuCategoriesList from "./MenuCategoriesList";
 import Meal from "./Meal";
-import Navbar from "../../../Layout/Navbar";
+import { useRouteMatch } from "react-router-dom";
+import { drawerWidth } from "../../../Layout/AppBarAndDrawer/AppBarAndDrawer";
 
 const useStyles = makeStyles((theme) => ({
-    dualPanel: {},
-    dualPanelContent: {},
+    dualPanel: {
+        display: "flex",
+        flexDirection: "row",
+    },
+    content: {
+        flexGrow: 1,
+        backgroundColor: "red",
+    },
     menuContainer: {
         height: "100vh",
         display: "flex",
+        // position: "fixed",
+        [theme.breakpoints.up("sm")]: {
+            width: `calc(100% - ${drawerWidth}px)`,
+            marginLeft: drawerWidth,
+        },
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(1),
+        position: "relative",
     },
 }));
 
-function CompanyMenu() {
+function CompanyMenu(props) {
     const classes = useStyles();
+    const [menuItem, setMenuItem] = useState(null);
+    const { url } = useRouteMatch();
+    const [dualPanel, setDualPanel] = useState(false);
+    const [meal, setMeal] = useState(null);
     const [menu, setMenu] = useState({
         id: 1,
         name: "Special Menu",
@@ -90,17 +109,8 @@ function CompanyMenu() {
         ],
     });
 
-    const [dualPanel, setDualPane] = useState(false);
-    const [mealCurrent, setMealCurrent] = useState(null);
-
     const toggleDualPanel = () => {
-        setDualPane(!dualPanel);
-    };
-
-    const setMeal = (meal) => {
-        console.log(meal);
-        setMealCurrent(meal);
-        setDualPane(true);
+        setDualPanel(!dualPanel);
     };
 
     return (
@@ -119,17 +129,17 @@ function CompanyMenu() {
                         <MenuCategoriesList
                             menuID={menu.id}
                             categories={menu.categories}
-                            dualPanel={dualPanel}
+                            setDualPanel={setDualPanel}
                             setMeal={setMeal}
+                            url={url}
                         />
                     </div>
                 </div>
             </MenuSidebar>
 
-            <Grid container>
-                <Grid item xs={12} md={5} lg={4}></Grid>
+            <Grid container className={classes.content}>
                 <Grid item xs={12} md={7} lg={8}>
-                    {dualPanel && <Meal meal={mealCurrent} />}
+                    {dualPanel && <Meal meal={meal} />}
                 </Grid>
             </Grid>
         </div>
