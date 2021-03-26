@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import { Link, Route } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,83 +17,81 @@ const useStyles = makeStyles((theme) => ({
     categoriesList: {
         display: "flex",
         flexDirection: "column",
+        justifyContent: "space-between",
+        overflowY: "auto",
+        flex: "auto",
     },
     mealList: {
         display: "flex",
         flexDirection: "column",
         marginTop: "15px",
+        overflowY: "auto",
+        flex: "auto",
     },
 }));
 
 function MealItem(props) {
     // holds the meal item
     // holds a single category
-    const { meal, onClick } = props;
+    const { item, setMeal, setDualPanel } = props;
+
     return (
-        <ListItem button={true} onClick={() => onClick(meal)}>
-            <ListItemText primary={meal.name} />
+        <ListItem
+            button
+            onClick={() => {
+                console.log("clicked");
+                setDualPanel(true);
+                setMeal(item);
+            }}
+        >
+            <ListItemText primary={item.name} />
         </ListItem>
     );
 }
 
 export function MenuCategory(props) {
     // holds a single category
-    const { category, onClick } = props;
+    const { category, component, to, url } = props;
     return (
-        <ListItem button={true} onClick={() => onClick(category.id)}>
+        <ListItem button to={to} component={component} url={url}>
             <ListItemText primary={category.name} />
         </ListItem>
     );
 }
 
 function MenuCategoriesList(props) {
-    const { categories, dualPanel, menuID, setMeal } = props;
     const classes = useStyles();
+    const { categories, setDualPanel, menuID, setMeal, url } = props;
 
-    const [menuState, setMenuState] = useState({
-        currentMenuId: menuID, // eg first menu id
-        currentMenuCategoryID: null, // eg lunch id
-        currentMealID: null, // eg boiled meat id
-        meals: [], // eg array for lunch items
-    });
-
-    const findMenuCategoryItems = (categoryId) => {
-        // searches and returns
-        console.log("clicked");
-        const meals = [
-            {
-                id: 1,
-                name: "Boiled meat",
-                price: 200,
-                description: "Best meat to salivate over",
-                category_id: 1,
-            },
-            {
-                id: 2,
-                name: "Boiled meat 2",
-                price: 200,
-                description: "Best meat to salivate over",
-                category_id: 1,
-            },
-        ];
-
-        setMenuState({
-            ...menuState,
-            currentMenuCategoryID: categoryId,
-            currentMealID: meals[0].id,
-            meals: meals,
-        });
-    };
+    const meals = [
+        {
+            id: 1,
+            name: "Boiled meat",
+            price: 200,
+            description: "Best meat to salivate over",
+            category_id: 1,
+        },
+        {
+            id: 2,
+            name: "Boiled meat 2",
+            price: 200,
+            description: "Best meat to salivate over",
+            category_id: 1,
+        },
+    ];
 
     return (
         <div className={classes.root}>
             <div className={classes.categoriesList}>
+                {/* category list */}
                 <List component="nav" aria-label="secondary mailbox folders">
-                    {categories.map((category, i) => (
+                    {categories.map((category, index) => (
                         <MenuCategory
                             category={category}
-                            key={i}
-                            onClick={findMenuCategoryItems}
+                            key={index}
+                            to={`${url}/category/${category.id}`}
+                            component={Link}
+                            url={url}
                         />
                     ))}
                 </List>
@@ -102,11 +101,29 @@ function MenuCategoriesList(props) {
             </div>
             {/* meal list */}
             <div className={classes.mealList}>
-                <List component="nav" aria-label="secondary mailbox folders">
+                <Route
+                    path={`${url}/category/:catId`}
+                    render={({ match }) => {
+                        const item = categories.find(
+                            (r) => r.id == match.params.catId
+                        );
+
+                        console.log(item);
+
+                        return (
+                            <MealItem
+                                item={item}
+                                setMeal={setMeal}
+                                setDualPanel={setDualPanel}
+                            />
+                        );
+                    }}
+                />
+                {/* <List component="nav" aria-label="secondary mailbox folders">
                     {menuState.meals.map((meal, i) => (
                         <MealItem meal={meal} key={i} onClick={setMeal} />
                     ))}
-                </List>
+                </List> */}
                 <ListItem button>
                     <ListItemText primary="Add Meal" />
                 </ListItem>
