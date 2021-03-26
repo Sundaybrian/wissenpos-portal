@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: theme.spacing(4),
         position: "relative",
     },
+    container2: {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
+        position: "relative",
+    },
 }));
 
 function Content({ children }) {
@@ -29,6 +34,20 @@ function Content({ children }) {
         <div className={classes.root}>
             <main className={classes.content}>
                 <Container maxWidth="xl" className={classes.container}>
+                    {children}
+                </Container>
+            </main>
+        </div>
+    );
+}
+
+export function Content2({ children }) {
+    const classes = useStyles();
+
+    return (
+        <div className={classes.root}>
+            <main className={classes.content}>
+                <Container maxWidth="xl" className={classes.container2}>
                     {children}
                 </Container>
             </main>
