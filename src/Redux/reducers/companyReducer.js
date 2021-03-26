@@ -3,7 +3,6 @@ import { LOAD_COMPANY, ADD_COMPANY, EDIT_COMPANY } from "../types";
 const initialState = {
     company: null,
     currentCompany: null,
-    authenticated: false,
 };
 
 const company = (state = initialState, action) => {
@@ -12,14 +11,14 @@ const company = (state = initialState, action) => {
         case ADD_COMPANY:
             return {
                 ...state,
-                company: res.data,
+                company: action.payload,
             };
         case EDIT_COMPANY:
             return {
                 ...state,
                 compay: {
                     ...state.company,
-                    ...res.data,
+                    ...action.payload,
                 },
             };
 
