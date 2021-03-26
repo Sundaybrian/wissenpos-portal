@@ -5,6 +5,7 @@ import {
     LOAD_COMPANY,
     ADD_COMPANY,
     EDIT_COMPANY,
+    SET_SUCCESS,
 } from "../types";
 import axios from "axios";
 
@@ -15,6 +16,10 @@ export const loadCompany = () => (dispatch) => {
         .get("/company/mine")
         .then((res) => {
             dispatch({ type: LOAD_COMPANY, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `company fetched successfully`,
+            });
 
             dispatch({ type: CLEAR_ERRORS });
         })
@@ -33,6 +38,10 @@ export const registerCompany = (companyData) => (dispatch) => {
         .post("/company", companyData)
         .then((res) => {
             dispatch({ type: ADD_COMPANY, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `${companyData.name} created successfully`,
+            });
             dispatch({ type: CLEAR_ERRORS });
         })
         .catch((err) => {
@@ -50,6 +59,10 @@ export const updateCompany = (id, companyData) => (dispatch) => {
         .patch(`/company/${id}`, companyData)
         .then((res) => {
             dispatch({ type: EDIT_COMPANY, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `${res.data.name} updated successfully`,
+            });
             dispatch({ type: CLEAR_ERRORS });
         })
         .catch((err) => {
