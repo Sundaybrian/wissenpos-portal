@@ -1,12 +1,12 @@
 import React from "react";
-
 import * as Yup from "yup";
-
 import { Formik, Form, Field } from "formik";
 import { TextField } from "formik-material-ui";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { Button, CircularProgress, Grid } from "@material-ui/core";
+import Loader from "../../../Base/Loader";
+import { registerCompany } from "../../../../Redux/actions/companyActions";
 import { connect } from "react-redux";
-import { Grid } from "@material-ui/core";
 
 const validationSchema = Yup.object({
     name: Yup.string().required("companyName is required"),
@@ -22,7 +22,7 @@ const validationSchema = Yup.object({
         "url cannot be greater than 255 characters"
     ),
     email: Yup.string()
-        .email()
+        .email("Invalid email address")
         .max(255, "email cannot be greater than 255 characters"),
 });
 
@@ -43,11 +43,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CompanyForm(props) {
-    const {} = props;
+    const {
+        registerCompany,
+        ui: { loading },
+    } = props;
     const classes = useStyles();
 
-    const handleSubmit = (values, actions) => {};
+    const handleSubmit = (values, actions) => {
+        const companyData = {
+            ...values,
+        };
 
+        registerCompany(companyData);
+        actions.resetForm();
+    };
+
+    if (loading) {
+        <Loader />;
+    }
     return (
         <Formik
             initialValues={{
@@ -98,7 +111,7 @@ function CompanyForm(props) {
                             />
                         </Grid>
 
-                        <Grid item xs={12}>
+                        <Grid item xs={6}>
                             <Field
                                 name="description"
                                 as="textarea"
@@ -109,6 +122,34 @@ function CompanyForm(props) {
                                 rowsMax={4}
                                 fullWidth
                             />
+
+                            <div className={classes.actionButtons}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    disabled={loading}
+                                    className={classes.submit}
+                                    type="submit"
+                                >
+                                    Submit
+                                    {loading && (
+                                        <CircularProgress
+                                            size={30}
+                                            className={classes.progress}
+                                        />
+                                    )}
+                                </Button>
+
+                                {/* <Button
+                                            variant="contained"
+                                            color="default"
+                                            disabled={loading}
+                                            className={classes.submit}
+                                            
+                                        >
+                                            Reset
+                                        </Button> */}
+                            </div>
                         </Grid>
                     </Grid>
                 </Form>
@@ -117,4 +158,12 @@ function CompanyForm(props) {
     );
 }
 
-export default CompanyForm;
+const mapStateToProps = (state) => ({
+    ui: state.ui,
+});
+
+const mapActionsToProps = {
+    registerCompany,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(CompanyForm);
