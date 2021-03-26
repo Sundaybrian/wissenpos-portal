@@ -6,6 +6,7 @@ import {
     CLEAR_ERRORS,
 } from "../types";
 import axios from "axios";
+import { loadCompany } from "./companyActions";
 
 export const loginUser = (userData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
@@ -16,6 +17,7 @@ export const loginUser = (userData, history) => (dispatch) => {
             setAuthorizationHeader(res.data.token);
 
             dispatch(setUserData(res.data.user));
+            dispatch(loadCompany()); // fetch user's company
             dispatch({ type: CLEAR_ERRORS });
             history.push("/dashboard");
         })
