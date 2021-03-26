@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CompanyForm(props) {
-    const {} = props;
+    const { handleSubmit } = props;
     const classes = useStyles();
 
     const handleSubmit = (values, actions) => {};
