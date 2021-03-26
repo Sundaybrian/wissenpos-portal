@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
 
 function Profile(props) {
     const classes = useStyles();
+    const {
+        company: { company },
+    } = props;
 
     return (
         <Content>
@@ -73,6 +76,11 @@ function Profile(props) {
                                     variant="contained"
                                     startIcon={<AddIcon />}
                                     onClick={open}
+                                    disabled={
+                                        company !== null && company.length > 0
+                                            ? true
+                                            : false
+                                    }
                                 >
                                     Create Company
                                 </Button>
@@ -101,5 +109,8 @@ function Profile(props) {
         </Content>
     );
 }
+const mapStateToProps = (state) => ({
+    company: state.company,
+});
 
-export default Profile;
+export default connect(mapStateToProps)(Profile);
