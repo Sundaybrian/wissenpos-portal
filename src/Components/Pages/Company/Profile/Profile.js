@@ -7,6 +7,9 @@ import PeopleDialog from "../../../Base/People/PeopleDialog";
 import { Button, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CompanyForm from "./CompanyForm";
+import CompanyCard from "./CompanyCard";
+import UserCard from "./UserCard";
+import SummaryCard from "../../../Base/SummaryCard";
 
 const useStyles = makeStyles((theme) => ({
     headerContainer: {
@@ -58,13 +61,14 @@ function Profile(props) {
     const classes = useStyles();
     const {
         company: { company },
+        user,
     } = props;
 
     return (
         <Content>
             <div className={classes.headerContainer}>
                 <div className={classes.header}>
-                    <Typography variant={"h5"}>username</Typography>
+                    <Typography variant={"h5"}>Hi, {user.firstName}</Typography>
                     <div className={classes.spacer} />
                     <div className={classes.actionGroup}>
                         <PeopleDialog
@@ -94,16 +98,24 @@ function Profile(props) {
 
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Eaque aliquid sequi eveniet temporibus. Corporis voluptatum
-                    veniam fugiat dolor similique dicta ad, sint beatae
-                    voluptatem. Eligendi id deserunt error maxime quae?
+                    {company !== null && company.length > 0 ? (
+                        <SummaryCard
+                            title="Company Info"
+                            component={<CompanyCard company={company[0]} />}
+                        />
+                    ) : (
+                        <SummaryCard title="You dont have any compay, please create one" />
+                    )}
                 </Grid>
                 <Grid item xs={6}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Eaque aliquid sequi eveniet temporibus. Corporis voluptatum
-                    veniam fugiat dolor similique dicta ad, sint beatae
-                    voluptatem. Eligendi id deserunt error maxime quae?
+                    {company !== null && company.length > 0 ? (
+                        <SummaryCard
+                            title="User Info"
+                            component={<UserCard user={user} />}
+                        />
+                    ) : (
+                        <SummaryCard title="You dont have any profile details, please create one" />
+                    )}
                 </Grid>
             </Grid>
         </Content>
@@ -111,6 +123,7 @@ function Profile(props) {
 }
 const mapStateToProps = (state) => ({
     company: state.company,
+    user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(Profile);
