@@ -31,7 +31,7 @@ export const loadCompany = () => (dispatch) => {
         });
 };
 
-export const registerCompany = (companyData) => (dispatch) => {
+export const registerCompany = (companyData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
 
     axios
@@ -43,6 +43,7 @@ export const registerCompany = (companyData) => (dispatch) => {
                 payload: `${companyData.name} created successfully`,
             });
             dispatch({ type: CLEAR_ERRORS });
+            history.push("/dashboard");
         })
         .catch((err) => {
             return dispatch({
