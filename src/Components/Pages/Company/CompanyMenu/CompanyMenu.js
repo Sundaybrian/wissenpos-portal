@@ -17,7 +17,7 @@ import { connect } from "react-redux";
 import PeopleDialog from "../../../Base/People/PeopleDialog";
 import FormikDialog from "../../../Base/FormikDialog";
 import MenuForm from "./MenuForm";
-import { createMenu } from "../../../../Redux/actions/menuActions";
+import { createMenu, loadMenu } from "../../../../Redux/actions/menuActions";
 import Loader from "../../../Base/Loader";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +51,7 @@ function CompanyMenu(props) {
         Menu: { menu: companyMenu },
         company: { company },
         createMenu,
+        loadMenu,
     } = props;
     const [menuItem, setMenuItem] = useState(null);
     const { url } = useRouteMatch();
@@ -72,6 +73,14 @@ function CompanyMenu(props) {
         actions.resetForm();
         setOpenPopup(false);
     };
+
+    useEffect(() => {
+        if (companyMenu == null) {
+            loadMenu(company[0].id);
+        } else {
+            return;
+        }
+    }, []);
 
     if (loading) {
         <Loader />;
@@ -145,6 +154,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     createMenu,
+    loadMenu,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(CompanyMenu);
