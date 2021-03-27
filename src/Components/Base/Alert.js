@@ -31,7 +31,7 @@ function Alert(props) {
             message: errors !== null ? errors.message : "",
             type: severity || "success",
         });
-    }, [errors]);
+    }, [errors, severity]);
 
     const snackClose = (event, reason) => {
         if (reason === "clickaway") {
