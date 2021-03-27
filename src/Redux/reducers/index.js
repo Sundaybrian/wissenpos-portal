@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import auth from "./authReducer";
 import company from "./companyReducer";
 import ui from "./uiReducer";
+import menu from "./menuReducer";
 import staffManagement from "./staffReducer";
 
 export default combineReducers({
@@ -9,4 +10,5 @@ export default combineReducers({
     ui,
     staffManagement,
     company,
+    menu,
 });
