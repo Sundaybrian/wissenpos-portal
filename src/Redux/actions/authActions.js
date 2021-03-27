@@ -42,7 +42,7 @@ export const registerUser = (userData, history) => (dispatch) => {
         .then((res) => {
             setAuthorizationHeader(res.data.token);
 
-            setUserData(res.data.user);
+            dispatch(setUserData(res.data.user));
             dispatch({
                 type: SET_SUCCESS,
                 payload: `account ${res.data.user.email} created successfully`,
