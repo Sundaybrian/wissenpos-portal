@@ -97,18 +97,12 @@ class Register extends Component {
     }
 
     handleSubmit = (values, actions) => {
-        const { firstName, lastName, email, phoneNumber, password } = values;
-
         const user = {
-            firstName,
-            lastName,
-            email,
-            phoneNumber,
-            password,
+            ...values,
         };
 
         this.props.registerUser(user, this.props.history);
-        actions.resetForm();
+        // actions.resetForm();
     };
 
     render() {
