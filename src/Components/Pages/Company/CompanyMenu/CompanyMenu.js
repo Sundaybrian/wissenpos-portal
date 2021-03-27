@@ -57,72 +57,6 @@ function CompanyMenu(props) {
     const [dualPanel, setDualPanel] = useState(false);
     const [openPopup, setOpenPopup] = useState(false);
     const [meal, setMeal] = useState(null);
-    const [menu, setMenu] = useState({
-        id: 1,
-        name: "Special Menu",
-        cover_url: "https://storage.bucket@firebase.com",
-        description: "menu so good, you have to bring you wife",
-        company: 1,
-        active: false,
-        categories: [
-            {
-                id: 1,
-                name: "Lunch",
-                menu_id: 1,
-                created_at: "2021-01-15T02:01:42.813Z",
-                updated_at: "2021-01-15T02:01:42.813Z",
-            },
-            {
-                id: 2,
-                name: "BreakFast",
-                menu_id: 1,
-                created_at: "2021-01-15T02:01:42.813Z",
-                updated_at: "2021-01-15T02:01:42.813Z",
-            },
-            {
-                id: 3,
-                name: "Lunch",
-                menu_id: 1,
-                created_at: "2021-01-15T02:01:42.813Z",
-                updated_at: "2021-01-15T02:01:42.813Z",
-            },
-            {
-                id: 4,
-                name: "BreakFast",
-                menu_id: 1,
-                created_at: "2021-01-15T02:01:42.813Z",
-                updated_at: "2021-01-15T02:01:42.813Z",
-            },
-            {
-                id: 5,
-                name: "Lunch",
-                menu_id: 1,
-                created_at: "2021-01-15T02:01:42.813Z",
-                updated_at: "2021-01-15T02:01:42.813Z",
-            },
-            {
-                id: 6,
-                name: "BreakFast",
-                menu_id: 1,
-                created_at: "2021-01-15T02:01:42.813Z",
-                updated_at: "2021-01-15T02:01:42.813Z",
-            },
-            {
-                id: 7,
-                name: "Lunch",
-                menu_id: 1,
-                created_at: "2021-01-15T02:01:42.813Z",
-                updated_at: "2021-01-15T02:01:42.813Z",
-            },
-            {
-                id: 8,
-                name: "BreakFast8",
-                menu_id: 1,
-                created_at: "2021-01-15T02:01:42.813Z",
-                updated_at: "2021-01-15T02:01:42.813Z",
-            },
-        ],
-    });
 
     const toggleDualPanel = () => {
         setDualPanel(!dualPanel);
@@ -180,13 +114,15 @@ function CompanyMenu(props) {
                         </FormikDialog>
                     )}
                     <div className={classes.dualPanel}>
-                        <MenuCategoriesList
-                            menuID={menu.id}
-                            categories={menu.categories}
-                            setDualPanel={setDualPanel}
-                            setMeal={setMeal}
-                            url={url}
-                        />
+                        {companyMenu && (
+                            <MenuCategoriesList
+                                menuID={companyMenu.id}
+                                categories={companyMenu.categories || []}
+                                setDualPanel={setDualPanel}
+                                setMeal={setMeal}
+                                url={url}
+                            />
+                        )}
                     </div>
                 </div>
             </MenuSidebar>
