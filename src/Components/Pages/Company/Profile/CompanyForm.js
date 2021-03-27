@@ -54,7 +54,7 @@ function CompanyForm(props) {
             ...values,
         };
 
-        registerCompany(companyData);
+        registerCompany(companyData, props.history);
         actions.resetForm();
     };
 
