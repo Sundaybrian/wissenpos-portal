@@ -6,10 +6,20 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         flexDirection: "column",
+        width: "420px",
         maxWidth: "320px",
-        height: "100vh",
-        overflowY: "auto",
+        height: "100%",
         backgroundColor: "#fb3",
+    },
+    children: {
+        overflowY: "scroll",
+        height: "100%",
+    },
+    header: {
+        height: "80px",
+        flex: "none",
+        padding: theme.spacing(2),
+        alignSelf: "center",
     },
 }));
 
@@ -18,8 +28,13 @@ function MenuSidebar(props) {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <Typography variant="h5">{title}</Typography>
-            <div>{children}</div>
+            <div className={classes.header}>
+                <Typography variant="h5" component="h4">
+                    {" "}
+                    {title}
+                </Typography>
+            </div>
+            <div className={classes.children}>{children}</div>
         </div>
     );
 }

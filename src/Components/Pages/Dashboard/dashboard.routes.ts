@@ -15,10 +15,12 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 //pages company
 import Staff from "../Company/Staff/Staff";
 import StaffProfile from "../Company/Staff/StaffProfile";
-import CompanyMenu from "../Company/CompanyMenu/CompanyMenu";
+import CompanyMenuContainer from "../Company/CompanyMenu/CompanyMenuContainer";
 import Orders from "../Company/Orders/Orders";
 import Profile from "../Company/Profile/Profile";
 import Metric from "../Company/Metric/Metric";
+import CompanyMenu from "../Company/CompanyMenu/CompanyMenu";
+import AddRecipe from "../Company/CompanyMenu/AddRecipe";
 
 const dashboardRoutes = [
     {
@@ -50,10 +52,24 @@ export const companyRoutes = [
     },
     {
         path: "menus",
-        component: CompanyMenu,
+        component: CompanyMenuContainer,
         text: "menus",
         icon: BusinessIcon,
-        layout:"/company"
+        layout:"/company",
+
+        routes:[
+            {
+                path:"",
+                text: "menus",
+                component: CompanyMenu
+            },
+            {
+                path: "add-recipe",
+                text:"add-recipe",
+                component: AddRecipe
+               
+            }
+        ]
     },
     {
         path: "orders",

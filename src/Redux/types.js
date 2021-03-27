@@ -8,6 +8,9 @@ export const LOADING_USER = "LOADING_USER";
 export const SET_ERRORS = "SET_ERRORS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const LOADING_UI = "LOADING_UI";
+export const SET_SUCCESS = "SET_SUCCESS";
+export const LOADING_DATA = "LOADING_DATA";
+export const STOP_LOADING_DATA = "STOP_LOADING_DATA";
 
 // SHARED TYPES
 export const SET_CURRENT = "SET_CURRENT";
@@ -20,5 +23,31 @@ export const SET_STAFF = "SET_STAFF";
 export const LOAD_STAFF = "LOAD_STAFF";
 export const STAFF_ERROR = "STAFF_ERROR";
 export const EDIT_STAFF = "EDIT_STAFF";
-export const LOADING_DATA = "LOADING_DATA";
 export const UPDATE_STAFF = "UPDATE_STAFF";
+
+// company types
+export const ADD_COMPANY = "ADD_COMPANY";
+export const DELETE_COMPANY = "DELETE_COMPANY";
+export const SET_CURRENT_COMPANY = "SET_CURRENT_COMPANY";
+export const LOAD_COMPANY = "LOAD_COMPANY";
+export const EDIT_COMPANY = "EDIT_COMPANY";
+
+//menu types
+export const ADD_MENU = "ADD_MENU";
+export const RENAME_MENU = "RENAME_MENU";
+export const DELETE_MENU = "DELETE_MENU";
+export const CUSITOMIZE_COVER = "CUSITOMIZE_COVER";
+export const SET_CURRENT_MENU = "SET_CURRENT_MENU";
+export const CLEAR_CURRENT_MENU = "CLEAR_CURRENT_MENU";
+
+export const ADD_CATEGORY = "ADD_CATEGORY";
+export const RENAME_CATEGORY = "RENAME_CATEGORY";
+export const DELETE_CATEGORY = "DELETE_CATEGORY";
+export const SET_CURRENT_CATEGORY = "SET_CURRENT_CATEGORY";
+export const CLEAR_CURRENT_CATEGORY = "CLEAR_CURRENT_CATEGORY";
+
+export const ADD_MEAL = "ADD_MEAL";
+export const EDIT_MEAL = "EDIT_MEAL";
+export const DELETE_MEAL = "DELETE_MEAL";
+export const SET_CURRENT_MEAL = "SET_CURRENT_MEAL";
+export const CLEAR_CURRENT_MEAL = "CLEAR_CURRENT_MEAL";

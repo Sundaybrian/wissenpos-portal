@@ -21,6 +21,7 @@ import { logoutUser } from "../Redux/actions/authActions";
 import { SET_AUTHENTICATED } from "../Redux/types";
 
 import axios from "axios";
+import Alert from "../Components/Base/Alert";
 
 const theme = createMuiTheme({
     typography: {
@@ -36,7 +37,6 @@ if (localStorage.token) {
     const decodeToken = jwtDecode(localStorage.token);
     if (decodeToken.exp * 1000 < Date.now()) {
         store.dispatch(logoutUser());
-        window.location.href = "/login";
     } else {
         store.dispatch({ type: SET_AUTHENTICATED });
         axios.defaults.headers.common["Authorization"] = localStorage.token;
@@ -46,6 +46,7 @@ if (localStorage.token) {
 function App() {
     return (
         <>
+            <Alert />
             <Switch>
                 {routes.map((route, index) => (
                     <Route

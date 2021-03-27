@@ -20,7 +20,11 @@ import Icon from "@material-ui/core/Icon";
 import Avatar from "@material-ui/core/Avatar";
 import Badge from "@material-ui/core/Badge";
 import MailIcon from "@material-ui/icons/Mail";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PalettePicker from "../../../Theme/PalettePicker";
+// redux
+import { connect } from "react-redux";
+import { logoutUser } from "../../../Redux/actions/authActions";
 export const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up("sm")]: {
             width: `calc(100% - ${drawerWidth}px)`,
             marginLeft: drawerWidth,
-            backgroundColor: `#${theme.palette.primary[300].substring(1)}77`,
+            // backgroundColor: `#${theme.palette.primary[300].substring(1)}77`,
         },
     },
     menuButton: {
@@ -84,6 +88,10 @@ function ResponsiveDrawer(props) {
     /* Modifying the source code from the template example to use the react router pathname hook to set
   selected prop and to use the react router component prop */
 
+    const handleLogout = () => {
+        props.logoutUser();
+    };
+
     const drawer = (
         <div>
             <div className={classes.toolbar} />
@@ -104,11 +112,28 @@ function ResponsiveDrawer(props) {
                                 </Icon>
                             </ListItemIcon>
                         </Tooltip>
-                        <ListItemText primary={text.toUpperCase()} />
+                        <ListItemText primary={`${text}`.toUpperCase()} />
                     </ListItem>
                 ))}
             </List>
             <Divider />
+            <List>
+                <ListItem
+                    component={RouterLink}
+                    button
+                    key="Logout"
+                    onClick={handleLogout}
+                >
+                    <Tooltip title="logout" placement="right-start">
+                        <ListItemIcon>
+                            <Icon>
+                                <ExitToAppIcon />
+                            </Icon>
+                        </ListItemIcon>
+                    </Tooltip>
+                    <ListItemText primary={"logout".toUpperCase()} />
+                </ListItem>
+            </List>
         </div>
     );
 
@@ -208,13 +233,19 @@ function ResponsiveDrawer(props) {
 }
 
 ResponsiveDrawer.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
     container: PropTypes.instanceOf(
         typeof Element === "undefined" ? Object : Element
     ),
 };
 
-export default ResponsiveDrawer;
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+});
+
+const mapActionsToProps = {
+    logoutUser,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(ResponsiveDrawer);

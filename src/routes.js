@@ -1,5 +1,6 @@
 import Login from "./Components/Pages/Auth/Login/Login";
-import Register from "./Components/Pages/Auth/Register/Register";
+import CompanyRegistration from "./Components/Pages/Auth/Register/SimpleRegister/CompanyRegistration";
+import Register from "./Components/Pages/Auth/Register/SimpleRegister/Register";
 
 const routes = [
     {
@@ -11,6 +12,11 @@ const routes = [
         path: "/login",
         exact: true,
         component: Login,
+    },
+    {
+        path: "/company-registration",
+        exact: true,
+        component: CompanyRegistration,
     },
 ];
 

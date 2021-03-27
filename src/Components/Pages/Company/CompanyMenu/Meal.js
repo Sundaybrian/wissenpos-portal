@@ -15,6 +15,8 @@ const useStyles = makeStyles((theme) => ({
 // will hold the menu name and menu items
 function Meal(props) {
     const { meal } = props;
+
+    console.log(meal, "8888888888888888888888888");
     const classes = useStyles();
     return <Paper className={classes.paper}>{meal.name}</Paper>;
 }

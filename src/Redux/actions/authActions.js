@@ -1,11 +1,13 @@
 import {
     SET_ERRORS,
     SET_UNAUTHENTICATED,
+    SET_SUCCESS,
     SET_USER,
     LOADING_UI,
     CLEAR_ERRORS,
 } from "../types";
 import axios from "axios";
+import { loadCompany } from "./companyActions";
 
 export const loginUser = (userData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
@@ -16,6 +18,11 @@ export const loginUser = (userData, history) => (dispatch) => {
             setAuthorizationHeader(res.data.token);
 
             dispatch(setUserData(res.data.user));
+            dispatch(loadCompany()); // fetch user's company
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `account ${res.data.user.email} welcome back`,
+            });
             dispatch({ type: CLEAR_ERRORS });
             history.push("/dashboard");
         })
@@ -35,9 +42,13 @@ export const registerUser = (userData, history) => (dispatch) => {
         .then((res) => {
             setAuthorizationHeader(res.data.token);
 
-            setUserData(res.data.user);
+            dispatch(setUserData(res.data.user));
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `account ${res.data.user.email} created successfully`,
+            });
             dispatch({ type: CLEAR_ERRORS });
-            history.push("/dashboard");
+            history.push("/company-registration");
         })
         .catch((err) => {
             return dispatch({

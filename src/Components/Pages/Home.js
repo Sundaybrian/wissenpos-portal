@@ -4,7 +4,7 @@ import { Switch, Route } from "react-router-dom";
 // components
 import Navbar from "../Layout/Navbar";
 import Login from "./Auth/Login/Login";
-import Register from "./Auth/Register/Register";
+import Register from "./Auth/Register/!RegisterFormik";
 import Landing from "./Landing/Landing";
 
 export class Home extends Component {

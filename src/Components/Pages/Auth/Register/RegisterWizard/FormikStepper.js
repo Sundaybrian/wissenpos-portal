@@ -3,25 +3,6 @@ import { Formik, Form } from "formik";
 import Button from "@material-ui/core/Button";
 import { Step, StepLabel, Stepper } from "@material-ui/core";
 
-{
-    /* <Button
-fullWidth
-variant="contained"
-color="primary"
-disabled={loading}
-className={classes.submit}
-type="submit"
->
-Register
-{loading && (
-    <CircularProgress
-        size={30}
-        className={classes.progress}
-    />
-)}
-</Button> */
-}
-
 export function FormikStep({ children, ...props }) {
     return <>{children}</>;
 }
