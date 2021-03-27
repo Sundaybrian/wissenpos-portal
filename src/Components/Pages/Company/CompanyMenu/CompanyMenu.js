@@ -5,8 +5,8 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
+import AddIcon from "@material-ui/icons/Add";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import Grid from "@material-ui/core/Grid";
 import MenuCategoriesList from "./MenuCategoriesList";
 import Meal from "./Meal";
@@ -138,10 +138,10 @@ function CompanyMenu(props) {
                         <Button
                             color="secondary"
                             className={classes.button}
-                            endIcon={<ArrowDropDownIcon />}
+                            endIcon={<AddIcon />}
                             fullWidth
                         >
-                            Add Menu
+                            Create New Menu
                         </Button>
                     )}
                     <div className={classes.dualPanel}>
