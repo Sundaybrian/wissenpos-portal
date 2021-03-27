@@ -1,4 +1,10 @@
-import { LOAD_MENU, ADD_MENU, RENAME_MENU, DELETE_MENU } from "../types";
+import {
+    LOAD_MENU,
+    ADD_MENU,
+    RENAME_MENU,
+    DELETE_MENU,
+    ADD_CATEGORY,
+} from "../types";
 
 const initialState = {
     menu: null,
@@ -19,6 +25,14 @@ const company = (state = initialState, action) => {
                 menu: {
                     ...state.menu,
                     ...action.payload,
+                },
+            };
+        case ADD_CATEGORY:
+            return {
+                ...state,
+                menu: {
+                    ...state.menu,
+                    categories: state.menu.categories.concat(action.payload),
                 },
             };
 
