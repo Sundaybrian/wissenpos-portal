@@ -14,6 +14,11 @@ import { useRouteMatch } from "react-router-dom";
 import { drawerWidth } from "../../../Layout/AppBarAndDrawer/AppBarAndDrawer";
 
 import { connect } from "react-redux";
+import PeopleDialog from "../../../Base/People/PeopleDialog";
+import FormikDialog from "../../../Base/FormikDialog";
+import MenuForm from "./MenuForm";
+import { createMenu } from "../../../../Redux/actions/menuActions";
+import Loader from "../../../Base/Loader";
 
 const useStyles = makeStyles((theme) => ({
     dualPanel: {
@@ -42,13 +47,15 @@ function CompanyMenu(props) {
     const classes = useStyles();
     const {
         auth,
-        ui,
+        ui: { loading },
         Menu: { menu: companyMenu },
         company: { company },
+        createMenu,
     } = props;
     const [menuItem, setMenuItem] = useState(null);
     const { url } = useRouteMatch();
     const [dualPanel, setDualPanel] = useState(false);
+    const [openPopup, setOpenPopup] = useState(false);
     const [meal, setMeal] = useState(null);
     const [menu, setMenu] = useState({
         id: 1,
@@ -121,6 +128,21 @@ function CompanyMenu(props) {
         setDualPanel(!dualPanel);
     };
 
+    // submitting menu creation
+    const handleMenuSubmit = (values, actions) => {
+        const menuData = {
+            ...values,
+        };
+
+        createMenu(company[0].id, menuData);
+        actions.resetForm();
+        setOpenPopup(false);
+    };
+
+    if (loading) {
+        <Loader />;
+    }
+
     return (
         <div className={classes.menuContainer}>
             <MenuSidebar title={company[0].name}>
@@ -135,14 +157,27 @@ function CompanyMenu(props) {
                             {companyMenu.name}
                         </Button>
                     ) : (
-                        <Button
-                            color="secondary"
-                            className={classes.button}
-                            endIcon={<AddIcon />}
-                            fullWidth
+                        <FormikDialog
+                            title="Create Menu"
+                            openPopup={openPopup}
+                            setOpenPopup={setOpenPopup}
+                            render={(open) => (
+                                <Button
+                                    color="primary"
+                                    className={classes.button}
+                                    endIcon={<AddIcon />}
+                                    fullWidth
+                                    onClick={open}
+                                >
+                                    Create New Menu
+                                </Button>
+                            )}
                         >
-                            Create New Menu
-                        </Button>
+                            <MenuForm
+                                handleMenuSubmit={handleMenuSubmit}
+                                loading={loading}
+                            />
+                        </FormikDialog>
                     )}
                     <div className={classes.dualPanel}>
                         <MenuCategoriesList
@@ -172,4 +207,8 @@ const mapStateToProps = (state) => ({
     Menu: state.menu,
 });
 
-export default connect(mapStateToProps)(CompanyMenu);
+const mapActionsToProps = {
+    createMenu,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(CompanyMenu);
