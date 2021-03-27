@@ -38,14 +38,14 @@ export default function PeopleDialog({
             >
                 <DialogTitle id="form-dialog-title">{title}</DialogTitle>
                 <DialogContent dividers>{children}</DialogContent>
-                <DialogActions>
+                {/* <DialogActions>
                     <Button onClick={handleClose} color="primary">
                         {data ? "Close" : "Cancel"}
                     </Button>
                     <Button onClick={handleSave} color="primary">
                         Save
                     </Button>
-                </DialogActions>
+                </DialogActions> */}
             </Dialog>
         </>
     );
