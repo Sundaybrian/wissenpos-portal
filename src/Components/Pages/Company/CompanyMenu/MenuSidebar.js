@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         flexDirection: "column",
-        width: "320px",
+        width: "420px",
         maxWidth: "320px",
         height: "100%",
         backgroundColor: "#fb3",
@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
     header: {
         height: "80px",
         flex: "none",
+        padding: theme.spacing(2),
+        alignSelf: "center",
     },
 }));
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Content, { Content2 } from "../../../Layout/Content/Content";
 import MenuSidebar from "./MenuSidebar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -12,6 +12,8 @@ import MenuCategoriesList from "./MenuCategoriesList";
 import Meal from "./Meal";
 import { useRouteMatch } from "react-router-dom";
 import { drawerWidth } from "../../../Layout/AppBarAndDrawer/AppBarAndDrawer";
+
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     dualPanel: {
@@ -38,6 +40,12 @@ const useStyles = makeStyles((theme) => ({
 
 function CompanyMenu(props) {
     const classes = useStyles();
+    const {
+        auth,
+        ui,
+        Menu: { menu: companyMenu },
+        company: { company },
+    } = props;
     const [menuItem, setMenuItem] = useState(null);
     const { url } = useRouteMatch();
     const [dualPanel, setDualPanel] = useState(false);
@@ -115,16 +123,27 @@ function CompanyMenu(props) {
 
     return (
         <div className={classes.menuContainer}>
-            <MenuSidebar title="Company x">
+            <MenuSidebar title={company[0].name}>
                 <div className={classes.dualPanelContent}>
-                    <Button
-                        color="secondary"
-                        className={classes.button}
-                        endIcon={<ArrowDropDownIcon />}
-                        fullWidth
-                    >
-                        {menu.name}
-                    </Button>
+                    {companyMenu !== null ? (
+                        <Button
+                            color="secondary"
+                            className={classes.button}
+                            endIcon={<ArrowDropDownIcon />}
+                            fullWidth
+                        >
+                            {companyMenu.name}
+                        </Button>
+                    ) : (
+                        <Button
+                            color="secondary"
+                            className={classes.button}
+                            endIcon={<ArrowDropDownIcon />}
+                            fullWidth
+                        >
+                            Add Menu
+                        </Button>
+                    )}
                     <div className={classes.dualPanel}>
                         <MenuCategoriesList
                             menuID={menu.id}
@@ -146,4 +165,11 @@ function CompanyMenu(props) {
     );
 }
 
-export default CompanyMenu;
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+    ui: state.ui,
+    company: state.company,
+    Menu: state.menu,
+});
+
+export default connect(mapStateToProps)(CompanyMenu);

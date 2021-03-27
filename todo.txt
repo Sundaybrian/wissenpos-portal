@@ -1,0 +1,27 @@
+// profile page
+
+[] edit company
+[] edit user
+
+// metrics
+
+// orders
+
+
+// menu
+[] add menu
+[] edit menu name
+[] delete menu name
+
+[] add cat
+[] edit
+[] delete
+[] add meal to cat
+[] edit meal
+[] delete meal
+
+// staff management
+
+// auth
+[] forgot password
+[] register stepper
