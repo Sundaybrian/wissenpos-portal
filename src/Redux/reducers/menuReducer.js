@@ -1,4 +1,4 @@
-import { LOAD_COMPANY, ADD_COMPANY, EDIT_COMPANY } from "../types";
+import { LOAD_MENU, ADD_MENU, RENAME_MENU, DELETE_MENU } from "../types";
 
 const initialState = {
     menu: null,
@@ -7,18 +7,19 @@ const initialState = {
 
 const company = (state = initialState, action) => {
     switch (action.type) {
-        case LOAD_COMPANY:
-        case ADD_COMPANY:
+        case LOAD_MENU:
+        case ADD_MENU:
             return {
                 ...state,
-                company: action.payload,
+                menu: action.payload,
             };
-        case EDIT_COMPANY:
+        case RENAME_MENU:
             return {
                 ...state,
-                compay: state.company.map((company) =>
-                    company.id == action.payload.id ? action.payload : company
-                ),
+                menu: {
+                    ...state.menu,
+                    ...action.payload,
+                },
             };
 
         default:
