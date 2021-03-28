@@ -157,11 +157,9 @@ function CompanyMenu(props) {
                 />
             )}
 
-            <Grid container className={classes.content}>
-                <Grid item xs={12} md={7} lg={8}>
-                    {dualPanel && <Meal meal={meal} />}
-                </Grid>
-            </Grid>
+            <div className={classes.content}>
+                <div>{addMeal && <Meal meal={addMeal} />}</div>
+            </div>
         </div>
     );
 }
