@@ -22,6 +22,7 @@ import {
     createMenu,
     loadMenu,
     addCategoryMenu,
+    addMealCategory,
 } from "../../../../Redux/actions/menuActions";
 import Loader from "../../../Base/Loader";
 
@@ -58,6 +59,7 @@ function CompanyMenu(props) {
         createMenu,
         loadMenu,
         addCategoryMenu,
+        addMealCategory,
     } = props;
     const [addMeal, setAddMeal] = useState(null);
     const { url } = useRouteMatch();
@@ -151,6 +153,7 @@ function CompanyMenu(props) {
                     setAddMeal={setAddMeal}
                     companyID={company[0].id}
                     menuID={companyMenu.id}
+                    addMealCategory={addMealCategory}
                 />
             )}
 
@@ -174,6 +177,7 @@ const mapActionsToProps = {
     createMenu,
     loadMenu,
     addCategoryMenu,
+    addMealCategory,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(CompanyMenu);
