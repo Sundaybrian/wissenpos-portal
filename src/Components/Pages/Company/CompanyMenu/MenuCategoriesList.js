@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { Link, Route } from "react-router-dom";
+import { Link, Route, useLocation } from "react-router-dom";
 import CategoryModal from "./CategoryModal";
 
 const useStyles = makeStyles((theme) => ({
@@ -54,9 +54,15 @@ function MealItem(props) {
 //002
 export function MenuCategory(props) {
     // holds a single category
-    const { category, component, to, url } = props;
+    const { category, to } = props;
+    const { pathname } = useLocation();
     return (
-        <ListItem button to={to} component={component} url={url}>
+        <ListItem
+            button
+            to={to}
+            component={Link}
+            selected={pathname === `${to}`}
+        >
             <ListItemText primary={category.name} />
         </ListItem>
     );
@@ -102,8 +108,6 @@ function MenuCategoriesList(props) {
                             category={category}
                             key={index}
                             to={`${url}/category/${category.id}`}
-                            component={Link}
-                            url={url}
                         />
                     ))}
                 </List>
@@ -121,7 +125,7 @@ function MenuCategoriesList(props) {
                 />
             </div>
 
-            {/* meal list */}
+            {/* ******************meal list *********************/}
             <div className={classes.mealList}>
                 <Route
                     path={`${url}/category/:catId`}
