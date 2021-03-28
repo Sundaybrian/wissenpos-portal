@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         width: "560px",
-        maxWidth: "560px",
+        maxWidth: "460px",
         height: "100%",
         backgroundColor: "#fb3",
     },
