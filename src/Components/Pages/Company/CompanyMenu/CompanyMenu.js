@@ -10,6 +10,7 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import Grid from "@material-ui/core/Grid";
 import MenuCategoriesList from "./MenuCategoriesList";
 import Meal from "./Meal";
+import AddMealSideBar from "./AddMealSideBar";
 import { useRouteMatch } from "react-router-dom";
 import { drawerWidth } from "../../../Layout/AppBarAndDrawer/AppBarAndDrawer";
 
@@ -58,7 +59,7 @@ function CompanyMenu(props) {
         loadMenu,
         addCategoryMenu,
     } = props;
-    const [menuItem, setMenuItem] = useState(null);
+    const [addMeal, setAddMeal] = useState(null);
     const { url } = useRouteMatch();
     const [dualPanel, setDualPanel] = useState(false);
     const [openPopup, setOpenPopup] = useState(false);
@@ -93,55 +94,65 @@ function CompanyMenu(props) {
 
     return (
         <div className={classes.menuContainer}>
-            <MenuSidebar title={company[0].name}>
-                <div className={classes.dualPanelContent}>
-                    {companyMenu !== null ? (
-                        <Button
-                            color="secondary"
-                            className={classes.button}
-                            endIcon={<ArrowDropDownIcon />}
-                            fullWidth
-                        >
-                            {companyMenu.name}
-                        </Button>
-                    ) : (
-                        <FormikDialog
-                            title="Create Menu"
-                            openPopup={openPopup}
-                            setOpenPopup={setOpenPopup}
-                            render={(open) => (
-                                <Button
-                                    color="primary"
-                                    className={classes.button}
-                                    endIcon={<AddIcon />}
-                                    fullWidth
-                                    onClick={open}
-                                >
-                                    Create New Menu
-                                </Button>
-                            )}
-                        >
-                            <MenuForm
-                                handleMenuSubmit={handleMenuSubmit}
-                                loading={loading}
-                            />
-                        </FormikDialog>
-                    )}
-                    <div className={classes.dualPanel}>
-                        {companyMenu && (
-                            <MenuCategoriesList
-                                companyID={company[0].id}
-                                addCategoryMenu={addCategoryMenu}
-                                menuID={companyMenu.id}
-                                categories={companyMenu.categories || []}
-                                setDualPanel={setDualPanel}
-                                setMeal={setMeal}
-                                url={url}
-                            />
+            {addMeal == null ? (
+                <MenuSidebar title={company[0].name}>
+                    <div className={classes.dualPanelContent}>
+                        {companyMenu !== null ? (
+                            <Button
+                                color="secondary"
+                                className={classes.button}
+                                endIcon={<ArrowDropDownIcon />}
+                                fullWidth
+                            >
+                                {companyMenu.name}
+                            </Button>
+                        ) : (
+                            <FormikDialog
+                                title="Create Menu"
+                                openPopup={openPopup}
+                                setOpenPopup={setOpenPopup}
+                                render={(open) => (
+                                    <Button
+                                        color="primary"
+                                        className={classes.button}
+                                        endIcon={<AddIcon />}
+                                        fullWidth
+                                        onClick={open}
+                                    >
+                                        Create New Menu
+                                    </Button>
+                                )}
+                            >
+                                <MenuForm
+                                    handleMenuSubmit={handleMenuSubmit}
+                                    loading={loading}
+                                />
+                            </FormikDialog>
                         )}
+                        <div className={classes.dualPanel}>
+                            {companyMenu && (
+                                <MenuCategoriesList
+                                    companyID={company[0].id}
+                                    addCategoryMenu={addCategoryMenu}
+                                    menuID={companyMenu.id}
+                                    categories={companyMenu.categories || []}
+                                    setDualPanel={setDualPanel}
+                                    setMeal={setMeal}
+                                    setAddMeal={setAddMeal}
+                                    url={url}
+                                />
+                            )}
+                        </div>
                     </div>
-                </div>
-            </MenuSidebar>
+                </MenuSidebar>
+            ) : (
+                <AddMealSideBar
+                    title={company[0].name}
+                    setAddMeal={setAddMeal}
+                    companyID={company[0].id}
+                    menuID={companyMenu.id}
+                />
+            )}
 
             <Grid container className={classes.content}>
                 <Grid item xs={12} md={7} lg={8}>
