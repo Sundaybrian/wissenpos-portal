@@ -54,7 +54,7 @@ export default function MealForm(props) {
                         <Field
                             name="name"
                             type="text"
-                            label="category name"
+                            label="meal name"
                             component={TextField}
                             fullWidth
                         />
