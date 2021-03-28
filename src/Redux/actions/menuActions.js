@@ -132,7 +132,7 @@ export const addMeal = (companyID, menuID, categoryID, mealData) => (
     axios
         .post(
             `/company/${companyID}/menu/${menuID}/category/${categoryID}`,
-            categoryData
+            mealData
         )
         .then((res) => {
             dispatch({ type: ADD_MEAL, payload: res.data });

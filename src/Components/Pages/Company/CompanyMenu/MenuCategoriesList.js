@@ -37,17 +37,24 @@ function MealItem(props) {
     // holds a single category
     const { item, setMeal, setDualPanel } = props;
 
+    // load meals
+
     return (
-        <ListItem
-            button
-            onClick={() => {
-                console.log("clicked");
-                setDualPanel(true);
-                setMeal(item);
-            }}
-        >
-            <ListItemText primary={item.name} />
-        </ListItem>
+        <>
+            <ListItem
+                button
+                onClick={() => {
+                    console.log("clicked");
+                    setDualPanel(true);
+                    setMeal(item);
+                }}
+            >
+                <ListItemText primary={item.name} />
+            </ListItem>
+            <ListItem button>
+                <ListItemText primary="Add Meal+" />
+            </ListItem>
+        </>
     );
 }
 
@@ -145,10 +152,6 @@ function MenuCategoriesList(props) {
                         );
                     }}
                 />
-
-                <ListItem button>
-                    <ListItemText primary="Add Meal" />
-                </ListItem>
             </div>
         </div>
     );
