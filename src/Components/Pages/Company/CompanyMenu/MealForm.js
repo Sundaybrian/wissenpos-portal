@@ -1,10 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Controls from "../../../Controls";
-import CloseIcon from "@material-ui/icons/Close";
+
 // form stuff
 import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
@@ -34,7 +30,17 @@ const validationSchema = Yup.object({
 
 export default function MealForm(props) {
     const classes = useStyles();
+
     const { handleMealSubmit, setAddMeal } = props;
+
+    const onKeyUpText = (e) => {
+        // customing handler for getting onChange value for previes
+        setAddMeal((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }));
+    };
+
     return (
         <Formik
             initialValues={{
@@ -48,63 +54,85 @@ export default function MealForm(props) {
             validationSchema={validationSchema}
             onSubmit={handleMealSubmit}
         >
-            <Form className={classes.form}>
-                <Grid container spacing={5}>
-                    <Grid item xs={12}>
-                        <Field
-                            name="name"
-                            type="text"
-                            label="meal name"
-                            component={TextField}
-                            fullWidth
-                        />
-                        <Field
-                            name="price"
-                            type="number"
-                            label="Price"
-                            component={TextField}
-                            fullWidth
-                        />
-                        <Field
-                            name="description"
-                            type="text"
-                            label="Description"
-                            component={TextField}
-                            fullWidth
-                        />
-                        <Field
-                            name="quantity"
-                            type="number"
-                            label="Quantity"
-                            component={TextField}
-                            fullWidth
-                        />
-                        <Field
-                            name="image_url"
-                            type="text"
-                            label="Upload Image"
-                            component={TextField}
-                            fullWidth
-                        />
+            {({ handleChange }) => (
+                <Form className={classes.form}>
+                    <Grid container spacing={5}>
+                        <Grid item xs={12}>
+                            <Field
+                                name="name"
+                                type="text"
+                                label="meal name"
+                                component={TextField}
+                                fullWidth
+                                onChange={(e) => {
+                                    handleChange(e);
+                                    onKeyUpText(e);
+                                }}
+                            />
+                            <Field
+                                name="price"
+                                type="number"
+                                label="Price"
+                                component={TextField}
+                                onChange={(e) => {
+                                    handleChange(e);
+                                    onKeyUpText(e);
+                                }}
+                                fullWidth
+                            />
+                            <Field
+                                name="description"
+                                type="text"
+                                label="Description"
+                                component={TextField}
+                                onChange={(e) => {
+                                    handleChange(e);
+                                    onKeyUpText(e);
+                                }}
+                                fullWidth
+                            />
+                            <Field
+                                name="quantity"
+                                type="number"
+                                label="Quantity"
+                                component={TextField}
+                                onChange={(e) => {
+                                    handleChange(e);
+                                    onKeyUpText(e);
+                                }}
+                                fullWidth
+                            />
+                            <Field
+                                name="image_url"
+                                type="text"
+                                label="Upload Image"
+                                component={TextField}
+                                onChange={(e) => {
+                                    handleChange(e);
+                                    onKeyUpText(e);
+                                }}
+                                fullWidth
+                            />
+                        </Grid>
+                        <Grid item xs={8}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                type="submit"
+                            >
+                                Ok
+                            </Button>
+                            <Button
+                                variant="secondary"
+                                color="primary"
+                                onClick={() => setAddMeal(null)}
+                            >
+                                Cancel
+                            </Button>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={8}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                        >
-                            Ok
-                        </Button>
-                        <Button
-                            variant="secondary"
-                            color="primary"
-                            onClick={() => setAddMeal(null)}
-                        >
-                            Cancel
-                        </Button>
-                    </Grid>
-                </Grid>
-            </Form>
+                </Form>
+            )}
         </Formik>
     );
 }
