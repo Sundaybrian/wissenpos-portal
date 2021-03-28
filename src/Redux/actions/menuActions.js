@@ -124,14 +124,14 @@ export const addCategoryMenu = (companyID, menuID, categoryData) => (
 };
 
 // meal
-export const addMeal = (companyID, menuID, categoryID, mealData) => (
+export const addMealCategory = (companyID, menuID, categoryID, mealData) => (
     dispatch
 ) => {
     dispatch({ type: LOADING_UI });
 
     axios
         .post(
-            `/company/${companyID}/menu/${menuID}/category/${categoryID}`,
+            `/company/${companyID}/menu/${menuID}/category/${categoryID}/item`,
             mealData
         )
         .then((res) => {
