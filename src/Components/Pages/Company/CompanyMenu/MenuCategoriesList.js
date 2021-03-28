@@ -3,7 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { Link, Route } from "react-router-dom";
+import { Link, Route, useLocation } from "react-router-dom";
+import CategoryModal from "./CategoryModal";
+
+import MealsList from "./MealList";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,76 +33,65 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function MealItem(props) {
-    // holds the meal item
+//002
+export function MenuCategory(props) {
     // holds a single category
-    const { item, setMeal, setDualPanel } = props;
-
+    const { category, to } = props;
+    const { pathname } = useLocation();
     return (
         <ListItem
             button
-            onClick={() => {
-                console.log("clicked");
-                setDualPanel(true);
-                setMeal(item);
-            }}
+            to={to}
+            component={Link}
+            selected={pathname === `${to}`}
         >
-            <ListItemText primary={item.name} />
-        </ListItem>
-    );
-}
-
-export function MenuCategory(props) {
-    // holds a single category
-    const { category, component, to, url } = props;
-    return (
-        <ListItem button to={to} component={component} url={url}>
             <ListItemText primary={category.name} />
         </ListItem>
     );
 }
 
+// 001
 function MenuCategoriesList(props) {
     const classes = useStyles();
-    const { categories, setDualPanel, menuID, setMeal, url } = props;
-
-    const meals = [
-        {
-            id: 1,
-            name: "Boiled meat",
-            price: 200,
-            description: "Best meat to salivate over",
-            category_id: 1,
-        },
-        {
-            id: 2,
-            name: "Boiled meat 2",
-            price: 200,
-            description: "Best meat to salivate over",
-            category_id: 1,
-        },
-    ];
+    const {
+        categories,
+        setDualPanel,
+        menuID,
+        companyID,
+        setMeal,
+        setAddMeal, // used to trigger add recipe sidebar
+        url,
+        addCategoryMenu,
+    } = props;
 
     return (
         <div className={classes.root}>
             <div className={classes.categoriesList}>
-                {/* category list */}
+                {/************** category list **************/}
                 <List component="nav" aria-label="secondary mailbox folders">
                     {categories.map((category, index) => (
                         <MenuCategory
                             category={category}
                             key={index}
                             to={`${url}/category/${category.id}`}
-                            component={Link}
-                            url={url}
                         />
                     ))}
                 </List>
-                <ListItem button>
-                    <ListItemText primary="Add Category" />
-                </ListItem>
+
+                <CategoryModal
+                    title="Add Category"
+                    addCategoryMenu={addCategoryMenu}
+                    companyID={companyID}
+                    menuID={menuID}
+                    render={(open) => (
+                        <ListItem button onClick={open}>
+                            <ListItemText primary="Add Category" />
+                        </ListItem>
+                    )}
+                />
             </div>
-            {/* meal list */}
+
+            {/* ******************meal list *********************/}
             <div className={classes.mealList}>
                 <Route
                     path={`${url}/category/:catId`}
@@ -111,22 +103,15 @@ function MenuCategoriesList(props) {
                         console.log(item);
 
                         return (
-                            <MealItem
-                                item={item}
+                            <MealsList
+                                category={item}
                                 setMeal={setMeal}
+                                setAddMeal={setAddMeal}
                                 setDualPanel={setDualPanel}
                             />
                         );
                     }}
                 />
-                {/* <List component="nav" aria-label="secondary mailbox folders">
-                    {menuState.meals.map((meal, i) => (
-                        <MealItem meal={meal} key={i} onClick={setMeal} />
-                    ))}
-                </List> */}
-                <ListItem button>
-                    <ListItemText primary="Add Meal" />
-                </ListItem>
             </div>
         </div>
     );

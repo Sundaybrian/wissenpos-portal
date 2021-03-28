@@ -34,6 +34,7 @@ export const EDIT_COMPANY = "EDIT_COMPANY";
 
 //menu types
 export const ADD_MENU = "ADD_MENU";
+export const LOAD_MENU = "LOAD_MENU";
 export const RENAME_MENU = "RENAME_MENU";
 export const DELETE_MENU = "DELETE_MENU";
 export const CUSITOMIZE_COVER = "CUSITOMIZE_COVER";

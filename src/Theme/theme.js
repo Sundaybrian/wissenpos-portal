@@ -9,7 +9,7 @@ const defaultTheme = {
         //type: "dark",
     },
     typography: {
-        fontFamily: "'Roboto', cursive;",
+        fontFamily: "'Roboto','san-serif', cursive;",
     },
     status: {
         danger: "orange",

@@ -1,24 +1,66 @@
-import { LOAD_COMPANY, ADD_COMPANY, EDIT_COMPANY } from "../types";
+import {
+    LOAD_MENU,
+    ADD_MENU,
+    RENAME_MENU,
+    DELETE_MENU,
+    ADD_CATEGORY,
+    SET_CURRENT_CATEGORY,
+    ADD_MEAL,
+    CLEAR_CURRENT_MEAL,
+} from "../types";
 
 const initialState = {
     menu: null,
     currentMenu: null,
+    currentCategory: {
+        items: [],
+    },
 };
 
 const company = (state = initialState, action) => {
     switch (action.type) {
-        case LOAD_COMPANY:
-        case ADD_COMPANY:
+        case LOAD_MENU:
+        case ADD_MENU:
             return {
                 ...state,
-                company: action.payload,
+                menu: action.payload,
             };
-        case EDIT_COMPANY:
+        case RENAME_MENU:
             return {
                 ...state,
-                compay: state.company.map((company) =>
-                    company.id == action.payload.id ? action.payload : company
-                ),
+                menu: {
+                    ...state.menu,
+                    ...action.payload,
+                },
+            };
+        case ADD_CATEGORY:
+            return {
+                ...state,
+                menu: {
+                    ...state.menu,
+                    categories: state.menu.categories.concat(action.payload),
+                },
+            };
+
+        case ADD_MEAL:
+            return {
+                ...state,
+                currentCategory: {
+                    ...state.currentCategory,
+                    items: state.currentCategory.items.concat(action.payload),
+                },
+            };
+        case CLEAR_CURRENT_MEAL:
+            return {
+                ...state,
+                currentCategory: {
+                    items: [],
+                },
+            };
+        case SET_CURRENT_CATEGORY:
+            return {
+                ...state,
+                currentCategory: action.payload,
             };
 
         default:

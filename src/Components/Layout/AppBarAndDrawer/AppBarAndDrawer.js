@@ -171,7 +171,7 @@ function ResponsiveDrawer(props) {
                         component={RouterLink}
                         className={classes.logo}
                     >
-                        Material World
+                        Wissenpos
                     </Typography>
                     <div style={{ flexGrow: 1 }}></div>
                     {/* <PalettePicker
