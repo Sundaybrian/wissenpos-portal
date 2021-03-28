@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2),
     },
 }));
+
 function MenuForm(props) {
     const { handleMenuSubmit, loading } = props;
     const classes = useStyles();

@@ -3,7 +3,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { Link, Route, useLocation } from "react-router-dom";
+import {
+    Link,
+    Route,
+    useLocation,
+    useHistory,
+    useRouteMatch,
+} from "react-router-dom";
 import CategoryModal from "./CategoryModal";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,8 +41,10 @@ const useStyles = makeStyles((theme) => ({
 function MealItem(props) {
     // holds the meal item
     // holds a single category
-    const { item, setMeal, setDualPanel } = props;
+    const { item, setMeal, setAddMeal, setDualPanel } = props;
 
+    const history = useHistory();
+    const { pathname } = useRouteMatch();
     // load meals
 
     return (
@@ -51,7 +59,7 @@ function MealItem(props) {
             >
                 <ListItemText primary={item.name} />
             </ListItem>
-            <ListItem button>
+            <ListItem button onClick={() => setAddMeal(item)}>
                 <ListItemText primary="Add Meal+" />
             </ListItem>
         </>
@@ -84,6 +92,7 @@ function MenuCategoriesList(props) {
         menuID,
         companyID,
         setMeal,
+        setAddMeal, // used to trigger add recipe sidebar
         url,
         addCategoryMenu,
     } = props;
@@ -147,6 +156,7 @@ function MenuCategoriesList(props) {
                             <MealItem
                                 item={item}
                                 setMeal={setMeal}
+                                setAddMeal={setAddMeal}
                                 setDualPanel={setDualPanel}
                             />
                         );
