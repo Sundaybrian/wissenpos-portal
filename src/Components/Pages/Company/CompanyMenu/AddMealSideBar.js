@@ -26,7 +26,10 @@ function AddMealSideBar(props) {
     return (
         <MenuSidebar title={title}>
             <div className={classes.mealForm}>
-                <MealForm handleMealSubmit={handleMealSubmit} />
+                <MealForm
+                    handleMealSubmit={handleMealSubmit}
+                    setAddMeal={setAddMeal}
+                />
             </div>
         </MenuSidebar>
     );
