@@ -4,7 +4,6 @@ import { Formik, Field, Form } from "formik";
 import { TextField } from "formik-material-ui";
 // import { CircularProgress, Button, Grid } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import { connect } from "react-redux";
 import { Button, CircularProgress, Grid } from "@material-ui/core";
 
 const validationSchema = Yup.object({
