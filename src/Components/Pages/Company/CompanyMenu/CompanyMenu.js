@@ -154,7 +154,10 @@ function CompanyMenu(props) {
             )}
 
             <div className={classes.content}>
+                {/* for add meal preview */}
                 <div>{addMeal && <Meal meal={addMeal} />}</div>
+                {/* for clicked meal preview */}
+                <div>{meal && <Meal meal={meal} />}</div>
             </div>
         </div>
     );
