@@ -3,14 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import {
-    Link,
-    Route,
-    useLocation,
-    useHistory,
-    useRouteMatch,
-} from "react-router-dom";
+import { Link, Route, useLocation } from "react-router-dom";
 import CategoryModal from "./CategoryModal";
+
+import MealsList from "./MealList";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,35 +32,6 @@ const useStyles = makeStyles((theme) => ({
         flex: "auto",
     },
 }));
-
-// 003
-function MealItem(props) {
-    // holds the meal item
-    // holds a single category
-    const { item, setMeal, setAddMeal, setDualPanel } = props;
-
-    const history = useHistory();
-    const { pathname } = useRouteMatch();
-    // load meals
-
-    return (
-        <>
-            <ListItem
-                button
-                onClick={() => {
-                    console.log("clicked");
-                    setDualPanel(true);
-                    setMeal(item);
-                }}
-            >
-                <ListItemText primary={item.name} />
-            </ListItem>
-            <ListItem button onClick={() => setAddMeal(item)}>
-                <ListItemText primary="Add Meal+" />
-            </ListItem>
-        </>
-    );
-}
 
 //002
 export function MenuCategory(props) {
@@ -97,27 +64,10 @@ function MenuCategoriesList(props) {
         addCategoryMenu,
     } = props;
 
-    const meals = [
-        {
-            id: 1,
-            name: "Boiled meat",
-            price: 200,
-            description: "Best meat to salivate over",
-            category_id: 1,
-        },
-        {
-            id: 2,
-            name: "Boiled meat 2",
-            price: 200,
-            description: "Best meat to salivate over",
-            category_id: 1,
-        },
-    ];
-
     return (
         <div className={classes.root}>
             <div className={classes.categoriesList}>
-                {/* category list */}
+                {/************** category list **************/}
                 <List component="nav" aria-label="secondary mailbox folders">
                     {categories.map((category, index) => (
                         <MenuCategory
@@ -153,8 +103,8 @@ function MenuCategoriesList(props) {
                         console.log(item);
 
                         return (
-                            <MealItem
-                                item={item}
+                            <MealsList
+                                category={item}
                                 setMeal={setMeal}
                                 setAddMeal={setAddMeal}
                                 setDualPanel={setDualPanel}
