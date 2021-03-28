@@ -11,6 +11,15 @@ import { Formik, Field, Form } from "formik";
 import { TextField } from "formik-material-ui";
 import { Grid, Typography, makeStyles } from "@material-ui/core";
 
+const useStyles = makeStyles((theme) => ({
+    form: {
+        padding: theme.spacing(3),
+        "& .MuiFormControl-root": {
+            marginBottom: theme.spacing(3.5),
+        },
+    },
+}));
+
 const validationSchema = Yup.object({
     name: Yup.string().required("category name is required"),
     price: Yup.number("please enter a number eg 200").required(
@@ -24,7 +33,8 @@ const validationSchema = Yup.object({
 });
 
 export default function MealForm(props) {
-    const { handleMealSubmit } = props;
+    const classes = useStyles();
+    const { handleMealSubmit, setAddMeal } = props;
     return (
         <Formik
             initialValues={{
@@ -38,13 +48,41 @@ export default function MealForm(props) {
             validationSchema={validationSchema}
             onSubmit={handleMealSubmit}
         >
-            <Form>
-                <Grid container spacing={4}>
+            <Form className={classes.form}>
+                <Grid container spacing={5}>
                     <Grid item xs={12}>
                         <Field
                             name="name"
                             type="text"
                             label="category name"
+                            component={TextField}
+                            fullWidth
+                        />
+                        <Field
+                            name="price"
+                            type="number"
+                            label="Price"
+                            component={TextField}
+                            fullWidth
+                        />
+                        <Field
+                            name="description"
+                            type="text"
+                            label="Description"
+                            component={TextField}
+                            fullWidth
+                        />
+                        <Field
+                            name="quantity"
+                            type="number"
+                            label="Quantity"
+                            component={TextField}
+                            fullWidth
+                        />
+                        <Field
+                            name="image_url"
+                            type="text"
+                            label="Upload Image"
                             component={TextField}
                             fullWidth
                         />
@@ -56,6 +94,13 @@ export default function MealForm(props) {
                             type="submit"
                         >
                             Ok
+                        </Button>
+                        <Button
+                            variant="secondary"
+                            color="primary"
+                            onClick={() => setAddMeal(null)}
+                        >
+                            Cancel
                         </Button>
                     </Grid>
                 </Grid>
