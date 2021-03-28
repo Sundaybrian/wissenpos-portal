@@ -17,7 +17,11 @@ import { connect } from "react-redux";
 import PeopleDialog from "../../../Base/People/PeopleDialog";
 import FormikDialog from "../../../Base/FormikDialog";
 import MenuForm from "./MenuForm";
-import { createMenu, loadMenu } from "../../../../Redux/actions/menuActions";
+import {
+    createMenu,
+    loadMenu,
+    addCategoryMenu,
+} from "../../../../Redux/actions/menuActions";
 import Loader from "../../../Base/Loader";
 
 const useStyles = makeStyles((theme) => ({
@@ -52,6 +56,7 @@ function CompanyMenu(props) {
         company: { company },
         createMenu,
         loadMenu,
+        addCategoryMenu,
     } = props;
     const [menuItem, setMenuItem] = useState(null);
     const { url } = useRouteMatch();
@@ -125,6 +130,8 @@ function CompanyMenu(props) {
                     <div className={classes.dualPanel}>
                         {companyMenu && (
                             <MenuCategoriesList
+                                companyID={company[0].id}
+                                addCategoryMenu={addCategoryMenu}
                                 menuID={companyMenu.id}
                                 categories={companyMenu.categories || []}
                                 setDualPanel={setDualPanel}
@@ -155,6 +162,7 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
     createMenu,
     loadMenu,
+    addCategoryMenu,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(CompanyMenu);
