@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Content, { Content2 } from "../../../Layout/Content/Content";
 import MenuSidebar from "./MenuSidebar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import Icon from "@material-ui/core/Icon";
 import AddIcon from "@material-ui/icons/Add";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import Grid from "@material-ui/core/Grid";
@@ -15,7 +12,6 @@ import { useRouteMatch } from "react-router-dom";
 import { drawerWidth } from "../../../Layout/AppBarAndDrawer/AppBarAndDrawer";
 
 import { connect } from "react-redux";
-import PeopleDialog from "../../../Base/People/PeopleDialog";
 import FormikDialog from "../../../Base/FormikDialog";
 import MenuForm from "./MenuForm";
 import {
