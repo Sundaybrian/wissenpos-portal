@@ -4,6 +4,7 @@ import {
     RENAME_MENU,
     DELETE_MENU,
     ADD_CATEGORY,
+    SET_CURRENT_CATEGORY,
     ADD_MEAL,
     CLEAR_CURRENT_MEAL,
 } from "../types";
@@ -12,7 +13,7 @@ const initialState = {
     menu: null,
     currentMenu: null,
     currentCategory: {
-        meals: [],
+        items: [],
     },
 };
 
@@ -46,15 +47,20 @@ const company = (state = initialState, action) => {
                 ...state,
                 currentCategory: {
                     ...state.currentCategory,
-                    meals: state.currentCategory.meals.concat(action.payload),
+                    items: state.currentCategory.items.concat(action.payload),
                 },
             };
         case CLEAR_CURRENT_MEAL:
             return {
                 ...state,
                 currentCategory: {
-                    meals: [],
+                    items: [],
                 },
+            };
+        case SET_CURRENT_CATEGORY:
+            return {
+                ...state,
+                currentCategory: action.payload,
             };
 
         default:

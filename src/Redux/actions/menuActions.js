@@ -8,6 +8,7 @@ import {
     DELETE_MENU,
     SET_SUCCESS,
     ADD_CATEGORY,
+    SET_CURRENT_CATEGORY,
     ADD_MEAL,
 } from "../types";
 import axios from "axios";
@@ -56,6 +57,7 @@ export const loadMenuByID = (companyID, menuID) => (dispatch) => {
         });
 };
 
+// create a menu
 export const createMenu = (companyID, menuData) => (dispatch) => {
     dispatch({ type: LOADING_UI });
 
@@ -100,6 +102,7 @@ export const updateMenu = (id, companyID, menuData) => (dispatch) => {
         });
 };
 
+// add category to a menu
 export const addCategoryMenu = (companyID, menuID, categoryData) => (
     dispatch
 ) => {
@@ -123,7 +126,7 @@ export const addCategoryMenu = (companyID, menuID, categoryData) => (
         });
 };
 
-// meal
+// create meal for a given category
 export const addMealCategory = (companyID, menuID, categoryID, mealData) => (
     dispatch
 ) => {
@@ -144,6 +147,31 @@ export const addMealCategory = (companyID, menuID, categoryID, mealData) => (
         })
         .catch((err) => {
             return dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data,
+            });
+        });
+};
+
+// load meals for a selected category
+export const fetchMealsByCategory = (companyID, menuID, categoryID) => (
+    dispatch
+) => {
+    dispatch({ type: LOADING_UI });
+
+    axios
+        .get(`/company/${companyID}/menu/${menuID}/category/${categoryID}`)
+        .then((res) => {
+            dispatch({ type: SET_CURRENT_CATEGORY, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `${res.data.name} meals fetched successfully`,
+            });
+
+            dispatch({ type: CLEAR_ERRORS });
+        })
+        .catch((err) => {
+            dispatch({
                 type: SET_ERRORS,
                 payload: err.response.data,
             });
