@@ -8,6 +8,7 @@ import {
     DELETE_MENU,
     SET_SUCCESS,
     ADD_CATEGORY,
+    ADD_MEAL,
 } from "../types";
 import axios from "axios";
 
@@ -121,15 +122,30 @@ export const addCategoryMenu = (companyID, menuID, categoryData) => (
             });
         });
 };
-// set current
-// clear current
-// delete company soon enough
 
-// get menu by id
-// get all menus
-// get meals by category id
+// meal
+export const addMeal = (companyID, menuID, categoryID, mealData) => (
+    dispatch
+) => {
+    dispatch({ type: LOADING_UI });
 
-// delete menu
-
-// delete category
-// delete meal
+    axios
+        .post(
+            `/company/${companyID}/menu/${menuID}/category/${categoryID}`,
+            categoryData
+        )
+        .then((res) => {
+            dispatch({ type: ADD_MEAL, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `${res.data.name} created successfully`,
+            });
+            dispatch({ type: CLEAR_ERRORS });
+        })
+        .catch((err) => {
+            return dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data,
+            });
+        });
+};
