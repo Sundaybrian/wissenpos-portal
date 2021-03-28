@@ -6,8 +6,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         flexDirection: "column",
-        width: "420px",
-        maxWidth: "320px",
+        width: "560px",
+        maxWidth: "560px",
         height: "100%",
         backgroundColor: "#fb3",
     },
