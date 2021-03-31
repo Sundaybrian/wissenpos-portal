@@ -1,7 +1,7 @@
 import React from "react";
 import MenuSidebar from "./MenuSidebar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import MealForm from "./MealForm";
+import MealForm from "./EditMeal/MealForm";
 import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
