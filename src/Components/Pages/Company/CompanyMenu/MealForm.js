@@ -28,10 +28,24 @@ const validationSchema = Yup.object({
     image_url: Yup.string().required("please upload a picture"),
 });
 
+const initialValues = {
+    name: "",
+    price: 0,
+    description: "",
+    quantity: 0,
+    image_url:
+        "https://i2.wp.com/kaneskitchenaffair.com/wp-content/uploads/2019/05/img_7122.jpg?resize=1200%2C751",
+};
+
 export default function MealForm(props) {
     const classes = useStyles();
 
-    const { handleMealSubmit, setAddMeal } = props;
+    const {
+        handleMealSubmit,
+        handleMealEdit,
+        setAddMeal,
+        addOREditMeal,
+    } = props;
 
     const onKeyUpText = (e) => {
         // customing handler for getting onChange value for previes
@@ -43,16 +57,21 @@ export default function MealForm(props) {
 
     return (
         <Formik
-            initialValues={{
-                name: "",
-                price: 0,
-                description: "",
-                quantity: 0,
-                image_url:
-                    "https://i2.wp.com/kaneskitchenaffair.com/wp-content/uploads/2019/05/img_7122.jpg?resize=1200%2C751",
-            }}
+            initialValues={
+                addOREditMeal !== null
+                    ? {
+                          name: addOREditMeal.name,
+                          price: addOREditMeal.price,
+                          description: addOREditMeal.description,
+                          quantity: addOREditMeal.quantity,
+                          image_url: addOREditMeal.image_url,
+                      }
+                    : initialValues
+            }
             validationSchema={validationSchema}
-            onSubmit={handleMealSubmit}
+            onSubmit={
+                addOREditMeal !== null ? handleMealEdit : handleMealSubmit
+            }
         >
             {({ handleChange }) => (
                 <Form className={classes.form}>
