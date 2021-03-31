@@ -48,11 +48,8 @@ function CompanyMenu(props) {
         company: { company },
     } = props;
 
-    const [addMeal, setAddMeal] = useState(null); // controls the add meal sidebar & preview
-    const [editMeal, setEditMeal] = useState(null); // controls the meal on edit
     const { url } = useRouteMatch();
     const [dualPanel, setDualPanel] = useState(false);
-    const [meal, setMeal] = useState(null); // controls current meal on preview
 
     const toggleDualPanel = () => {
         setDualPanel(!dualPanel);
