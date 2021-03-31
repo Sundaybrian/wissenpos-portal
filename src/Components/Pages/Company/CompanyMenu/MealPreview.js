@@ -7,8 +7,11 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { Avatar, CardHeader, IconButton } from "@material-ui/core";
+import { CardHeader, IconButton } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
+import { setCurrentMeal } from "../../../../Redux/actions/menuActions";
+import { connect } from "react-redux";
+
 const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
@@ -25,24 +28,32 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Meal(props) {
+function MealPreview(props) {
     const classes = useStyles();
-    const { meal, setAddMeal, setMeal } = props;
+    const {
+        meal,
+        setToogleMenuView,
+        setMeal,
+        toggleMenuView,
+        setCurrentMeal,
+    } = props;
 
     return (
         <div className={classes.root}>
             <Typography variant="h5" component="h6" gutterBottom>
-                {meal.name} Preview
+                {meal.name} {toggleMenuView == true ? "Edit/Create" : "Preview"}
             </Typography>
 
             <Card className={classes.card}>
                 <CardHeader
                     action={
                         <IconButton
+                            disabled={toggleMenuView == true ? true : false}
                             aria-label="settings"
                             onClick={() => {
-                                setMeal(null);
-                                setAddMeal(meal);
+                                // setMeal(null);
+                                setToogleMenuView(true);
+                                setCurrentMeal(meal);
                             }}
                         >
                             <EditIcon />
@@ -81,3 +92,5 @@ export default function Meal(props) {
         </div>
     );
 }
+
+export default connect(null, { setCurrentMeal })(MealPreview);
