@@ -6,7 +6,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import Grid from "@material-ui/core/Grid";
 import MenuCategoriesList from "./MenuCategoriesList";
-import Meal from "./Meal";
+import MealPreview from "./MealPreview";
 import AddMealSideBar from "./AddMealSideBar";
 import { useRouteMatch } from "react-router-dom";
 import { drawerWidth } from "../../../Layout/AppBarAndDrawer/AppBarAndDrawer";
@@ -18,6 +18,7 @@ import {
     createMenu,
     loadMenu,
     addCategoryMenu,
+    editMealCategory,
     addMealCategory,
 } from "../../../../Redux/actions/menuActions";
 import Loader from "../../../Base/Loader";
@@ -56,12 +57,14 @@ function CompanyMenu(props) {
         loadMenu,
         addCategoryMenu,
         addMealCategory,
+        editMealCategory,
     } = props;
-    const [addMeal, setAddMeal] = useState(null);
+    const [addMeal, setAddMeal] = useState(null); // controls the add meal sidebar & preview
+    const [editMeal, setEditMeal] = useState(null); // controls the meal on edit
     const { url } = useRouteMatch();
     const [dualPanel, setDualPanel] = useState(false);
     const [openPopup, setOpenPopup] = useState(false);
-    const [meal, setMeal] = useState(null);
+    const [meal, setMeal] = useState(null); // controls current meal on preview
 
     const toggleDualPanel = () => {
         setDualPanel(!dualPanel);
@@ -146,18 +149,36 @@ function CompanyMenu(props) {
             ) : (
                 <AddMealSideBar
                     title={company[0].name}
+                    addOREditMeal={addMeal}
                     setAddMeal={setAddMeal}
                     companyID={company[0].id}
                     menuID={companyMenu.id}
                     addMealCategory={addMealCategory}
+                    editMealCategory={editMealCategory}
                 />
             )}
 
             <div className={classes.content}>
-                {/* for add meal preview */}
-                <div>{addMeal && <Meal meal={addMeal} />}</div>
+                {/* for add meal & meal edit preview */}
+                <div>
+                    {addMeal && (
+                        <MealPreview
+                            meal={addMeal}
+                            setAddMeal={setAddMeal}
+                            setMeal={setMeal}
+                        />
+                    )}
+                </div>
                 {/* for clicked meal preview */}
-                <div>{meal && <Meal meal={meal} />}</div>
+                <div>
+                    {meal && (
+                        <MealPreview
+                            meal={meal}
+                            setAddMeal={setAddMeal}
+                            setMeal={setMeal}
+                        />
+                    )}
+                </div>
             </div>
         </div>
     );
@@ -175,6 +196,7 @@ const mapActionsToProps = {
     loadMenu,
     addCategoryMenu,
     addMealCategory,
+    editMealCategory,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(CompanyMenu);
