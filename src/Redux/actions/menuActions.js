@@ -11,6 +11,8 @@ import {
     SET_CURRENT_CATEGORY,
     ADD_MEAL,
     EDIT_MEAL,
+    SET_CURRENT_MEAL,
+    CLEAR_CURRENT_MEAL,
 } from "../types";
 import axios from "axios";
 
@@ -175,6 +177,7 @@ export const editMealCategory = (
                 type: SET_SUCCESS,
                 payload: `${res.data.name} updated successfully`,
             });
+            dispatch(clearCurrentMeal()); // remove current meal from state
             dispatch({ type: CLEAR_ERRORS });
         })
         .catch((err) => {
@@ -208,4 +211,19 @@ export const fetchMealsByCategory = (companyID, menuID, categoryID) => (
                 payload: err.response.data,
             });
         });
+};
+
+// set current meal
+export const setCurrentMeal = (meal) => (dispatch) => {
+    dispatch({
+        type: SET_CURRENT_MEAL,
+        payload: meal,
+    });
+};
+
+// set current meal
+export const clearCurrentMeal = () => (dispatch) => {
+    dispatch({
+        type: CLEAR_CURRENT_MEAL,
+    });
 };
