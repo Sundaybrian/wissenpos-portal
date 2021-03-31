@@ -37,11 +37,6 @@ export default function Meal(props) {
 
             <Card className={classes.card}>
                 <CardHeader
-                    avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar}>
-                            R
-                        </Avatar>
-                    }
                     action={
                         <IconButton
                             aria-label="settings"
@@ -53,8 +48,7 @@ export default function Meal(props) {
                             <EditIcon />
                         </IconButton>
                     }
-                    title="Shrimp and Chorizo Paella"
-                    subheader="September 14, 2016"
+                    subheader={new Date().toISOString()}
                 />
                 <CardActionArea>
                     <CardMedia
