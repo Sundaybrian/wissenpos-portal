@@ -10,6 +10,7 @@ import {
     ADD_CATEGORY,
     SET_CURRENT_CATEGORY,
     ADD_MEAL,
+    EDIT_MEAL,
 } from "../types";
 import axios from "axios";
 
@@ -142,6 +143,37 @@ export const addMealCategory = (companyID, menuID, categoryID, mealData) => (
             dispatch({
                 type: SET_SUCCESS,
                 payload: `${res.data.name} created successfully`,
+            });
+            dispatch({ type: CLEAR_ERRORS });
+        })
+        .catch((err) => {
+            return dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data,
+            });
+        });
+};
+
+//edit meal
+export const editMealCategory = (
+    companyID,
+    menuID,
+    categoryID,
+    mealID,
+    mealData
+) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+
+    axios
+        .patch(
+            `/company/${companyID}/menu/${menuID}/category/${categoryID}/item/${mealID}`,
+            mealData
+        )
+        .then((res) => {
+            dispatch({ type: EDIT_MEAL, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `${res.data.name} updated successfully`,
             });
             dispatch({ type: CLEAR_ERRORS });
         })

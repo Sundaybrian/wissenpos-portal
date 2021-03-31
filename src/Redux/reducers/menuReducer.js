@@ -6,6 +6,7 @@ import {
     ADD_CATEGORY,
     SET_CURRENT_CATEGORY,
     ADD_MEAL,
+    EDIT_MEAL,
     CLEAR_CURRENT_MEAL,
 } from "../types";
 
@@ -48,6 +49,18 @@ const company = (state = initialState, action) => {
                 currentCategory: {
                     ...state.currentCategory,
                     items: state.currentCategory.items.concat(action.payload),
+                },
+            };
+        case EDIT_MEAL:
+            return {
+                ...state,
+                currentCategory: {
+                    ...state.currentCategory,
+                    items: state.currentCategory.items.filter((item, index) =>
+                        action.payload.id == item.id
+                            ? { ...item, ...action.payload }
+                            : item
+                    ),
                 },
             };
         case CLEAR_CURRENT_MEAL:
