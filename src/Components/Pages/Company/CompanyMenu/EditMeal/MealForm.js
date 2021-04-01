@@ -28,10 +28,25 @@ const validationSchema = Yup.object({
     image_url: Yup.string().required("please upload a picture"),
 });
 
+const initialValues = {
+    name: "",
+    price: 0,
+    description: "",
+    quantity: 0,
+    image_url:
+        "https://i2.wp.com/kaneskitchenaffair.com/wp-content/uploads/2019/05/img_7122.jpg?resize=1200%2C751",
+};
+
 export default function MealForm(props) {
     const classes = useStyles();
 
-    const { handleMealSubmit, setAddMeal } = props;
+    const {
+        handleMealSubmit,
+        handleMealEdit,
+        setAddMeal,
+        currentMeal,
+        setToogleMenuView,
+    } = props;
 
     const onKeyUpText = (e) => {
         // customing handler for getting onChange value for previes
@@ -39,20 +54,24 @@ export default function MealForm(props) {
             ...prevState,
             [e.target.name]: e.target.value,
         }));
+        setToogleMenuView(true);
     };
 
     return (
         <Formik
-            initialValues={{
-                name: "",
-                price: 0,
-                description: "",
-                quantity: 0,
-                image_url:
-                    "https://i2.wp.com/kaneskitchenaffair.com/wp-content/uploads/2019/05/img_7122.jpg?resize=1200%2C751",
-            }}
+            initialValues={
+                currentMeal
+                    ? {
+                          name: currentMeal.name,
+                          price: currentMeal.price,
+                          description: currentMeal.description,
+                          quantity: currentMeal.quantity,
+                          image_url: currentMeal.image_url,
+                      }
+                    : initialValues
+            }
             validationSchema={validationSchema}
-            onSubmit={handleMealSubmit}
+            onSubmit={currentMeal ? handleMealEdit : handleMealSubmit}
         >
             {({ handleChange }) => (
                 <Form className={classes.form}>
@@ -125,7 +144,10 @@ export default function MealForm(props) {
                             <Button
                                 variant="secondary"
                                 color="primary"
-                                onClick={() => setAddMeal(null)}
+                                onClick={() => {
+                                    setAddMeal(null);
+                                    setToogleMenuView(false);
+                                }}
                             >
                                 Cancel
                             </Button>

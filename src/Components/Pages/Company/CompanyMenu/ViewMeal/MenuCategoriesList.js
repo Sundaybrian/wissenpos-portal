@@ -50,16 +50,15 @@ export function MenuCategory(props) {
     );
 }
 
-// 001
+// 001 container for the menu categories and their meals
 function MenuCategoriesList(props) {
     const classes = useStyles();
     const {
         categories,
-        setDualPanel,
         menuID,
         companyID,
         setMeal,
-        setAddMeal, // used to trigger add recipe sidebar
+        setToogleMenuView, // used to trigger add/edit meal sidebar
         url,
         addCategoryMenu,
     } = props;
@@ -100,14 +99,11 @@ function MenuCategoriesList(props) {
                             (r) => r.id == match.params.catId
                         );
 
-                        console.log(item);
-
                         return (
                             <MealsList
                                 category={item}
                                 setMeal={setMeal}
-                                setAddMeal={setAddMeal}
-                                setDualPanel={setDualPanel}
+                                setToogleMenuView={setToogleMenuView}
                             />
                         );
                     }}

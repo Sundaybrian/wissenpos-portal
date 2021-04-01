@@ -1,26 +1,17 @@
 import React, { useState, useEffect } from "react";
-import MenuSidebar from "./MenuSidebar";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import Grid from "@material-ui/core/Grid";
-import MenuCategoriesList from "./MenuCategoriesList";
-import Meal from "./Meal";
-import AddMealSideBar from "./AddMealSideBar";
 import { useRouteMatch } from "react-router-dom";
 import { drawerWidth } from "../../../Layout/AppBarAndDrawer/AppBarAndDrawer";
-
 import { connect } from "react-redux";
-import FormikDialog from "../../../Base/FormikDialog";
-import MenuForm from "./MenuForm";
+
 import {
-    createMenu,
     loadMenu,
-    addCategoryMenu,
+    editMealCategory,
     addMealCategory,
 } from "../../../../Redux/actions/menuActions";
 import Loader from "../../../Base/Loader";
+import ViewMenuContainer from "./ViewMeal/ViewMenuContainer";
+import EditMenuContainer from "./EditMeal/EditMealContainer";
 
 const useStyles = makeStyles((theme) => ({
     dualPanel: {
@@ -47,35 +38,21 @@ const useStyles = makeStyles((theme) => ({
 
 function CompanyMenu(props) {
     const classes = useStyles();
+    const [toggleMenuView, setToogleMenuView] = useState(false);
+
     const {
         auth,
         ui: { loading },
+        loadMenu,
         Menu: { menu: companyMenu },
         company: { company },
-        createMenu,
-        loadMenu,
-        addCategoryMenu,
-        addMealCategory,
     } = props;
-    const [addMeal, setAddMeal] = useState(null);
+
     const { url } = useRouteMatch();
     const [dualPanel, setDualPanel] = useState(false);
-    const [openPopup, setOpenPopup] = useState(false);
-    const [meal, setMeal] = useState(null);
 
     const toggleDualPanel = () => {
         setDualPanel(!dualPanel);
-    };
-
-    // submitting menu creation
-    const handleMenuSubmit = (values, actions) => {
-        const menuData = {
-            ...values,
-        };
-
-        createMenu(company[0].id, menuData);
-        actions.resetForm();
-        setOpenPopup(false);
     };
 
     useEffect(() => {
@@ -92,70 +69,22 @@ function CompanyMenu(props) {
 
     return (
         <div className={classes.menuContainer}>
-            {addMeal == null ? (
-                <MenuSidebar title={company[0].name}>
-                    <div className={classes.dualPanelContent}>
-                        {companyMenu !== null ? (
-                            <Button
-                                color="secondary"
-                                className={classes.button}
-                                endIcon={<ArrowDropDownIcon />}
-                                fullWidth
-                            >
-                                {companyMenu.name}
-                            </Button>
-                        ) : (
-                            <FormikDialog
-                                title="Create Menu"
-                                openPopup={openPopup}
-                                setOpenPopup={setOpenPopup}
-                                render={(open) => (
-                                    <Button
-                                        color="primary"
-                                        className={classes.button}
-                                        endIcon={<AddIcon />}
-                                        fullWidth
-                                        onClick={open}
-                                    >
-                                        Create New Menu
-                                    </Button>
-                                )}
-                            >
-                                <MenuForm
-                                    handleMenuSubmit={handleMenuSubmit}
-                                    loading={loading}
-                                />
-                            </FormikDialog>
-                        )}
-                        <div className={classes.dualPanel}>
-                            {companyMenu && (
-                                <MenuCategoriesList
-                                    companyID={company[0].id}
-                                    addCategoryMenu={addCategoryMenu}
-                                    menuID={companyMenu.id}
-                                    categories={companyMenu.categories || []}
-                                    setDualPanel={setDualPanel}
-                                    setMeal={setMeal}
-                                    setAddMeal={setAddMeal}
-                                    url={url}
-                                />
-                            )}
-                        </div>
-                    </div>
-                </MenuSidebar>
-            ) : (
-                <AddMealSideBar
+            {toggleMenuView == true ? (
+                <EditMenuContainer
                     title={company[0].name}
-                    setAddMeal={setAddMeal}
                     companyID={company[0].id}
                     menuID={companyMenu.id}
-                    addMealCategory={addMealCategory}
+                    setToogleMenuView={setToogleMenuView}
+                />
+            ) : (
+                <ViewMenuContainer
+                    company={company}
+                    companyMenu={companyMenu}
+                    url={url}
+                    toggleMenuView={toggleMenuView}
+                    setToogleMenuView={setToogleMenuView}
                 />
             )}
-
-            <div className={classes.content}>
-                <div>{addMeal && <Meal meal={addMeal} />}</div>
-            </div>
         </div>
     );
 }
@@ -168,10 +97,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-    createMenu,
     loadMenu,
-    addCategoryMenu,
     addMealCategory,
+    editMealCategory,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(CompanyMenu);

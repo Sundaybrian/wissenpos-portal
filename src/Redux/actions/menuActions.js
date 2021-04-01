@@ -10,6 +10,9 @@ import {
     ADD_CATEGORY,
     SET_CURRENT_CATEGORY,
     ADD_MEAL,
+    EDIT_MEAL,
+    SET_CURRENT_MEAL,
+    CLEAR_CURRENT_MEAL,
 } from "../types";
 import axios from "axios";
 
@@ -153,6 +156,38 @@ export const addMealCategory = (companyID, menuID, categoryID, mealData) => (
         });
 };
 
+//edit meal
+export const editMealCategory = (
+    companyID,
+    menuID,
+    categoryID,
+    mealID,
+    mealData
+) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+
+    axios
+        .patch(
+            `/company/${companyID}/menu/${menuID}/category/${categoryID}/item/${mealID}`,
+            mealData
+        )
+        .then((res) => {
+            dispatch({ type: EDIT_MEAL, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `${res.data.name} updated successfully`,
+            });
+            dispatch(clearCurrentMeal()); // remove current meal from state
+            dispatch({ type: CLEAR_ERRORS });
+        })
+        .catch((err) => {
+            return dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data,
+            });
+        });
+};
+
 // load meals for a selected category
 export const fetchMealsByCategory = (companyID, menuID, categoryID) => (
     dispatch
@@ -176,4 +211,19 @@ export const fetchMealsByCategory = (companyID, menuID, categoryID) => (
                 payload: err.response.data,
             });
         });
+};
+
+// set current meal
+export const setCurrentMeal = (meal) => (dispatch) => {
+    dispatch({
+        type: SET_CURRENT_MEAL,
+        payload: meal,
+    });
+};
+
+// set current meal
+export const clearCurrentMeal = () => (dispatch) => {
+    dispatch({
+        type: CLEAR_CURRENT_MEAL,
+    });
 };

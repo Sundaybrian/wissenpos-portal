@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { fetchMealsByCategory } from "../../../../Redux/actions/menuActions";
+import { fetchMealsByCategory } from "../../../../../Redux/actions/menuActions";
 
 // 003
 function MealsList(props) {
@@ -11,32 +11,16 @@ function MealsList(props) {
     const {
         category,
         setMeal,
-        setAddMeal,
-        setDualPanel,
+        setToogleMenuView,
         fetchMealsByCategory,
         company,
         menu: { menu, currentCategory },
     } = props;
-    // const [meals, setMeals] = useState([
-    //     {
-    //         id: 1,
-    //         name: "Boiled meat",
-    //         price: 200,
-    //         description: "Best meat to salivate over",
-    //         category_id: 1,
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "Boiled meat 2",
-    //         price: 200,
-    //         description: "Best meat to salivate over",
-    //         category_id: 1,
-    //     },
-    // ]);
 
     useEffect(() => {
         // fetch meals based on category
         fetchMealsByCategory(company[0].id, menu.id, category.id);
+        setMeal(null);
     }, [category.id]);
 
     return (
@@ -46,8 +30,6 @@ function MealsList(props) {
                     <ListItem
                         button
                         onClick={() => {
-                            console.log("clicked");
-                            setDualPanel(true);
                             setMeal(m);
                         }}
                         key={index}
@@ -55,7 +37,12 @@ function MealsList(props) {
                         <ListItemText primary={m.name} />
                     </ListItem>
                 ))}
-            <ListItem button onClick={() => setAddMeal(category)}>
+            <ListItem
+                button
+                onClick={() => {
+                    setToogleMenuView(true); // launches edit/add container
+                }}
+            >
                 <ListItemText primary="Add Meal+" />
             </ListItem>
         </>

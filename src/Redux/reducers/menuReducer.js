@@ -6,12 +6,16 @@ import {
     ADD_CATEGORY,
     SET_CURRENT_CATEGORY,
     ADD_MEAL,
+    EDIT_MEAL,
     CLEAR_CURRENT_MEAL,
+    SET_CURRENT_MEAL,
+    CLEAR_CURRENT_CATEGORY,
 } from "../types";
 
 const initialState = {
     menu: null,
     currentMenu: null,
+    currentMeal: null,
     currentCategory: {
         items: [],
     },
@@ -50,7 +54,29 @@ const company = (state = initialState, action) => {
                     items: state.currentCategory.items.concat(action.payload),
                 },
             };
+        case EDIT_MEAL:
+            return {
+                ...state,
+                currentCategory: {
+                    ...state.currentCategory,
+                    items: state.currentCategory.items.filter((item, index) => {
+                        return action.payload.id == item.id
+                            ? { ...item, ...action.payload }
+                            : item;
+                    }),
+                },
+            };
+        case SET_CURRENT_MEAL:
+            return {
+                ...state,
+                currentMeal: action.payload,
+            };
         case CLEAR_CURRENT_MEAL:
+            return {
+                ...state,
+                currentMeal: null,
+            };
+        case CLEAR_CURRENT_CATEGORY:
             return {
                 ...state,
                 currentCategory: {
