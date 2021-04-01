@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
 import { TextField } from "formik-material-ui";
 import { Grid, Typography, makeStyles } from "@material-ui/core";
+import ProgressBar from "../../../../Base/ProgressBar";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -59,11 +60,12 @@ export default function MealForm(props) {
     };
 
     const [file, setFile] = React.useState(null);
-    const types = ["image.png", "image/jpeg", "image/jpg"];
+    const types = ["image/png", "image/jpeg", "image/jpg"];
     const changeHandler = (e) => {
         let selected = e.target.files[0];
         if (selected && types.includes(selected.type)) {
             setFile(selected);
+            console.log(selected);
             // clearError
         } else {
             setFile(null);
@@ -90,6 +92,11 @@ export default function MealForm(props) {
             {({ handleChange }) => (
                 <Form className={classes.form}>
                     <Grid container spacing={5}>
+                        {file && (
+                            <Grid item xs={12}>
+                                <ProgressBar file={file} setFile={setFile} />
+                            </Grid>
+                        )}
                         <Grid item xs={12}>
                             <Field
                                 name="name"
