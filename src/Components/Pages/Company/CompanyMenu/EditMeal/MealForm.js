@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
+import ImageIcon from "@material-ui/icons/Image";
 
 // form stuff
 import * as Yup from "yup";
@@ -55,6 +56,19 @@ export default function MealForm(props) {
             [e.target.name]: e.target.value,
         }));
         setToogleMenuView(true);
+    };
+
+    const [file, setFile] = React.useState(null);
+    const types = ["image.png", "image/jpeg", "image/jpg"];
+    const changeHandler = (e) => {
+        let selected = e.target.files[0];
+        if (selected && types.includes(selected.type)) {
+            setFile(selected);
+            // clearError
+        } else {
+            setFile(null);
+            // setALertError e,g select an image file (png or jpeg)
+        }
     };
 
     return (
@@ -129,6 +143,18 @@ export default function MealForm(props) {
                                 onChange={(e) => {
                                     handleChange(e);
                                     onKeyUpText(e);
+                                }}
+                                fullWidth
+                            />
+                            {/* new image file */}
+                            <Field
+                                name="image_url2"
+                                type="file"
+                                label="Add Image"
+                                component={TextField}
+                                onChange={(e) => {
+                                    // handleChange(e);
+                                    changeHandler(e);
                                 }}
                                 fullWidth
                             />
