@@ -28,7 +28,7 @@ const validationSchema = Yup.object({
         .max(200, "should not exceed 200 characters")
         .required("description is required"),
     quantity: Yup.number().required("please fill current available stock"),
-    image_url: Yup.string().required("please upload a picture"),
+    // image_url: Yup.string().required("please upload a picture"),
 });
 
 const initialValues = {

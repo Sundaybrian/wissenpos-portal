@@ -73,15 +73,18 @@ function EditMealContainer(props) {
     const handleMealSubmit = (values, action) => {
         const mealData = {
             ...values,
+            image_url: imageUrl ? imageUrl : "", // get from state
             category_id: parseInt(categoryID),
         };
 
         addMealCategory(companyID, menuID, parseInt(categoryID), mealData);
         setToogleMenuView(false);
+        setImageUrl(null); //clear state
         // handleClose();
     };
 
     const handleMealEdit = (values, action) => {
+        console.log("clicked");
         const mealData = {
             ...values,
             category_id: currentMeal.category_id,
@@ -113,7 +116,6 @@ function EditMealContainer(props) {
                         imageChangeHandler={imageChangeHandler}
                         setImageUrl={setImageUrl}
                     />
-                    <Button>hello</Button>
                 </div>
             </MenuSidebar>
 
