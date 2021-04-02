@@ -9,6 +9,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import MealPreview from "../MealPreview";
 import MealForm from "./MealForm";
 import { useLocation } from "react-router-dom";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     dualPanel: {
@@ -43,6 +44,7 @@ function EditMealContainer(props) {
     const { pathname } = useLocation();
     const [categoryID] = pathname.split("/").slice(-1);
 
+    // check if we are in edit mode
     useEffect(() => {
         if (currentMeal !== null) {
             setAddMeal(currentMeal);
@@ -50,6 +52,23 @@ function EditMealContainer(props) {
             setAddMeal(null);
         }
     }, []);
+
+    // image upload related
+    const [file, setFile] = React.useState(null);
+    const [imageUrl, setImageUrl] = React.useState(null); //once we have an image, we will duplicate it here
+    const types = ["image/png", "image/jpeg", "image/jpg"];
+    const imageChangeHandler = (e) => {
+        let selected = e.target.files[0];
+        if (selected && types.includes(selected.type)) {
+            setFile(selected);
+            console.log(selected);
+
+            // clearError
+        } else {
+            setFile(null);
+            // setALertError e,g select an image file (png or jpeg)
+        }
+    };
 
     const handleMealSubmit = (values, action) => {
         const mealData = {
@@ -89,7 +108,12 @@ function EditMealContainer(props) {
                         setAddMeal={setAddMeal}
                         currentMeal={currentMeal}
                         setToogleMenuView={setToogleMenuView}
+                        file={file}
+                        setFile={setFile}
+                        imageChangeHandler={imageChangeHandler}
+                        setImageUrl={setImageUrl}
                     />
+                    <Button>hello</Button>
                 </div>
             </MenuSidebar>
 
