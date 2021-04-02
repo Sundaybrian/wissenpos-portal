@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import useStorage from "../../../../../Hooks/useStorage";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import { makeStyles } from "@material-ui/core/styles";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
-const useStyles = makeStyles((theme) => ({
-    progressBar: {
-        height: "5px",
-        backgroundColor: theme.palette.primary,
-        marginTop: "20px",
+const useStyles = makeStyles({
+    root: {
+        width: "100%",
     },
-}));
+});
 
-function ProgressBar(props) {
+export default function LinearDeterminate(props) {
     const classes = useStyles();
+
     const { file, setFile, setAddMeal, setImageUrl } = props;
     const { url, progress } = useStorage(file);
 
@@ -27,11 +27,8 @@ function ProgressBar(props) {
     }, [url, setFile]);
 
     return (
-        <div
-            className={classes.progressBar}
-            style={{ width: progress + "%" }}
-        ></div>
+        <div className={classes.root}>
+            <LinearProgress variant="determinate" value={progress} />
+        </div>
     );
 }
-
-export default ProgressBar;
