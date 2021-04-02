@@ -23,25 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UploadButton(props) {
     const classes = useStyles();
-    const {
-        imageChangeHandler,
-        file,
-        setFile,
-        setImageUrl,
-        setAddMeal,
-    } = props;
-    const { url, progress } = useStorage(file);
-
-    React.useEffect(() => {
-        if (url) {
-            setFile(null);
-            setImageUrl(url);
-            setAddMeal((prevState) => ({
-                ...prevState,
-                image_url: url,
-            }));
-        }
-    }, [url, setFile]);
+    const { imageChangeHandler } = props;
 
     return (
         <div className={classes.root}>
