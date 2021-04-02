@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
-import ImageIcon from "@material-ui/icons/Image";
-
+import { clearCurrentMeal } from "../../../../../Redux/actions/menuActions";
+import { connect } from "react-redux";
 // form stuff
 import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
@@ -36,14 +36,14 @@ const initialValues = {
     price: 0,
     description: "",
     quantity: 0,
-    image_url:
-        "https://i2.wp.com/kaneskitchenaffair.com/wp-content/uploads/2019/05/img_7122.jpg?resize=1200%2C751",
 };
 
-export default function MealForm(props) {
+function MealForm(props) {
     const classes = useStyles();
 
     const {
+        //from redux
+        clearCurrentMeal,
         handleMealSubmit,
         handleMealEdit,
         setAddMeal,
@@ -74,7 +74,6 @@ export default function MealForm(props) {
                           price: currentMeal.price,
                           description: currentMeal.description,
                           quantity: currentMeal.quantity,
-                          image_url: currentMeal.image_url,
                       }
                     : initialValues
             }
@@ -129,28 +128,6 @@ export default function MealForm(props) {
                                 }}
                                 fullWidth
                             />
-                            <Field
-                                name="image_url"
-                                type="text"
-                                label="Upload Image"
-                                component={TextField}
-                                onChange={(e) => {
-                                    handleChange(e);
-                                    onKeyUpText(e);
-                                }}
-                                fullWidth
-                            />
-                            {/* new image file */}
-                            {/* <Field
-                                name="image_url2"
-                                type="file"
-                                label="Add Image"
-                                onChange={(e) => {
-                                    // handleChange(e);
-                                    imageChangeHandler(e);
-                                }}
-                                fullWidth
-                            /> */}
 
                             {file == null && (
                                 <UploadButton
@@ -181,6 +158,7 @@ export default function MealForm(props) {
                                 variant="secondary"
                                 color="primary"
                                 onClick={() => {
+                                    clearCurrentMeal();
                                     setAddMeal(null);
                                     setToogleMenuView(false);
                                 }}
@@ -194,3 +172,9 @@ export default function MealForm(props) {
         </Formik>
     );
 }
+
+const mapActionsToProps = {
+    clearCurrentMeal,
+};
+
+export default connect(null, mapActionsToProps)(MealForm);
