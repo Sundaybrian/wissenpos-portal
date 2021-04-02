@@ -84,11 +84,6 @@ export default function MealForm(props) {
             {({ handleChange }) => (
                 <Form className={classes.form}>
                     <Grid container spacing={5}>
-                        {file && (
-                            <Grid item xs={12}>
-                                <ProgressBar file={file} setFile={setFile} />
-                            </Grid>
-                        )}
                         <Grid item xs={12}>
                             <Field
                                 name="name"
@@ -157,12 +152,22 @@ export default function MealForm(props) {
                                 fullWidth
                             /> */}
 
-                            <UploadButton
-                                imageChangeHandler={imageChangeHandler}
-                                file={file}
-                                setFile={setFile}
-                                setImageUrl={setImageUrl}
-                            />
+                            {file == null && (
+                                <UploadButton
+                                    imageChangeHandler={imageChangeHandler}
+                                />
+                            )}
+
+                            {file && (
+                                <Grid item xs={12}>
+                                    <ProgressBar
+                                        file={file}
+                                        setFile={setFile}
+                                        setImageUrl={setImageUrl}
+                                        setAddMeal={setAddMeal}
+                                    />
+                                </Grid>
+                            )}
                         </Grid>
                         <Grid item xs={8}>
                             <Button
