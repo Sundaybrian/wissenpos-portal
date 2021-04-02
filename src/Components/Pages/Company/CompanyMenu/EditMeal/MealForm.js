@@ -7,7 +7,8 @@ import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
 import { TextField } from "formik-material-ui";
 import { Grid, Typography, makeStyles } from "@material-ui/core";
-import ProgressBar from "../../../../Base/ProgressBar";
+import ProgressBar from "./ProgressBar";
+import UploadButton from "./uploadButton";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -48,6 +49,11 @@ export default function MealForm(props) {
         setAddMeal,
         currentMeal,
         setToogleMenuView,
+        // image upload
+        file,
+        setFile,
+        imageChangeHandler,
+        setImageUrl,
     } = props;
 
     const onKeyUpText = (e) => {
@@ -57,20 +63,6 @@ export default function MealForm(props) {
             [e.target.name]: e.target.value,
         }));
         setToogleMenuView(true);
-    };
-
-    const [file, setFile] = React.useState(null);
-    const types = ["image/png", "image/jpeg", "image/jpg"];
-    const changeHandler = (e) => {
-        let selected = e.target.files[0];
-        if (selected && types.includes(selected.type)) {
-            setFile(selected);
-            console.log(selected);
-            // clearError
-        } else {
-            setFile(null);
-            // setALertError e,g select an image file (png or jpeg)
-        }
     };
 
     return (
@@ -154,16 +146,22 @@ export default function MealForm(props) {
                                 fullWidth
                             />
                             {/* new image file */}
-                            <Field
+                            {/* <Field
                                 name="image_url2"
                                 type="file"
                                 label="Add Image"
-                                component={TextField}
                                 onChange={(e) => {
                                     // handleChange(e);
-                                    changeHandler(e);
+                                    imageChangeHandler(e);
                                 }}
                                 fullWidth
+                            /> */}
+
+                            <UploadButton
+                                imageChangeHandler={imageChangeHandler}
+                                file={file}
+                                setFile={setFile}
+                                setImageUrl={setImageUrl}
                             />
                         </Grid>
                         <Grid item xs={8}>
