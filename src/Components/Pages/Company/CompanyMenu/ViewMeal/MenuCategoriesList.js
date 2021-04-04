@@ -7,7 +7,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Link, Route, useLocation } from "react-router-dom";
 import CategoryModal from "./CategoryModal";
-import CustomTooltip, { SimpleList } from "./CustomTooltip";
+import CustomTooltip from "../../../../Base/VerticonOptions";
 
 import MealsList from "./MealList";
 
@@ -37,27 +37,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //002
+// holds a single category
 export function MenuCategory(props) {
-    // holds a single category
     const { category, to } = props;
     const { pathname } = useLocation();
     const selected = pathname === `${to}`;
-    const [open, setOpen] = React.useState(false);
-
-    const handleTooltipClose = () => {
-        setOpen(false);
+    const handleRename = (close) => {
+        console.log(category);
+        close();
     };
 
-    const handleTooltipOpen = () => {
-        setOpen(true);
-    };
+    // categories options
+    const options = [
+        { name: "Rename", onClick: handleRename },
+        { name: "Delete", onClick: handleRename },
+    ];
 
     return (
         <ListItem button to={to} component={Link} selected={selected}>
             <ListItemText primary={category.name} />
             {selected && (
                 <ListItemIcon>
-                    <MoreVertIcon onClick={() => setOpen(true)} />
+                    <CustomTooltip options={options} />
                 </ListItemIcon>
             )}
             {/* <CustomTooltip

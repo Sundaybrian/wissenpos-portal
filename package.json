@@ -14,6 +14,7 @@
         "@testing-library/user-event": "^12.1.10",
         "axios": "^0.21.0",
         "date-fns": "^2.19.0",
+        "env-cmd": "^10.1.0",
         "firebase": "^8.3.2",
         "formik": "^2.2.6",
         "formik-material-ui": "^3.0.1",
@@ -36,9 +37,9 @@
     },
     "scripts": {
         "start": "BROWSER=none react-scripts start",
-        "start:develop": "BROWSER=none REACT_APP_STAGE=develop react-scripts start",
-        "start:local": "BROWSER=none REACT_APP_STAGE=local react-scripts start",
-        "build": "REACT_APP_STAGE=develop react-scripts build",
+        "start:develop": "BROWSER=none env-cmd -f ./.env.development.local react-scripts start",
+        "start:local": "BROWSER=none env-cmd -f ./.env.local  react-scripts start",
+        "build:develop": "env-cmd -f ./.env.development.local react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
