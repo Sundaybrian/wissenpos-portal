@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UploadButton(props) {
     const classes = useStyles();
-    const { imageChangeHandler } = props;
+    const { imageChangeHandler, currentMeal } = props;
 
     return (
         <div className={classes.root}>
@@ -44,7 +44,7 @@ export default function UploadButton(props) {
                     startIcon={<PhotoCamera />}
                     fullWidth
                 >
-                    Add Image
+                    {currentMeal ? "Edit Image" : "Add Image"}
                 </Button>
             </label>
         </div>
