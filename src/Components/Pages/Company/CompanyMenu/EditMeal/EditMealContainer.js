@@ -87,6 +87,7 @@ function EditMealContainer(props) {
         console.log("clicked");
         const mealData = {
             ...values,
+            image_url: imageUrl ? imageUrl : values.image_url,
             category_id: currentMeal.category_id,
         };
 
@@ -98,6 +99,7 @@ function EditMealContainer(props) {
             mealData
         );
         setAddMeal(null);
+        setImageUrl(null);
         setToogleMenuView(false);
     };
 
