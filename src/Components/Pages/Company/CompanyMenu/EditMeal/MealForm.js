@@ -132,6 +132,7 @@ function MealForm(props) {
                             {file == null && (
                                 <UploadButton
                                     imageChangeHandler={imageChangeHandler}
+                                    currentMeal={currentMeal}
                                 />
                             )}
 
