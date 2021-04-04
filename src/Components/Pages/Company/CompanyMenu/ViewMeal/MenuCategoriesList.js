@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Link, Route, useLocation } from "react-router-dom";
 import CategoryModal from "./CategoryModal";
+import CustomTooltip, { SimpleList } from "./CustomTooltip";
 
 import MealsList from "./MealList";
 
@@ -38,14 +41,33 @@ export function MenuCategory(props) {
     // holds a single category
     const { category, to } = props;
     const { pathname } = useLocation();
+    const selected = pathname === `${to}`;
+    const [open, setOpen] = React.useState(false);
+
+    const handleTooltipClose = () => {
+        setOpen(false);
+    };
+
+    const handleTooltipOpen = () => {
+        setOpen(true);
+    };
+
     return (
-        <ListItem
-            button
-            to={to}
-            component={Link}
-            selected={pathname === `${to}`}
-        >
+        <ListItem button to={to} component={Link} selected={selected}>
             <ListItemText primary={category.name} />
+            {selected && (
+                <ListItemIcon>
+                    <MoreVertIcon onClick={() => setOpen(true)} />
+                </ListItemIcon>
+            )}
+            {/* <CustomTooltip
+                open={open}
+                setOpen={setOpen}
+                handleTooltipClose={handleTooltipClose}
+                handleTooltipOpen={handleTooltipOpen}
+            >
+                {open && <SimpleList />}
+            </CustomTooltip> */}
         </ListItem>
     );
 }
@@ -77,6 +99,7 @@ function MenuCategoriesList(props) {
                     ))}
                 </List>
 
+                {/* ******************category modal**************** */}
                 <CategoryModal
                     title="Add Category"
                     addCategoryMenu={addCategoryMenu}
