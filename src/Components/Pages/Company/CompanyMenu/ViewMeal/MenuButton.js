@@ -4,6 +4,7 @@ import VerticonOptions from "../../../../Base/VerticonOptions";
 import SingleFieldModal, {
     SingleFieldForm,
 } from "../../../../Base/SingleFieldForm";
+import { DeletePopUpDialog } from "../../../../Base/DeleteDialog";
 
 import { connect } from "react-redux";
 import { updateMenu } from "../../../../../Redux/actions/menuActions";
@@ -17,13 +18,21 @@ function MenuButton(props) {
     const { companyMenu, updateMenu } = props;
     const [open, setOpen] = React.useState(false);
 
+    const [openPopUp, setOpenPopUp] = React.useState(false);
+
     const handleClickOpen = (handleVerticonClose) => {
         setOpen(true);
         handleVerticonClose(); //passed up from verticonOptiosn to close  it
     };
 
+    const handleDeleteDialogOpen = (handleVerticonClose) => {
+        setOpenPopUp(true);
+        handleVerticonClose();
+    };
+
     const handleClose = () => {
         setOpen(false);
+        setOpenPopUp(false);
     };
 
     const handleMenuRename = (values, actions) => {
@@ -35,7 +44,14 @@ function MenuButton(props) {
         handleClose(); // passed up from verticonOptions
     };
 
-    const options = [{ name: "rename menu", onClick: handleClickOpen }];
+    const handleMenuDelete = () => {
+        console.log("clicked");
+    };
+
+    const options = [
+        { name: "rename menu", onClick: handleClickOpen },
+        { name: "delete menu", onClick: handleDeleteDialogOpen },
+    ];
 
     return (
         <>
@@ -63,6 +79,14 @@ function MenuButton(props) {
                     label="new name"
                 />
             </SingleFieldModal>
+
+            <DeletePopUpDialog
+                title={`delete ${companyMenu.name}`}
+                onSave={handleMenuDelete}
+                message="This action cannot be undone, every meal and category will be lost forever...are you sure you wish to proceed?"
+                open={openPopUp}
+                handleClose={handleClose}
+            />
         </>
     );
 }
