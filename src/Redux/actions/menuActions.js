@@ -3,7 +3,7 @@ import {
     LOADING_UI,
     CLEAR_ERRORS,
     LOAD_MENU,
-    ADD_MENU,
+    // ADD_MENU,
     RENAME_MENU,
     DELETE_MENU,
     SET_SUCCESS,
@@ -94,6 +94,29 @@ export const updateMenu = (id, companyID, menuData) => (dispatch) => {
             dispatch({
                 type: SET_SUCCESS,
                 payload: `${res.data.name} updated successfully`,
+            });
+            dispatch({ type: CLEAR_ERRORS });
+        })
+        .catch((err) => {
+            return dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data,
+            });
+        });
+};
+
+// delte a menu
+
+export const deleteMenu = (companyID, menuID) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+
+    axios
+        .delete(`/company/${companyID}/menu/${menuID}`)
+        .then((res) => {
+            dispatch({ type: DELETE_MENU, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: "menu deleted updated successfully",
             });
             dispatch({ type: CLEAR_ERRORS });
         })
