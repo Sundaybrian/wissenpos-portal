@@ -5,30 +5,37 @@ import SingleFieldModal, {
     SingleFieldForm,
 } from "../../../../Base/SingleFieldForm";
 
+import { connect } from "react-redux";
+import { updateMenu } from "../../../../../Redux/actions/menuActions";
+
 import * as Yup from "yup";
 const validationSchema = Yup.object({
     name: Yup.string().required("category name is required"),
 });
 
 function MenuButton(props) {
-    const { companyMenu } = props;
+    const { companyMenu, updateMenu } = props;
     const [open, setOpen] = React.useState(false);
 
-    const handleClickOpen = () => {
+    const handleClickOpen = (handleVerticonClose) => {
         setOpen(true);
+        handleVerticonClose(); //passed up from verticonOptiosn to close  it
     };
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    const handleMenuRename = (handleClose) => {
+    const handleMenuRename = (values, actions) => {
         //pop up dialog
+        const menuData = { ...values };
+        updateMenu(companyMenu.id, companyMenu.company_id, menuData);
 
+        actions.resetForm();
         handleClose(); // passed up from verticonOptions
     };
 
-    const options = [{ name: "Rename Menu", onClick: handleClickOpen }];
+    const options = [{ name: "rename menu", onClick: handleClickOpen }];
 
     return (
         <>
@@ -45,9 +52,23 @@ function MenuButton(props) {
                 handleClose={handleClose}
                 title="Rename Menu"
                 open={open}
-            ></SingleFieldModal>
+            >
+                <SingleFieldForm
+                    handleSubmit={handleMenuRename}
+                    initialValues={{
+                        name: companyMenu.name,
+                    }}
+                    validationSchema={validationSchema}
+                    name="name"
+                    label="new name"
+                />
+            </SingleFieldModal>
         </>
     );
 }
 
-export default MenuButton;
+const mapActionsToProps = {
+    updateMenu,
+};
+
+export default connect(null, mapActionsToProps)(MenuButton);
