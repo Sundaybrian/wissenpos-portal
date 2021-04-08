@@ -2,22 +2,26 @@
 
 [] edit company
 [] edit user
+[*] render company
+[*] render user profile
 
 // metrics
+[] rename to reports
 
 // orders
 
 
 // menu
-[] add menu
-[] edit menu name
-[] delete menu name
+[*] add menu
+[*] edit menu name
+[] delete menu 
+[] generate qr-code
 
-[] add cat
-[] edit
-[] delete
-[] add meal to cat
-[] edit meal
+[*] add cat
+[] edit cat
+[] delete cat
+[*] add meal to cat
+[*] edit meal
 [] delete meal
 
 // staff management
@@ -25,3 +29,15 @@
 // auth
 [] forgot password
 [] register stepper
+[*] login
+[*] register
+[*] company register
+
+// cleanup & AOB
+[] clean up unsued vars
+[] typescript migrate
+[] more reusable components
+[] fix alert
+    [] it is rendering all the timw
+    [] not showing messages success
+[] fix heroku react dev    
