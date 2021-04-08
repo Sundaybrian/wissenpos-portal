@@ -10,6 +10,7 @@ import CategoryModal from "./CategoryModal";
 import CustomTooltip from "../../../../Base/VerticonOptions";
 
 import MealsList from "./MealList";
+import DeleteDialog from "../../../../Base/DeleteDialog";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,16 +60,23 @@ export function MenuCategory(props) {
             {selected && (
                 <ListItemIcon>
                     <CustomTooltip options={options} />
+                    {/* <DeleteDialog
+                        title="Delete Category?"
+                        content="Are you sure you want to delete this category ? Every meal under it will be deleted too"
+                        onSave={handleDelete}
+                        render={(open) => (
+                            <Button
+                                startIcon={<DeleteIcon />}
+                                variant="contained"
+                                onClick={open}
+                                color="secondary"
+                            >
+                                Reject
+                            </Button>
+                        )}
+                    /> */}
                 </ListItemIcon>
             )}
-            {/* <CustomTooltip
-                open={open}
-                setOpen={setOpen}
-                handleTooltipClose={handleTooltipClose}
-                handleTooltipOpen={handleTooltipOpen}
-            >
-                {open && <SimpleList />}
-            </CustomTooltip> */}
         </ListItem>
     );
 }
