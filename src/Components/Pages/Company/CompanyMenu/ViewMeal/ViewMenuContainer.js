@@ -14,6 +14,7 @@ import {
     addCategoryMenu,
 } from "../../../../../Redux/actions/menuActions";
 import { connect } from "react-redux";
+import Loader from "../../../../Base/Loader";
 
 const useStyles = makeStyles((theme) => ({
     dualPanel: {
@@ -52,6 +53,10 @@ function ViewMenuContainer(props) {
         actions.resetForm();
         setOpenPopup(false);
     };
+
+    if (loading) {
+        <Loader />;
+    }
 
     return (
         <>
