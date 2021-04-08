@@ -1,17 +1,28 @@
 // profile page
-
 [] edit company
 [] edit user
 [*] render company
 [*] render user profile
 
-// metrics
+
+// styles
+[] minivariant sidebar
+    [] with tooltip
+[] fix colors
+[] twitter flex for meal page
+
+
+// metrics page
 [] rename to reports
 
-// orders
+// orders page
+[] websocket to push new order items???
+[] order table
+[] filter component
 
 
-// menu
+
+// menu page
 [*] add menu
 [*] edit menu name
 [] delete menu 
