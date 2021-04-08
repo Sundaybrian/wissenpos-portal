@@ -37,6 +37,16 @@ const company = (state = initialState, action) => {
                     ...action.payload,
                 },
             };
+        case DELETE_MENU:
+            return {
+                ...state,
+                menu: null,
+                currentMenu: null,
+                currentMeal: null,
+                currentCategory: {
+                    items: [],
+                },
+            };
         case ADD_CATEGORY:
             return {
                 ...state,
