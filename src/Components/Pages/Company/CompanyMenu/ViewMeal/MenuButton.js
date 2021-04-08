@@ -5,6 +5,7 @@ import SingleFieldModal, {
     SingleFieldForm,
 } from "../../../../Base/SingleFieldForm";
 import { DeletePopUpDialog } from "../../../../Base/DeleteDialog";
+import QRCard from "./QRCard";
 
 import QrCode from "qrcode";
 import { connect } from "react-redux";
@@ -121,7 +122,7 @@ function MenuButton(props) {
             >
                 {imageUrl ? (
                     <a href={imageUrl} download>
-                        <img src={imageUrl} alt="img" />
+                        <QRCard imageUrl={imageUrl} />
                     </a>
                 ) : (
                     <Typography variant="h5" component="h6">
