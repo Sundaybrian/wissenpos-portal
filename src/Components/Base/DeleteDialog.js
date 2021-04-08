@@ -5,6 +5,40 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+export function DeletePopUpDialog({
+    title,
+    message,
+    onSave,
+    open,
+    handleClose,
+}) {
+    const handleSave = () => {
+        onSave && onSave();
+        handleClose();
+    };
+
+    return (
+        <div>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="form-dialog-title"
+            >
+                <DialogTitle id="form-dialog-title">{title}</DialogTitle>
+                <DialogContent>{message}</DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleSave} color="seconday">
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    );
+}
+
 export default function DeleteDialog({ ids, render, title, onSave }) {
     const [open, setOpen] = React.useState(false);
 
