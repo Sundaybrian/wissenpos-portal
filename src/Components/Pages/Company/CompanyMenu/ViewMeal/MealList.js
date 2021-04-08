@@ -39,6 +39,7 @@ function MealsList(props) {
                 ))}
             <ListItem
                 button
+                variant="text"
                 onClick={() => {
                     setToogleMenuView(true); // launches edit/add container
                 }}

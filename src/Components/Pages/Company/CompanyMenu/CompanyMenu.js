@@ -49,11 +49,6 @@ function CompanyMenu(props) {
     } = props;
 
     const { url } = useRouteMatch();
-    const [dualPanel, setDualPanel] = useState(false);
-
-    const toggleDualPanel = () => {
-        setDualPanel(!dualPanel);
-    };
 
     useEffect(() => {
         if (companyMenu == null) {

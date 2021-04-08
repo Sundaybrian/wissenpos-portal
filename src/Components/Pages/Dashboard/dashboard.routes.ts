@@ -20,7 +20,7 @@ import Orders from "../Company/Orders/Orders";
 import Profile from "../Company/Profile/Profile";
 import Metric from "../Company/Metric/Metric";
 import CompanyMenu from "../Company/CompanyMenu/CompanyMenu";
-import AddRecipe from "../Company/CompanyMenu/AddRecipe";
+// import AddRecipe from "../Company/CompanyMenu/AddRecipe";
 
 const dashboardRoutes = [
     {
@@ -63,12 +63,12 @@ export const companyRoutes = [
                 text: "menus",
                 component: CompanyMenu
             },
-            {
-                path: "add-recipe",
-                text:"add-recipe",
-                component: AddRecipe
+            // {
+            //     path: "add-recipe",
+            //     text:"add-recipe",
+            //     component: AddRecipe
                
-            }
+            // }
         ]
     },
     {

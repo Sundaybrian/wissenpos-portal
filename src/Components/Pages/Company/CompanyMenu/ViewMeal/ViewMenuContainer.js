@@ -7,7 +7,8 @@ import AddIcon from "@material-ui/icons/Add";
 import MenuForm from "../MenuForm";
 import MenuCategoriesList from "./MenuCategoriesList";
 import MealPreview from "../MealPreview";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import MenuButton from "./MenuButton";
+
 import {
     createMenu,
     addCategoryMenu,
@@ -57,14 +58,7 @@ function ViewMenuContainer(props) {
             <MenuSidebar title={company[0].name}>
                 <div>
                     {companyMenu !== null ? (
-                        <Button
-                            color="secondary"
-                            className={classes.button}
-                            endIcon={<ArrowDropDownIcon />}
-                            fullWidth
-                        >
-                            {companyMenu.name}
-                        </Button>
+                        <MenuButton companyMenu={companyMenu} />
                     ) : (
                         <FormikDialog
                             title="Create Menu"
