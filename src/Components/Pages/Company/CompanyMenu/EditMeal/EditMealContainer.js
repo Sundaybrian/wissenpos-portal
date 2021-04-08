@@ -9,6 +9,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import MealPreview from "../MealPreview";
 import MealForm from "./MealForm";
 import { useLocation } from "react-router-dom";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     dualPanel: {
@@ -43,6 +44,7 @@ function EditMealContainer(props) {
     const { pathname } = useLocation();
     const [categoryID] = pathname.split("/").slice(-1);
 
+    // check if we are in edit mode
     useEffect(() => {
         if (currentMeal !== null) {
             setAddMeal(currentMeal);
@@ -51,20 +53,41 @@ function EditMealContainer(props) {
         }
     }, []);
 
+    // image upload related
+    const [file, setFile] = React.useState(null);
+    const [imageUrl, setImageUrl] = React.useState(null); //once we have an image, we will duplicate it here
+    const types = ["image/png", "image/jpeg", "image/jpg"];
+    const imageChangeHandler = (e) => {
+        let selected = e.target.files[0];
+        if (selected && types.includes(selected.type)) {
+            setFile(selected);
+            console.log(selected);
+
+            // clearError
+        } else {
+            setFile(null);
+            // setALertError e,g select an image file (png or jpeg)
+        }
+    };
+
     const handleMealSubmit = (values, action) => {
         const mealData = {
             ...values,
+            image_url: imageUrl ? imageUrl : "", // get from state
             category_id: parseInt(categoryID),
         };
 
         addMealCategory(companyID, menuID, parseInt(categoryID), mealData);
         setToogleMenuView(false);
+        setImageUrl(null); //clear state
         // handleClose();
     };
 
     const handleMealEdit = (values, action) => {
+        console.log("clicked");
         const mealData = {
             ...values,
+            image_url: imageUrl ? imageUrl : values.image_url,
             category_id: currentMeal.category_id,
         };
 
@@ -76,6 +99,7 @@ function EditMealContainer(props) {
             mealData
         );
         setAddMeal(null);
+        setImageUrl(null);
         setToogleMenuView(false);
     };
 
@@ -89,6 +113,10 @@ function EditMealContainer(props) {
                         setAddMeal={setAddMeal}
                         currentMeal={currentMeal}
                         setToogleMenuView={setToogleMenuView}
+                        file={file}
+                        setFile={setFile}
+                        imageChangeHandler={imageChangeHandler}
+                        setImageUrl={setImageUrl}
                     />
                 </div>
             </MenuSidebar>

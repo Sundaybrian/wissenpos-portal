@@ -9,8 +9,6 @@ import jwtDecode from "jwt-decode";
 import config from "../Utils/config";
 // MUi stuff
 
-// import { ThemeProvider } from "@material-ui/core/styles";
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { CssBaseline } from "@material-ui/core";
 
 // components
@@ -23,16 +21,9 @@ import { SET_AUTHENTICATED } from "../Redux/types";
 import axios from "axios";
 import Alert from "../Components/Base/Alert";
 
-const theme = createMuiTheme({
-    typography: {
-        useNextVariants: true,
-    },
-});
 // decidin on the backend service to use
 axios.defaults.baseURL = config["BACKEND_SERVICE"];
 
-// checking for jwt
-let authenticated;
 if (localStorage.token) {
     const decodeToken = jwtDecode(localStorage.token);
     if (decodeToken.exp * 1000 < Date.now()) {
