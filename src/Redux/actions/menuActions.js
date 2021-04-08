@@ -107,7 +107,7 @@ export const updateMenu = (id, companyID, menuData) => (dispatch) => {
 
 // delte a menu
 
-export const deleteMenu = (companyID, menuID) => (dispatch) => {
+export const deleteMenu = (companyID, menuID, setOpenPopUp) => (dispatch) => {
     dispatch({ type: LOADING_UI });
 
     axios
@@ -118,9 +118,11 @@ export const deleteMenu = (companyID, menuID) => (dispatch) => {
                 type: SET_SUCCESS,
                 payload: "menu deleted updated successfully",
             });
+            setOpenPopUp(false); // if it was successfull delete
             dispatch({ type: CLEAR_ERRORS });
         })
         .catch((err) => {
+            setOpenPopUp(false);
             return dispatch({
                 type: SET_ERRORS,
                 payload: err.response.data,
