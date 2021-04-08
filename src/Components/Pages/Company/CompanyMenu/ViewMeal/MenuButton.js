@@ -7,7 +7,10 @@ import SingleFieldModal, {
 import { DeletePopUpDialog } from "../../../../Base/DeleteDialog";
 
 import { connect } from "react-redux";
-import { updateMenu } from "../../../../../Redux/actions/menuActions";
+import {
+    updateMenu,
+    deleteMenu,
+} from "../../../../../Redux/actions/menuActions";
 
 import * as Yup from "yup";
 const validationSchema = Yup.object({
@@ -15,7 +18,7 @@ const validationSchema = Yup.object({
 });
 
 function MenuButton(props) {
-    const { companyMenu, updateMenu } = props;
+    const { companyMenu, updateMenu, deleteMenu } = props;
     const [open, setOpen] = React.useState(false);
 
     const [openPopUp, setOpenPopUp] = React.useState(false);
@@ -46,6 +49,8 @@ function MenuButton(props) {
 
     const handleMenuDelete = () => {
         console.log("clicked");
+
+        deleteMenu(companyMenu.company_id, companyMenu.id, setOpenPopUp);
     };
 
     const options = [
@@ -93,6 +98,7 @@ function MenuButton(props) {
 
 const mapActionsToProps = {
     updateMenu,
+    deleteMenu,
 };
 
 export default connect(null, mapActionsToProps)(MenuButton);
