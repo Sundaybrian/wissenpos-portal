@@ -1,8 +1,6 @@
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
-import useStorage from "../../../../../Hooks/useStorage";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -12,12 +10,6 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         display: "none",
-    },
-
-    progressBar: {
-        height: "5px",
-        background: theme.palette.primary,
-        marginTop: "20px",
     },
 }));
 
