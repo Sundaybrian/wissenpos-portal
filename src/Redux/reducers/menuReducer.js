@@ -5,6 +5,7 @@ import {
     DELETE_MENU,
     ADD_CATEGORY,
     RENAME_CATEGORY,
+    DELETE_CATEGORY,
     SET_CURRENT_CATEGORY,
     ADD_MEAL,
     EDIT_MEAL,
@@ -78,6 +79,20 @@ const company = (state = initialState, action) => {
                         return action.payload.id == item.id
                             ? { ...item, ...action.payload }
                             : item;
+                    }),
+                },
+            };
+
+        case DELETE_CATEGORY:
+            return {
+                ...state,
+                currentCategory: {
+                    items: [],
+                },
+                menu: {
+                    ...state.menu,
+                    categories: state.menu.categories.filter((item, index) => {
+                        return action.payload.id !== item.id;
                     }),
                 },
             };
