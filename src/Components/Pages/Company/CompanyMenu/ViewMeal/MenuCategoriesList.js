@@ -12,7 +12,7 @@ import SingleFieldModal, {
 } from "../../../../Base/SingleFieldForm";
 import VerticonOptions from "../../../../Base/VerticonOptions";
 import MealsList from "./MealList";
-import { DeletePopUpDialog } from "../../../../Base/DeleteDialog";
+
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 //002
 // holds a single category
 export function MenuCategory(props) {
-    const { category, to } = props;
+    const { category, to, renameCategoryMenu } = props;
     const { pathname } = useLocation();
     const selected = pathname === `${to}`;
 
@@ -72,6 +72,8 @@ export function MenuCategory(props) {
     const handleCategoryRename = (values, actions) => {
         console.log("clicked");
         //some logic to rename
+
+        renameCategoryMenu({});
     };
 
     const handleCategoryDelete = () => {
@@ -129,6 +131,7 @@ function MenuCategoriesList(props) {
         setToogleMenuView, // used to trigger add/edit meal sidebar
         url,
         addCategoryMenu,
+        renameCategoryMenu,
     } = props;
 
     return (
@@ -139,6 +142,7 @@ function MenuCategoriesList(props) {
                     {categories.map((category, index) => (
                         <MenuCategory
                             category={category}
+                            renameCategoryMenu={renameCategoryMenu}
                             key={index}
                             to={`${url}/category/${category.id}`}
                         />
