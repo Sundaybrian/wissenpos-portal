@@ -74,7 +74,7 @@ const company = (state = initialState, action) => {
                 },
                 menu: {
                     ...state.menu,
-                    categories: state.menu.categories.filter((item, index) => {
+                    categories: state.menu.categories.map((item, index) => {
                         return action.payload.id == item.id
                             ? { ...item, ...action.payload }
                             : item;
