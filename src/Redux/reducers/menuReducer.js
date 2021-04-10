@@ -4,6 +4,7 @@ import {
     RENAME_MENU,
     DELETE_MENU,
     ADD_CATEGORY,
+    RENAME_CATEGORY,
     SET_CURRENT_CATEGORY,
     ADD_MEAL,
     EDIT_MEAL,
@@ -62,6 +63,22 @@ const company = (state = initialState, action) => {
                 currentCategory: {
                     ...state.currentCategory,
                     items: state.currentCategory.items.concat(action.payload),
+                },
+            };
+        case RENAME_CATEGORY:
+            return {
+                ...state,
+                currentCategory: {
+                    ...state.currentCategory,
+                    ...action.payload,
+                },
+                menu: {
+                    ...state.menu,
+                    categories: state.menu.categories.filter((item, index) => {
+                        return action.payload.id == item.id
+                            ? { ...item, ...action.payload }
+                            : item;
+                    }),
                 },
             };
         case EDIT_MEAL:
