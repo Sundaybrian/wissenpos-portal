@@ -5,11 +5,16 @@ import ListItemText from "@material-ui/core/ListItemText";
 import SingleFieldModal, {
     SingleFieldForm,
 } from "../../../../Base/SingleFieldForm";
+import { DeletePopUpDialog } from "../../../../Base/DeleteDialog";
+
 import VerticonOptions from "../../../../Base/VerticonOptions";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { renameCategoryMenu } from "../../../../../Redux/actions/menuActions";
+import {
+    renameCategoryMenu,
+    deleteCategoryMenu,
+} from "../../../../../Redux/actions/menuActions";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
@@ -17,8 +22,15 @@ const validationSchema = Yup.object({
 });
 
 export function MenuCategory(props) {
-    const { category, to, renameCategoryMenu, company } = props;
+    const {
+        category,
+        to,
+        renameCategoryMenu,
+        deleteCategoryMenu,
+        company,
+    } = props;
     const { pathname } = useLocation();
+    const history = useHistory();
     const selected = pathname === `${to}`;
 
     const [openRename, setOpenRename] = React.useState(false);
@@ -58,6 +70,12 @@ export function MenuCategory(props) {
 
     const handleCategoryDelete = () => {
         console.log("deleted");
+        deleteCategoryMenu({
+            companyID: company[0].id,
+            menuID: category.menu_id,
+            categoryID: category.id,
+            history,
+        });
     };
 
     // categories options
@@ -97,6 +115,14 @@ export function MenuCategory(props) {
                     label="new name"
                 />
             </SingleFieldModal>
+
+            <DeletePopUpDialog
+                title={`delete ${category.name}`}
+                onSave={handleCategoryDelete}
+                message="Deleting a category deletes also the meals under it, are you sure you want to proceed?"
+                open={openDelete}
+                handleClose={handleClose}
+            />
         </>
     );
 }
@@ -107,5 +133,6 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     renameCategoryMenu,
+    deleteCategoryMenu,
 };
 export default connect(mapStateToProps, mapActionsToProps)(MenuCategory);
