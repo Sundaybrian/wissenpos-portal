@@ -9,6 +9,7 @@ import {
     SET_SUCCESS,
     ADD_CATEGORY,
     RENAME_CATEGORY,
+    DELETE_CATEGORY,
     SET_CURRENT_CATEGORY,
     ADD_MEAL,
     EDIT_MEAL,
@@ -185,6 +186,33 @@ export const renameCategoryMenu = ({
         });
 };
 
+// delete category
+export const deleteCategoryMenu = ({
+    companyID,
+    menuID,
+    categoryID,
+    history,
+}) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+
+    axios
+        .delete(`/company/${companyID}/menu/${menuID}/category/${categoryID}`)
+        .then((res) => {
+            dispatch({ type: DELETE_CATEGORY, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `category deleted successfully`,
+            });
+            dispatch({ type: CLEAR_ERRORS });
+            history.goBack();
+        })
+        .catch((err) => {
+            return dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data,
+            });
+        });
+};
 // create meal for a given category
 export const addMealCategory = (companyID, menuID, categoryID, mealData) => (
     dispatch
