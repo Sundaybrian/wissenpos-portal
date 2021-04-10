@@ -8,6 +8,7 @@ import {
     DELETE_MENU,
     SET_SUCCESS,
     ADD_CATEGORY,
+    RENAME_CATEGORY,
     SET_CURRENT_CATEGORY,
     ADD_MEAL,
     EDIT_MEAL,
@@ -143,6 +144,36 @@ export const addCategoryMenu = (companyID, menuID, categoryData) => (
             dispatch({
                 type: SET_SUCCESS,
                 payload: `${res.data.name} created successfully`,
+            });
+            dispatch({ type: CLEAR_ERRORS });
+        })
+        .catch((err) => {
+            return dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data,
+            });
+        });
+};
+
+// rename category
+export const renameCategoryMenu = ({
+    companyID,
+    menuID,
+    categoryData,
+    categoryID,
+}) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+
+    axios
+        .patch(
+            `/company/${companyID}/menu/${menuID}/category/${categoryID}`,
+            categoryData
+        )
+        .then((res) => {
+            dispatch({ type: RENAME_CATEGORY, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `${res.data.name} updated successfully`,
             });
             dispatch({ type: CLEAR_ERRORS });
         })
