@@ -18,24 +18,27 @@
 // orders page
 [] websocket to push new order items???
 [] order table
+[] handle orders
+    [] reject
+    [] accept
+    [] dispatch
+    [] handle payments ==== [] websocket too?
 [] filter component
-
-
 
 // menu page
 [*] add menu
 [*] edit menu name
-[] delete menu 
-[] generate qr-code
-
+[*] delete menu 
+[*] generate qr-code
 [*] add cat
-[] edit cat
-[] delete cat
+[*] edit cat
+[*] delete cat
 [*] add meal to cat
 [*] edit meal
 [] delete meal
 
 // staff management
+[] tank it for now
 
 // auth
 [] forgot password
@@ -52,3 +55,5 @@
     [] it is rendering all the timw
     [] not showing messages success
 [] fix heroku react dev    
+[] delete images from storage on edit/account deletion
+[] add report a bug/suggestion
