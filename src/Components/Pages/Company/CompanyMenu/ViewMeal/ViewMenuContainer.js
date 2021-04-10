@@ -60,7 +60,7 @@ function ViewMenuContainer(props) {
 
     return (
         <>
-            <MenuSidebar title={company[0].name}>
+            <MenuSidebar title={company[0].name || ""}>
                 <div>
                     {companyMenu !== null ? (
                         <MenuButton companyMenu={companyMenu} />
