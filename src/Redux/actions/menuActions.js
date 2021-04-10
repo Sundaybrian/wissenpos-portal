@@ -3,11 +3,13 @@ import {
     LOADING_UI,
     CLEAR_ERRORS,
     LOAD_MENU,
-    ADD_MENU,
+    // ADD_MENU,
     RENAME_MENU,
     DELETE_MENU,
     SET_SUCCESS,
     ADD_CATEGORY,
+    RENAME_CATEGORY,
+    DELETE_CATEGORY,
     SET_CURRENT_CATEGORY,
     ADD_MEAL,
     EDIT_MEAL,
@@ -105,6 +107,31 @@ export const updateMenu = (id, companyID, menuData) => (dispatch) => {
         });
 };
 
+// delte a menu
+
+export const deleteMenu = (companyID, menuID, setOpenPopUp) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+
+    axios
+        .delete(`/company/${companyID}/menu/${menuID}`)
+        .then((res) => {
+            dispatch({ type: DELETE_MENU, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: "menu deleted updated successfully",
+            });
+            setOpenPopUp(false); // if it was successfull delete
+            dispatch({ type: CLEAR_ERRORS });
+        })
+        .catch((err) => {
+            setOpenPopUp(false);
+            return dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data,
+            });
+        });
+};
+
 // add category to a menu
 export const addCategoryMenu = (companyID, menuID, categoryData) => (
     dispatch
@@ -129,6 +156,63 @@ export const addCategoryMenu = (companyID, menuID, categoryData) => (
         });
 };
 
+// rename category
+export const renameCategoryMenu = ({
+    companyID,
+    menuID,
+    categoryData,
+    categoryID,
+}) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+
+    axios
+        .patch(
+            `/company/${companyID}/menu/${menuID}/category/${categoryID}`,
+            categoryData
+        )
+        .then((res) => {
+            dispatch({ type: RENAME_CATEGORY, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `${res.data.name} updated successfully`,
+            });
+            dispatch({ type: CLEAR_ERRORS });
+        })
+        .catch((err) => {
+            return dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data,
+            });
+        });
+};
+
+// delete category
+export const deleteCategoryMenu = ({
+    companyID,
+    menuID,
+    categoryID,
+    history,
+}) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+
+    axios
+        .delete(`/company/${companyID}/menu/${menuID}/category/${categoryID}`)
+        .then((res) => {
+            dispatch({ type: DELETE_CATEGORY, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `category deleted successfully`,
+            });
+            dispatch({ type: CLEAR_ERRORS });
+            history.goBack();
+        })
+        .catch((err) => {
+            return dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data,
+            });
+        });
+};
 // create meal for a given category
 export const addMealCategory = (companyID, menuID, categoryID, mealData) => (
     dispatch

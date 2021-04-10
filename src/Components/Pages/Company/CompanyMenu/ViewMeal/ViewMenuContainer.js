@@ -14,6 +14,7 @@ import {
     addCategoryMenu,
 } from "../../../../../Redux/actions/menuActions";
 import { connect } from "react-redux";
+import Loader from "../../../../Base/Loader";
 
 const useStyles = makeStyles((theme) => ({
     dualPanel: {
@@ -53,9 +54,13 @@ function ViewMenuContainer(props) {
         setOpenPopup(false);
     };
 
+    if (loading) {
+        <Loader />;
+    }
+
     return (
         <>
-            <MenuSidebar title={company[0].name}>
+            <MenuSidebar title={company[0].name || ""}>
                 <div>
                     {companyMenu !== null ? (
                         <MenuButton companyMenu={companyMenu} />

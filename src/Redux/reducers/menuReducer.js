@@ -4,6 +4,8 @@ import {
     RENAME_MENU,
     DELETE_MENU,
     ADD_CATEGORY,
+    RENAME_CATEGORY,
+    DELETE_CATEGORY,
     SET_CURRENT_CATEGORY,
     ADD_MEAL,
     EDIT_MEAL,
@@ -37,6 +39,16 @@ const company = (state = initialState, action) => {
                     ...action.payload,
                 },
             };
+        case DELETE_MENU:
+            return {
+                ...state,
+                menu: null,
+                currentMenu: null,
+                currentMeal: null,
+                currentCategory: {
+                    items: [],
+                },
+            };
         case ADD_CATEGORY:
             return {
                 ...state,
@@ -52,6 +64,36 @@ const company = (state = initialState, action) => {
                 currentCategory: {
                     ...state.currentCategory,
                     items: state.currentCategory.items.concat(action.payload),
+                },
+            };
+        case RENAME_CATEGORY:
+            return {
+                ...state,
+                currentCategory: {
+                    ...state.currentCategory,
+                    ...action.payload,
+                },
+                menu: {
+                    ...state.menu,
+                    categories: state.menu.categories.map((item, index) => {
+                        return action.payload.id == item.id
+                            ? { ...item, ...action.payload }
+                            : item;
+                    }),
+                },
+            };
+
+        case DELETE_CATEGORY:
+            return {
+                ...state,
+                currentCategory: {
+                    items: [],
+                },
+                menu: {
+                    ...state.menu,
+                    categories: state.menu.categories.filter((item, index) => {
+                        return action.payload.id !== item.id;
+                    }),
                 },
             };
         case EDIT_MEAL:

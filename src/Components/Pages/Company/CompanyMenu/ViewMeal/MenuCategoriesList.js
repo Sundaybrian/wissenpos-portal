@@ -1,16 +1,12 @@
-import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { Link, Route, useLocation } from "react-router-dom";
+import { Route } from "react-router-dom";
 import CategoryModal from "./CategoryModal";
-import CustomTooltip from "../../../../Base/VerticonOptions";
-
+import MenuCategory from "./MenuCategory";
 import MealsList from "./MealList";
-import DeleteDialog from "../../../../Base/DeleteDialog";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,47 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 //002
 // holds a single category
-export function MenuCategory(props) {
-    const { category, to } = props;
-    const { pathname } = useLocation();
-    const selected = pathname === `${to}`;
-    const handleRename = (close) => {
-        console.log(category);
-        close();
-    };
-
-    // categories options
-    const options = [
-        { name: "Rename", onClick: handleRename },
-        { name: "Delete", onClick: handleRename },
-    ];
-
-    return (
-        <ListItem button to={to} component={Link} selected={selected}>
-            <ListItemText primary={category.name} />
-            {selected && (
-                <ListItemIcon>
-                    <CustomTooltip options={options} />
-                    {/* <DeleteDialog
-                        title="Delete Category?"
-                        content="Are you sure you want to delete this category ? Every meal under it will be deleted too"
-                        onSave={handleDelete}
-                        render={(open) => (
-                            <Button
-                                startIcon={<DeleteIcon />}
-                                variant="contained"
-                                onClick={open}
-                                color="secondary"
-                            >
-                                Reject
-                            </Button>
-                        )}
-                    /> */}
-                </ListItemIcon>
-            )}
-        </ListItem>
-    );
-}
 
 // 001 container for the menu categories and their meals
 function MenuCategoriesList(props) {
