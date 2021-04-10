@@ -7,10 +7,17 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Link, Route, useLocation } from "react-router-dom";
 import CategoryModal from "./CategoryModal";
-import CustomTooltip from "../../../../Base/VerticonOptions";
-
+import SingleFieldModal, {
+    SingleFieldForm,
+} from "../../../../Base/SingleFieldForm";
+import VerticonOptions from "../../../../Base/VerticonOptions";
 import MealsList from "./MealList";
-import DeleteDialog from "../../../../Base/DeleteDialog";
+import { DeletePopUpDialog } from "../../../../Base/DeleteDialog";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object({
+    name: Yup.string().required("category name is required"),
+});
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,38 +50,68 @@ export function MenuCategory(props) {
     const { category, to } = props;
     const { pathname } = useLocation();
     const selected = pathname === `${to}`;
-    const handleRename = (close) => {
-        console.log(category);
-        close();
+
+    const [openRename, setOpenRename] = React.useState(false);
+    const [openDelete, setOpenDelete] = React.useState(false);
+
+    const handleRenameOpen = (handleVerticonClose) => {
+        setOpenRename(true);
+        handleVerticonClose();
+    };
+
+    const handleDeleteDailogOpen = (handleVerticonClose) => {
+        setOpenDelete(true);
+        handleVerticonClose(); // closes verticon passed up from verticon options
+    };
+
+    const handleClose = () => {
+        setOpenDelete(false);
+        setOpenRename(false);
+    };
+
+    const handleCategoryRename = (values, actions) => {
+        console.log("clicked");
+        //some logic to rename
+    };
+
+    const handleCategoryDelete = () => {
+        console.log("deleted");
     };
 
     // categories options
     const options = [
-        { name: "Rename", onClick: handleRename },
-        { name: "Delete", onClick: handleRename },
+        { name: "rename", onClick: handleRenameOpen },
+        { name: "delete", onClick: handleDeleteDailogOpen },
     ];
 
     return (
-        <ListItem button to={to} component={Link} selected={selected}>
+        <ListItem
+            button
+            disableRipple
+            to={to}
+            component={Link}
+            selected={selected}
+        >
             <ListItemText primary={category.name} />
             {selected && (
                 <ListItemIcon>
-                    <CustomTooltip options={options} />
-                    {/* <DeleteDialog
-                        title="Delete Category?"
-                        content="Are you sure you want to delete this category ? Every meal under it will be deleted too"
-                        onSave={handleDelete}
-                        render={(open) => (
-                            <Button
-                                startIcon={<DeleteIcon />}
-                                variant="contained"
-                                onClick={open}
-                                color="secondary"
-                            >
-                                Reject
-                            </Button>
-                        )}
-                    /> */}
+                    <VerticonOptions options={options} />
+
+                    <SingleFieldModal
+                        handleClose={handleClose}
+                        title="rename category"
+                        open={openRename}
+                    >
+                        <SingleFieldForm
+                            handleSubmit={handleCategoryRename}
+                            initialValues={{
+                                name: category.name,
+                            }}
+                            validationSchema={validationSchema}
+                            name="name"
+                            label="new name"
+                        />
+                    </SingleFieldModal>
                 </ListItemIcon>
             )}
         </ListItem>
