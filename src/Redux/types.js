@@ -47,6 +47,7 @@ export const DELETE_CATEGORY = "DELETE_CATEGORY";
 export const SET_CURRENT_CATEGORY = "SET_CURRENT_CATEGORY";
 export const CLEAR_CURRENT_CATEGORY = "CLEAR_CURRENT_CATEGORY";
 
+// types meal
 export const ADD_MEAL = "ADD_MEAL";
 export const EDIT_MEAL = "EDIT_MEAL";
 export const DELETE_MEAL = "DELETE_MEAL";

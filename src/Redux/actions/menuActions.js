@@ -13,6 +13,7 @@ import {
     SET_CURRENT_CATEGORY,
     ADD_MEAL,
     EDIT_MEAL,
+    DELETE_MEAL,
     SET_CURRENT_MEAL,
     CLEAR_CURRENT_MEAL,
 } from "../types";
@@ -213,6 +214,7 @@ export const deleteCategoryMenu = ({
             });
         });
 };
+
 // create meal for a given category
 export const addMealCategory = (companyID, menuID, categoryID, mealData) => (
     dispatch
@@ -297,6 +299,39 @@ export const fetchMealsByCategory = (companyID, menuID, categoryID) => (
         });
 };
 
+// delte a meal
+
+export const deleteMeal = ({
+    companyID,
+    menuID,
+    categoryID,
+    itemID,
+    setDeleteOpen,
+}) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+
+    axios
+        .delete(
+            `/company/${companyID}/menu/${menuID}/category/${categoryID}/item/${itemID}`
+        )
+        .then((res) => {
+            dispatch({ type: DELETE_MEAL, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: "meal deleted updated successfully",
+            });
+            setDeleteOpen(false); // if it was successfull delete
+            dispatch({ type: CLEAR_ERRORS });
+        })
+        .catch((err) => {
+            setDeleteOpen(false);
+            return dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data,
+            });
+        });
+};
+
 // set current meal
 export const setCurrentMeal = (meal) => (dispatch) => {
     dispatch({
@@ -305,7 +340,7 @@ export const setCurrentMeal = (meal) => (dispatch) => {
     });
 };
 
-// set current meal
+// CLEAR current meal
 export const clearCurrentMeal = () => (dispatch) => {
     dispatch({
         type: CLEAR_CURRENT_MEAL,
