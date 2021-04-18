@@ -73,6 +73,12 @@ export class Login extends React.Component {
         };
     }
 
+    componentDidMount() {
+        if (this.props.auth.authenticated) {
+            this.props.history.push("/dashboard");
+        }
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
 
