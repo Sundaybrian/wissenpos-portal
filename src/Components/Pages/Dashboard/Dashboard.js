@@ -24,6 +24,7 @@ function Dashboard(props) {
     const {
         user: { role },
         match: { path },
+        authenticated,
         location,
     } = props;
 
@@ -42,6 +43,7 @@ function Dashboard(props) {
                 <Main
                     routes={getDashboardRoutes(role)}
                     matchPath={path}
+                    authenticated={authenticated}
                     {...props}
                 />
             </ThemeProvider>
@@ -51,6 +53,7 @@ function Dashboard(props) {
 
 const mapStateToProps = (state) => ({
     user: state.auth.user,
+    authenticated: state.auth.authenticated,
 });
 
 export default connect(mapStateToProps)(Dashboard);

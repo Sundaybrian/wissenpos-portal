@@ -96,6 +96,12 @@ class Register extends Component {
         super(props);
     }
 
+    componentDidMount() {
+        if (this.props.auth.authenticated) {
+            this.props.history.push("/dashboard");
+        }
+    }
+
     handleSubmit = (values, actions) => {
         const user = {
             ...values,

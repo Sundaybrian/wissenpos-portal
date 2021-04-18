@@ -152,6 +152,9 @@ function MealForm(props) {
                                 variant="contained"
                                 color="primary"
                                 type="submit"
+                                style={{
+                                    marginRight: "12px",
+                                }}
                             >
                                 Ok
                             </Button>

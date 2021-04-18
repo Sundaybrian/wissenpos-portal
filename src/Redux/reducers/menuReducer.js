@@ -9,6 +9,7 @@ import {
     SET_CURRENT_CATEGORY,
     ADD_MEAL,
     EDIT_MEAL,
+    DELETE_MEAL,
     CLEAR_CURRENT_MEAL,
     SET_CURRENT_MEAL,
     CLEAR_CURRENT_CATEGORY,
@@ -58,14 +59,6 @@ const company = (state = initialState, action) => {
                 },
             };
 
-        case ADD_MEAL:
-            return {
-                ...state,
-                currentCategory: {
-                    ...state.currentCategory,
-                    items: state.currentCategory.items.concat(action.payload),
-                },
-            };
         case RENAME_CATEGORY:
             return {
                 ...state,
@@ -94,6 +87,25 @@ const company = (state = initialState, action) => {
                     categories: state.menu.categories.filter((item, index) => {
                         return action.payload.id !== item.id;
                     }),
+                },
+            };
+
+        case ADD_MEAL:
+            return {
+                ...state,
+                currentCategory: {
+                    ...state.currentCategory,
+                    items: state.currentCategory.items.concat(action.payload),
+                },
+            };
+        case DELETE_MEAL:
+            return {
+                ...state,
+                currentCategory: {
+                    ...state.currentCategory,
+                    items: state.currentCategory.items.filter(
+                        (item) => item.id !== action.payload.id
+                    ),
                 },
             };
         case EDIT_MEAL:
