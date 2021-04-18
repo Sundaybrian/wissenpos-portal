@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
-        backgroundColor: "red",
     },
     menuContainer: {
         height: "100vh",

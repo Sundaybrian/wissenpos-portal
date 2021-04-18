@@ -47,6 +47,7 @@ function MenuCategoriesList(props) {
         setToogleMenuView, // used to trigger add/edit meal sidebar
         url,
         addCategoryMenu,
+        meal,
     } = props;
 
     return (
@@ -58,6 +59,7 @@ function MenuCategoriesList(props) {
                         <MenuCategory
                             category={category}
                             key={index}
+                            meal={meal}
                             to={`${url}/category/${category.id}`}
                         />
                     ))}

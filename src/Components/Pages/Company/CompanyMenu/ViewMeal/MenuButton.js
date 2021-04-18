@@ -83,7 +83,11 @@ function MenuButton(props) {
     return (
         <>
             <Button
-                color="secondary"
+                style={{
+                    borderTop: ".5px solid rgb(221, 227, 227)",
+                    borderBottom: ".5px solid rgb(221, 227, 227)",
+                }}
+                color="primary"
                 endIcon={<VerticonOptions options={options} />}
                 fullWidth
                 disableRipple

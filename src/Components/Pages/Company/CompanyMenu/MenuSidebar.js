@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
         width: "560px",
         maxWidth: "460px",
         height: "100%",
-        backgroundColor: "#fb3",
+        borderRight: "3px solid rgb(221, 227, 227)",
     },
     children: {
         overflowY: "scroll",

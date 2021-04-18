@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
-        backgroundColor: "red",
     },
 }));
 
@@ -71,6 +70,7 @@ function ViewMenuContainer(props) {
                             setOpenPopup={setOpenPopup}
                             render={(open) => (
                                 <Button
+                                    variant="contained"
                                     color="primary"
                                     className={classes.button}
                                     endIcon={<AddIcon />}
@@ -95,6 +95,7 @@ function ViewMenuContainer(props) {
                                 menuID={companyMenu.id}
                                 categories={companyMenu.categories || []}
                                 setMeal={setMeal}
+                                meal={meal}
                                 setToogleMenuView={setToogleMenuView}
                                 url={url}
                             />
