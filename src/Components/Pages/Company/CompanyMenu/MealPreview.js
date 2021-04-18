@@ -8,7 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { CardHeader, IconButton } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
+import { DeletePopUpDialog } from "../../../Base/DeleteDialog";
 import { setCurrentMeal } from "../../../../Redux/actions/menuActions";
 import { connect } from "react-redux";
 import formatDate from "../../../../Utils/formateDate";
@@ -108,6 +108,14 @@ function MealPreview(props) {
                     </Button>
                 </CardActions>
             </Card>
+
+            <DeletePopUpDialog
+                title={`delete ${meal.name}`}
+                onSave={handleMealDelete}
+                message="Are you sure you want to delete this meal, you cannot undo this action?"
+                open={deleteOpen}
+                handleClose={handleClose}
+            />
         </div>
     );
 }
