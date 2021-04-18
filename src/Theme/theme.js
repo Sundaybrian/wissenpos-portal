@@ -4,8 +4,18 @@ import { blue, pink } from "@material-ui/core/colors";
 
 const defaultTheme = {
     palette: {
-        primary: blue,
-        secondary: pink, //ss,
+        primary: {
+            light: "#3a4450",
+            main: "#131d28",
+            dark: "#0b1218",
+            contrastText: "#fff",
+        },
+        secondary: {
+            light: "#ffc947",
+            main: "#ff9800",
+            dark: "#c66900",
+            contrastText: "#000",
+        }, //ss,
         //type: "dark",
     },
     typography: {
@@ -19,8 +29,18 @@ const defaultTheme = {
 export function useTheme() {
     const [currentTheme, setCurrentTheme] = useState({
         palette: {
-            primary: blue,
-            secondary: pink, //ss,
+            primary: {
+                light: "#3a4450",
+                main: "#131d28",
+                dark: "#0b1218",
+                contrastText: "#fff",
+            },
+            secondary: {
+                light: "#ffc947",
+                main: "#ff9800",
+                dark: "#c66900",
+                contrastText: "#000",
+            },
         },
     });
     const muiTheme = createMuiTheme({

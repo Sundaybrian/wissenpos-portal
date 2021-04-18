@@ -19,9 +19,11 @@ function MealsList(props) {
 
     useEffect(() => {
         // fetch meals based on category
-        fetchMealsByCategory(company[0].id, menu.id, category.id);
-        setMeal(null);
-    }, [category.id]);
+        if (category) {
+            fetchMealsByCategory(company[0].id, menu.id, category.id);
+            setMeal(null);
+        }
+    }, [category]);
 
     return (
         <>
