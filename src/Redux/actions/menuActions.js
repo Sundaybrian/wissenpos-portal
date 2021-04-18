@@ -307,6 +307,7 @@ export const deleteMeal = ({
     categoryID,
     itemID,
     setDeleteOpen,
+    setMeal,
 }) => (dispatch) => {
     dispatch({ type: LOADING_UI });
 
@@ -320,6 +321,7 @@ export const deleteMeal = ({
                 type: SET_SUCCESS,
                 payload: "meal deleted updated successfully",
             });
+            setMeal(null);
             setDeleteOpen(false); // if it was successfull delete
             dispatch({ type: CLEAR_ERRORS });
         })
