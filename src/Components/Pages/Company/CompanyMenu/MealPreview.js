@@ -9,7 +9,10 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { CardHeader, IconButton } from "@material-ui/core";
 import { DeletePopUpDialog } from "../../../Base/DeleteDialog";
-import { setCurrentMeal } from "../../../../Redux/actions/menuActions";
+import {
+    setCurrentMeal,
+    deleteMeal,
+} from "../../../../Redux/actions/menuActions";
 import { connect } from "react-redux";
 import formatDate from "../../../../Utils/formateDate";
 import VerticonOptions from "../../../Base/VerticonOptions";
@@ -33,11 +36,13 @@ const useStyles = makeStyles((theme) => ({
 function MealPreview(props) {
     const classes = useStyles();
     const {
+        menu: { id, company_id },
         meal,
         setToogleMenuView,
         setMeal,
         toggleMenuView,
         setCurrentMeal,
+        deleteMeal,
     } = props;
 
     const [editOpen, setEditOpen] = useState(false);
@@ -62,6 +67,15 @@ function MealPreview(props) {
 
     const handleMealDelete = () => {
         console.log("deleted");
+
+        deleteMeal({
+            itemID: meal.id,
+            categoryID: meal.category_id,
+            menuID: id,
+            companyID: company_id,
+            setDeleteOpen,
+            setMeal,
+        });
     };
 
     const options = [
@@ -120,4 +134,12 @@ function MealPreview(props) {
     );
 }
 
-export default connect(null, { setCurrentMeal })(MealPreview);
+const mapStateToProps = (state) => ({
+    menu: state.menu.menu,
+});
+const mapActionsToProps = {
+    deleteMeal,
+    setCurrentMeal,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(MealPreview);
