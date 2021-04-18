@@ -9,7 +9,7 @@ import jwtDecode from "jwt-decode";
 import config from "../Utils/config";
 // MUi stuff
 
-import { CssBaseline } from "@material-ui/core";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
 
 // components
 // pages
@@ -17,7 +17,7 @@ import Dashboard from "../Components/Pages/Dashboard/Dashboard";
 import store from "../Redux/store";
 import { logoutUser } from "../Redux/actions/authActions";
 import { SET_AUTHENTICATED } from "../Redux/types";
-
+import { useTheme } from "../Theme/theme";
 import axios from "axios";
 import Alert from "../Components/Base/Alert";
 
@@ -25,6 +25,8 @@ import Alert from "../Components/Base/Alert";
 axios.defaults.baseURL = config["BACKEND_SERVICE"];
 
 function App() {
+    const [currentTheme] = useTheme();
+
     React.useEffect(() => {
         // checking for jwt
         const jwtToken = localStorage.getItem("token");
@@ -48,7 +50,7 @@ function App() {
     });
 
     return (
-        <>
+        <ThemeProvider theme={currentTheme}>
             <Alert />
             <Switch>
                 {routes.map((route, index) => (
@@ -67,7 +69,7 @@ function App() {
             </Switch>
 
             <CssBaseline />
-        </>
+        </ThemeProvider>
     );
 }
 
