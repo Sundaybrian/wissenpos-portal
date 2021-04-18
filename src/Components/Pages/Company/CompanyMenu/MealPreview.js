@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -12,6 +12,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import { setCurrentMeal } from "../../../../Redux/actions/menuActions";
 import { connect } from "react-redux";
 import formatDate from "../../../../Utils/formateDate";
+import VerticonOptions from "../../../Base/VerticonOptions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,6 +40,35 @@ function MealPreview(props) {
         setCurrentMeal,
     } = props;
 
+    const [editOpen, setEditOpen] = useState(false);
+    const [deleteOpen, setDeleteOpen] = useState(false);
+
+    const handleEditOpen = (close) => {
+        setEditOpen(true);
+        setToogleMenuView(true);
+        setCurrentMeal(meal);
+        close();
+    };
+
+    const handleDeleteDialogOpen = (close) => {
+        setDeleteOpen(true);
+        close();
+    };
+
+    const handleClose = () => {
+        setDeleteOpen(false);
+        setEditOpen(false);
+    };
+
+    const handleMealDelete = () => {
+        console.log("deleted");
+    };
+
+    const options = [
+        { name: "edit", onClick: handleEditOpen },
+        { name: "delete", onClick: handleDeleteDialogOpen },
+    ];
+
     return (
         <div className={classes.root}>
             <Typography variant="h5" component="h6" gutterBottom>
@@ -47,19 +77,7 @@ function MealPreview(props) {
 
             <Card className={classes.card}>
                 <CardHeader
-                    action={
-                        <IconButton
-                            disabled={toggleMenuView == true ? true : false}
-                            aria-label="settings"
-                            onClick={() => {
-                                // setMeal(null);
-                                setToogleMenuView(true);
-                                setCurrentMeal(meal);
-                            }}
-                        >
-                            <EditIcon />
-                        </IconButton>
-                    }
+                    action={<VerticonOptions options={options} />}
                     subheader={formatDate(meal.created_at)}
                 />
                 <CardActionArea>
