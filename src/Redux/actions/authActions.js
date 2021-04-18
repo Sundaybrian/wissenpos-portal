@@ -73,6 +73,7 @@ const setAuthorizationHeader = (token) => {
 
 export const logoutUser = () => (dispatch) => {
     localStorage.removeItem("token");
+    localStorage.clear(); // will fix jwt decode error
     delete axios.defaults.headers.common["Authorization"];
     dispatch({ type: SET_UNAUTHENTICATED });
     window.location.href = "/login";
