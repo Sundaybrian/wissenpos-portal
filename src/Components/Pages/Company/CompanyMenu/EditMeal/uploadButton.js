@@ -4,8 +4,9 @@ import PhotoCamera from "@material-ui/icons/PhotoCamera";
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        marginTop: theme.spacing(2),
         "& > *": {
-            margin: theme.spacing(1),
+            margin: theme.spacing(0),
         },
     },
     input: {

@@ -11,6 +11,7 @@ import { CardHeader, IconButton } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { setCurrentMeal } from "../../../../Redux/actions/menuActions";
 import { connect } from "react-redux";
+import formatDate from "../../../../Utils/formateDate";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,7 +60,7 @@ function MealPreview(props) {
                             <EditIcon />
                         </IconButton>
                     }
-                    subheader={new Date().toISOString()}
+                    subheader={formatDate(meal.created_at)}
                 />
                 <CardActionArea>
                     <CardMedia
