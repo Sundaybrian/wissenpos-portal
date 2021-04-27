@@ -6,7 +6,6 @@ import { Route } from "react-router-dom";
 import CategoryModal from "./CategoryModal";
 import MenuCategory from "./MenuCategory";
 import MealsList from "./MealList";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "space-between",
         overflowY: "auto",
         flex: "auto",
+        borderRight: "3px solid rgb(221, 227, 227)",
     },
     mealList: {
         display: "flex",
