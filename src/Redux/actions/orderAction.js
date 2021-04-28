@@ -15,13 +15,13 @@ export const loadOrders = ({
     nextPage = "",
     limit = 30,
     order_status = "New",
-    purchase_status = "paid",
+    purchase_status = "unpaid",
 }) => (dispatch) => {
     dispatch({ type: LOADING_DATA });
 
     axios
         .get(
-            `/company/${companyId}/company-orders?nextPage=${nextPage}&limit=${limit}&order_status=${order_status}&purchase_status=${purchase_status}`
+            `/company/${companyId}/order/company-orders?nextPage=${nextPage}&limit=${limit}&order_status=${order_status}&purchase_status=${purchase_status}`
         )
         .then((res) => {
             dispatch({
