@@ -53,3 +53,13 @@ export const EDIT_MEAL = "EDIT_MEAL";
 export const DELETE_MEAL = "DELETE_MEAL";
 export const SET_CURRENT_MEAL = "SET_CURRENT_MEAL";
 export const CLEAR_CURRENT_MEAL = "CLEAR_CURRENT_MEAL";
+
+// types orders
+export const ADD_ORDER = "ADD_ORDER";
+export const EDIT_ORDER = "EDIT_ORDER";
+export const FILTER_ORDER = "FILTER_ORDER";
+export const LOAD_ORDERS = "LOAD_ORDERS";
+export const UPDATE_ORDER_STATUS = "UPDATE_ORDER_STATUS";
+export const DELETE_ORDER = "DELETE_ORDER";
+export const SET_CURRENT_ORDER = "SET_CURRENT_ORDER";
+export const CLEAR_CURRENT_ORDER = "CLEAR_CURRENT_ORDER";
