@@ -26,6 +26,12 @@ export default function (state = initialState, action) {
                 ...state,
                 loading: true,
             };
+        case LOAD_CART:
+            return {
+                ...state,
+                laoding: false,
+                currentOrder: action.payload,
+            };
         case CLEAR_LOADING_CART:
             return {
                 ...state,
