@@ -17,7 +17,6 @@ import { DeletePopUpDialog as ConfirmDialog } from "../../../Base/DeleteDialog";
 // redux
 import { connect } from "react-redux";
 import { loadOrders } from "../../../../Redux/actions/orderAction";
-import Content from "../../../Layout/Content/Content";
 
 const useStyles = makeStyles((theme) => ({
     root: {
