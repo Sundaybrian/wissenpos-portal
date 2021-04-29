@@ -44,11 +44,12 @@ export const loadOrders = ({
 export const fetchCart = ({ cartID, companyID }) => (dispatch) => {
     dispatch({ type: LOADING_CART });
 
-    const url = `/company${companyID}/order/${cartID}`;
+    const url = `/company/${companyID}/order/${cartID}`;
 
     axios
         .get(url)
         .then((res) => {
+            console.log(res.data);
             dispatch({
                 type: LOAD_CART,
                 payload: res.data,
