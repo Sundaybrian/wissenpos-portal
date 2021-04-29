@@ -57,6 +57,7 @@ export const fetchCart = ({ cartID, companyID }) => (dispatch) => {
             dispatch({ type: CLEAR_LOADING_CART });
         })
         .catch((error) => {
+            dispatch({ type: CLEAR_LOADING_CART });
             dispatch({
                 type: SET_ERRORS,
                 payload: error.response.data,
