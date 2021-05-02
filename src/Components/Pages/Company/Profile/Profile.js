@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import Content from "../../../Layout/Content/Content";
 import Grid from "@material-ui/core/Grid/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
 import PeopleDialog from "../../../Base/People/PeopleDialog";
 import { Button, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
@@ -10,6 +10,10 @@ import CompanyForm from "./CompanyForm";
 import CompanyCard from "./CompanyCard";
 import UserCard from "./UserCard";
 import SummaryCard from "../../../Base/SummaryCard";
+//
+import { connect } from "react-redux";
+import { updateUserProfile } from "../../../../Redux/actions/authActions";
+import UserCardForm from "./UserCardForm";
 
 const useStyles = makeStyles((theme) => ({
     headerContainer: {
@@ -59,10 +63,23 @@ const useStyles = makeStyles((theme) => ({
 
 function Profile(props) {
     const classes = useStyles();
+    const [editUser, setEditUser] = useState(false);
     const {
         company: { company },
         user,
+        loading,
+        updateUserProfile,
     } = props;
+
+    const handleUserUpdate = (values, actions, imageUrl) => {
+        const userData = {
+            ...values,
+            image_url: imageUrl ? imageUrl : user.image_url,
+        };
+
+        updateUserProfile({ userID: user.id, userData });
+        setEditUser(false);
+    };
 
     return (
         <Content>
@@ -108,13 +125,23 @@ function Profile(props) {
                     )}
                 </Grid>
                 <Grid item xs={6}>
-                    {company !== null && company.length > 0 ? (
+                    {editUser ? (
+                        <SummaryCard
+                            title="User Info"
+                            component={
+                                <UserCardForm
+                                    user={user}
+                                    loading={loading}
+                                    setEditUser={setEditUser}
+                                    handleUserUpdate={handleUserUpdate}
+                                />
+                            }
+                        />
+                    ) : (
                         <SummaryCard
                             title="User Info"
                             component={<UserCard user={user} />}
                         />
-                    ) : (
-                        <SummaryCard title="You dont have any profile details, please create one" />
                     )}
                 </Grid>
             </Grid>
@@ -124,6 +151,15 @@ function Profile(props) {
 const mapStateToProps = (state) => ({
     company: state.company,
     user: state.auth.user,
+    loading: state.ui.loading,
 });
 
-export default connect(mapStateToProps)(Profile);
+const mapActionsToProps = {
+    updateUserProfile,
+};
+
+Profile.propTypes = {
+    updateUserProfile: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(Profile);
