@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 // components
 import Main from "./Main";
 
@@ -31,7 +32,7 @@ function Dashboard(props) {
     const classes = useStyles();
 
     return (
-        <d>
+        <div className={classes.root}>
             <ThemeProvider theme={currentTheme}>
                 <AppBarAndDrawer
                     currentTheme={currentTheme}
@@ -47,7 +48,7 @@ function Dashboard(props) {
                     {...props}
                 />
             </ThemeProvider>
-        </d>
+        </div>
     );
 }
 
@@ -55,5 +56,10 @@ const mapStateToProps = (state) => ({
     user: state.auth.user,
     authenticated: state.auth.authenticated,
 });
+
+Dashboard.propTypes = {
+    user: PropTypes.object.isRequired,
+    authenticated: PropTypes.bool.isRequired,
+};
 
 export default connect(mapStateToProps)(Dashboard);
