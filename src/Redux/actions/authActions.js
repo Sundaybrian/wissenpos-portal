@@ -5,6 +5,7 @@ import {
     SET_USER,
     LOADING_UI,
     CLEAR_ERRORS,
+    UPDATE_PROFILE,
 } from "../types";
 import axios from "axios";
 import { loadCompany } from "./companyActions";
@@ -52,6 +53,28 @@ export const registerUser = (userData, history) => (dispatch) => {
         })
         .catch((err) => {
             return dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data,
+            });
+        });
+};
+
+// update user profile
+export const updateUserProfile = ({ userID, userData }) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+
+    axios
+        .put(`/accounts/${userID}`, userData)
+        .then((res) => {
+            dispatch({ type: UPDATE_PROFILE, payload: res.data });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `Account updated successfully`,
+            });
+            dispatch({ type: CLEAR_ERRORS });
+        })
+        .catch((err) => {
+            dispatch({
                 type: SET_ERRORS,
                 payload: err.response.data,
             });
