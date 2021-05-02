@@ -30,6 +30,7 @@ const useStorage = (file) => {
 
     return {
         progress,
+        setProgress,
         url,
         error,
     };
