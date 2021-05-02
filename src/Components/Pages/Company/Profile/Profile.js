@@ -13,7 +13,9 @@ import SummaryCard from "../../../Base/SummaryCard";
 //
 import { connect } from "react-redux";
 import { updateUserProfile } from "../../../../Redux/actions/authActions";
+import { updateCompany } from "../../../../Redux/actions/companyActions";
 import UserCardForm from "./UserCardForm";
+import CompanyEditForm from "./CompanyEditForm";
 
 const useStyles = makeStyles((theme) => ({
     headerContainer: {
@@ -64,11 +66,14 @@ const useStyles = makeStyles((theme) => ({
 function Profile(props) {
     const classes = useStyles();
     const [editUser, setEditUser] = useState(false);
+    const [editCompany, setEditCompany] = useState(false);
+
     const {
         company: { company },
         user,
         loading,
         updateUserProfile,
+        updateCompany,
     } = props;
 
     const handleUserUpdate = (values, actions, imageUrl) => {
@@ -79,6 +84,16 @@ function Profile(props) {
 
         updateUserProfile({ userID: user.id, userData });
         setEditUser(false);
+    };
+
+    const handleCompanyUpdate = (values, actions, imageUrl) => {
+        const companyData = {
+            ...values,
+            logo_url: imageUrl ? imageUrl : company.logo_url,
+        };
+
+        updateCompany({ id: company.id, companyData });
+        setEditCompany(false);
     };
 
     return (
@@ -123,13 +138,22 @@ function Profile(props) {
 
             <div className={classes.summaryCards}>
                 <>
-                    {company !== null && company.length > 0 ? (
+                    {editCompany ? (
+                        <SummaryCard
+                            title="Edit Company Info"
+                            component={
+                                <CompanyEditForm
+                                    company={company[0]}
+                                    handleCompanyUpdate={handleCompanyUpdate}
+                                    setEditCompany={setEditCompany}
+                                />
+                            }
+                        />
+                    ) : (
                         <SummaryCard
                             title="Company Info"
                             component={<CompanyCard company={company[0]} />}
                         />
-                    ) : (
-                        <SummaryCard title="You dont have any compay, please create one" />
                     )}
                 </>
                 <>
@@ -169,10 +193,12 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     updateUserProfile,
+    updateCompany,
 };
 
 Profile.propTypes = {
     updateUserProfile: PropTypes.func.isRequired,
+    updateCompany: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(Profile);
