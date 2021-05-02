@@ -8,6 +8,7 @@ import {
     LOAD_CART,
     LOADING_CART,
     CLEAR_LOADING_CART,
+    CLEAR_CURRENT_ORDER,
 } from "../types";
 import axios from "axios";
 
@@ -64,4 +65,11 @@ export const fetchCart = ({ cartID, companyID }) => (dispatch) => {
                 payload: error.response.data,
             });
         });
+};
+
+// set current order to null
+export const clearCurrentOrder = () => (dispatch) => {
+    dispatch({
+        type: CLEAR_CURRENT_ORDER,
+    });
 };

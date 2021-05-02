@@ -3,6 +3,7 @@ import {
     LOAD_CART,
     LOADING_CART,
     CLEAR_LOADING_CART,
+    CLEAR_CURRENT_ORDER,
 } from "../types";
 
 const initialState = {
@@ -31,6 +32,12 @@ export default function (state = initialState, action) {
                 ...state,
                 laoding: false,
                 currentOrder: action.payload,
+            };
+        case CLEAR_CURRENT_ORDER:
+            return {
+                ...state,
+                loading: false,
+                currentOrder: null,
             };
         case CLEAR_LOADING_CART:
             return {
