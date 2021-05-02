@@ -14,8 +14,6 @@ const company = (state = initialState, action) => {
                 company: action.payload,
             };
         case EDIT_COMPANY:
-            console.log(state.company);
-            console.log(action.payload);
             return {
                 ...state,
                 company: state.company.map((company) =>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Content from "../../../Layout/Content/Content";
-import Grid from "@material-ui/core/Grid/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import PeopleDialog from "../../../Base/People/PeopleDialog";
 import { Avatar, Button, Typography } from "@material-ui/core";
@@ -87,12 +86,13 @@ function Profile(props) {
     };
 
     const handleCompanyUpdate = (values, actions, imageUrl) => {
+        console.log("clicked");
         const companyData = {
             ...values,
             logo_url: imageUrl ? imageUrl : company.logo_url,
         };
 
-        updateCompany({ id: company.id, companyData });
+        updateCompany({ id: company[0].id, companyData });
         setEditCompany(false);
     };
 
@@ -146,13 +146,19 @@ function Profile(props) {
                                     company={company[0]}
                                     handleCompanyUpdate={handleCompanyUpdate}
                                     setEditCompany={setEditCompany}
+                                    loading={loading}
                                 />
                             }
                         />
                     ) : (
                         <SummaryCard
                             title="Company Info"
-                            component={<CompanyCard company={company[0]} />}
+                            component={
+                                <CompanyCard
+                                    company={company[0]}
+                                    setEditCompany={setEditCompany}
+                                />
+                            }
                         />
                     )}
                 </>
