@@ -4,7 +4,7 @@ import Content from "../../../Layout/Content/Content";
 import Grid from "@material-ui/core/Grid/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import PeopleDialog from "../../../Base/People/PeopleDialog";
-import { Button, Typography } from "@material-ui/core";
+import { Avatar, Button, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CompanyForm from "./CompanyForm";
 import CompanyCard from "./CompanyCard";
@@ -85,6 +85,14 @@ function Profile(props) {
         <Content>
             <div className={classes.headerContainer}>
                 <div className={classes.header}>
+                    <Avatar
+                        alt={`${user.firstName}`}
+                        src={`${user.image_url}`}
+                        classes={{
+                            root: classes.avatar,
+                            circle: classes.circle,
+                        }}
+                    />
                     <Typography variant={"h5"}>Hi, {user.firstName}</Typography>
                     <div className={classes.spacer} />
                     <div className={classes.actionGroup}>
@@ -113,8 +121,8 @@ function Profile(props) {
                 </div>
             </div>
 
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
+            <div className={classes.summaryCards}>
+                <>
                     {company !== null && company.length > 0 ? (
                         <SummaryCard
                             title="Company Info"
@@ -123,8 +131,8 @@ function Profile(props) {
                     ) : (
                         <SummaryCard title="You dont have any compay, please create one" />
                     )}
-                </Grid>
-                <Grid item xs={6}>
+                </>
+                <>
                     {editUser ? (
                         <SummaryCard
                             title="User Info"
@@ -140,11 +148,16 @@ function Profile(props) {
                     ) : (
                         <SummaryCard
                             title="User Info"
-                            component={<UserCard user={user} />}
+                            component={
+                                <UserCard
+                                    user={user}
+                                    setEditUser={setEditUser}
+                                />
+                            }
                         />
                     )}
-                </Grid>
-            </Grid>
+                </>
+            </div>
         </Content>
     );
 }
