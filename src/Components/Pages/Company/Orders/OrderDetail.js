@@ -10,7 +10,11 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
-import { fetchCart } from "../../../../Redux/actions/orderAction";
+import {
+    fetchCart,
+    clearCurrentOrder,
+} from "../../../../Redux/actions/orderAction";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,15 +27,32 @@ const useStyles = makeStyles((theme) => ({
     },
 
     root1: {
-        width: "340px",
+        display: "flex",
+        flexDirection: "column",
+        width: "360px",
         flexShrink: 0,
         height: "100vh",
+        minHeight: "100vh",
+        position: "absolute",
+        right: 0,
+        top: 0,
+        bottom: 0,
+        zIndex: 100,
+        overflowY: "scroll",
+        marginTop: theme.spacing(5),
     },
 }));
 
 export function AlignItemsList(props) {
-    const { items } = props;
+    const { items, clearCurrentOrder } = props;
     const classes = useStyles();
+
+    const evalTotal = (t) => {
+        return t.reduce((accumulator, currentValue, index) => {
+            let x = currentValue.quantity * currentValue.price;
+            return accumulator + x;
+        }, 0);
+    };
 
     return (
         <>
@@ -40,13 +61,10 @@ export function AlignItemsList(props) {
                 <List className={classes.root}>
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
-                            <Avatar
-                                alt="Remy Sharp"
-                                src="/static/images/avatar/1.jpg"
-                            />
+                            <Avatar alt={item.id} src={item.image_url} />
                         </ListItemAvatar>
                         <ListItemText
-                            primary="Brunch this weekend?"
+                            primary={`${item.name} * ${item.quantity}`}
                             secondary={
                                 <React.Fragment>
                                     <Typography
@@ -55,11 +73,9 @@ export function AlignItemsList(props) {
                                         className={classes.inline}
                                         color="textPrimary"
                                     >
-                                        Ali Connors
+                                        @:ksh
                                     </Typography>
-                                    {
-                                        " — I'll be in your neighborhood doing errands this…"
-                                    }
+                                    {item.quantity}
                                 </React.Fragment>
                             }
                         />
@@ -67,6 +83,42 @@ export function AlignItemsList(props) {
                     <Divider variant="inset" component="li" />
                 </List>
             ))}
+            <List className={classes.root}>
+                <ListItem alignItems="flex-start">
+                    <ListItemText
+                        primary={`Total Payable:`}
+                        secondary={
+                            <React.Fragment>
+                                <Typography
+                                    component="span"
+                                    variant="body2"
+                                    className={classes.inline}
+                                    color="textPrimary"
+                                >
+                                    ksh{" "}
+                                </Typography>
+                                {evalTotal(items)}
+                            </React.Fragment>
+                        }
+                    />
+                </ListItem>
+                <ListItem alignItems="flex-start" spacing={2}>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => clearCurrentOrder()}
+                        style={{
+                            marginRight: "15px",
+                        }}
+                    >
+                        Close
+                    </Button>
+
+                    <Button variant="contained" color="primary" disabled>
+                        Action
+                    </Button>
+                </ListItem>
+            </List>
         </>
     );
 }
@@ -76,6 +128,7 @@ function OrderDetail(props) {
         currentOrder: cart,
         loading,
         fetchCart,
+        clearCurrentOrder,
         company: { company },
     } = props;
 
@@ -93,9 +146,13 @@ function OrderDetail(props) {
         <div className={classes.root1}>
             <SummaryCard
                 title={cart.cart_id}
-                component={<AlignItemsList items={cart.items} />}
+                component={
+                    <AlignItemsList
+                        items={cart.items}
+                        clearCurrentOrder={clearCurrentOrder}
+                    />
+                }
             />
-            ;
         </div>
     );
 }
@@ -104,12 +161,14 @@ const mapStateToProps = (state) => ({
 });
 const mapActionsToProps = {
     fetchCart,
+    clearCurrentOrder,
 };
 
 OrderDetail.propTypes = {
     cart: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     fetchCart: PropTypes.func.isRequired,
+    clearCurrentOrder: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(OrderDetail);
