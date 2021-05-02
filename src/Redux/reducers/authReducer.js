@@ -1,8 +1,8 @@
 import {
     SET_USER,
-    LOADING_UI,
     SET_AUTHENTICATED,
     SET_UNAUTHENTICATED,
+    UPDATE_PROFILE,
 } from "../types";
 
 const initialState = {
@@ -27,6 +27,14 @@ const auth = (state = initialState, action) => {
                 ...state,
                 authenticated: true,
                 user: action.payload,
+            };
+        case UPDATE_PROFILE:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    ...action.payload,
+                },
             };
         default:
             return state;
