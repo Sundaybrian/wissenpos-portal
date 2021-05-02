@@ -53,8 +53,9 @@ export const registerCompany = (companyData, history) => (dispatch) => {
         });
 };
 
-export const updateCompany = (id, companyData) => (dispatch) => {
+export const updateCompany = ({ id, companyData }) => (dispatch) => {
     dispatch({ type: LOADING_UI });
+    console.log("hereeeeeeeeeeeeeee");
 
     axios
         .patch(`/company/${id}`, companyData)

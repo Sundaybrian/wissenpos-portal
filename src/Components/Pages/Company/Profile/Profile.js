@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import Content from "../../../Layout/Content/Content";
-import Grid from "@material-ui/core/Grid/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
 import PeopleDialog from "../../../Base/People/PeopleDialog";
-import { Button, Typography } from "@material-ui/core";
+import { Avatar, Button, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CompanyForm from "./CompanyForm";
 import CompanyCard from "./CompanyCard";
 import UserCard from "./UserCard";
 import SummaryCard from "../../../Base/SummaryCard";
+//
+import { connect } from "react-redux";
+import { updateUserProfile } from "../../../../Redux/actions/authActions";
+import { updateCompany } from "../../../../Redux/actions/companyActions";
+import UserCardForm from "./UserCardForm";
+import CompanyEditForm from "./CompanyEditForm";
 
 const useStyles = makeStyles((theme) => ({
     headerContainer: {
@@ -59,15 +64,50 @@ const useStyles = makeStyles((theme) => ({
 
 function Profile(props) {
     const classes = useStyles();
+    const [editUser, setEditUser] = useState(false);
+    const [editCompany, setEditCompany] = useState(false);
+
     const {
         company: { company },
         user,
+        loading,
+        updateUserProfile,
+        updateCompany,
     } = props;
+
+    const handleUserUpdate = (values, actions, imageUrl) => {
+        const userData = {
+            ...values,
+            image_url: imageUrl ? imageUrl : user.image_url,
+        };
+
+        updateUserProfile({ userID: user.id, userData });
+        setEditUser(false);
+    };
+
+    const handleCompanyUpdate = (values, actions, imageUrl) => {
+        console.log("clicked");
+        const companyData = {
+            ...values,
+            logo_url: imageUrl ? imageUrl : company.logo_url,
+        };
+
+        updateCompany({ id: company[0].id, companyData });
+        setEditCompany(false);
+    };
 
     return (
         <Content>
             <div className={classes.headerContainer}>
                 <div className={classes.header}>
+                    <Avatar
+                        alt={`${user.firstName}`}
+                        src={`${user.image_url}`}
+                        classes={{
+                            root: classes.avatar,
+                            circle: classes.circle,
+                        }}
+                    />
                     <Typography variant={"h5"}>Hi, {user.firstName}</Typography>
                     <div className={classes.spacer} />
                     <div className={classes.actionGroup}>
@@ -96,34 +136,75 @@ function Profile(props) {
                 </div>
             </div>
 
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
-                    {company !== null && company.length > 0 ? (
+            <div className={classes.summaryCards}>
+                <>
+                    {editCompany ? (
+                        <SummaryCard
+                            title="Edit Company Info"
+                            component={
+                                <CompanyEditForm
+                                    company={company[0]}
+                                    handleCompanyUpdate={handleCompanyUpdate}
+                                    setEditCompany={setEditCompany}
+                                    loading={loading}
+                                />
+                            }
+                        />
+                    ) : (
                         <SummaryCard
                             title="Company Info"
-                            component={<CompanyCard company={company[0]} />}
+                            component={
+                                <CompanyCard
+                                    company={company[0]}
+                                    setEditCompany={setEditCompany}
+                                />
+                            }
                         />
-                    ) : (
-                        <SummaryCard title="You dont have any compay, please create one" />
                     )}
-                </Grid>
-                <Grid item xs={6}>
-                    {company !== null && company.length > 0 ? (
+                </>
+                <>
+                    {editUser ? (
                         <SummaryCard
                             title="User Info"
-                            component={<UserCard user={user} />}
+                            component={
+                                <UserCardForm
+                                    user={user}
+                                    loading={loading}
+                                    setEditUser={setEditUser}
+                                    handleUserUpdate={handleUserUpdate}
+                                />
+                            }
                         />
                     ) : (
-                        <SummaryCard title="You dont have any profile details, please create one" />
+                        <SummaryCard
+                            title="User Info"
+                            component={
+                                <UserCard
+                                    user={user}
+                                    setEditUser={setEditUser}
+                                />
+                            }
+                        />
                     )}
-                </Grid>
-            </Grid>
+                </>
+            </div>
         </Content>
     );
 }
 const mapStateToProps = (state) => ({
     company: state.company,
     user: state.auth.user,
+    loading: state.ui.loading,
 });
 
-export default connect(mapStateToProps)(Profile);
+const mapActionsToProps = {
+    updateUserProfile,
+    updateCompany,
+};
+
+Profile.propTypes = {
+    updateUserProfile: PropTypes.func.isRequired,
+    updateCompany: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(Profile);

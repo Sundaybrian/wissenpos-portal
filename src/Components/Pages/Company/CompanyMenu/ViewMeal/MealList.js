@@ -11,6 +11,7 @@ function MealsList(props) {
     const {
         category,
         setMeal,
+        meal,
         setToogleMenuView,
         fetchMealsByCategory,
         company,
@@ -34,6 +35,7 @@ function MealsList(props) {
                         onClick={() => {
                             setMeal(m);
                         }}
+                        selected={meal && meal.name == m.name}
                         key={index}
                     >
                         <ListItemText primary={m.name} />

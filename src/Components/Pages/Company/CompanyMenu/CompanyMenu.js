@@ -20,17 +20,16 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
-        backgroundColor: "red",
     },
     menuContainer: {
         height: "100vh",
         display: "flex",
         // position: "fixed",
-        [theme.breakpoints.up("sm")]: {
-            width: `calc(100% - ${drawerWidth}px)`,
-            marginLeft: drawerWidth,
-        },
-        paddingTop: theme.spacing(1),
+        // [theme.breakpoints.up("sm")]: {
+        //     width: `calc(100% - ${drawerWidth}px)`,
+        //     marginLeft: drawerWidth,
+        // },
+        // paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(1),
         position: "relative",
     },

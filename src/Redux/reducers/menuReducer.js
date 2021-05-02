@@ -30,7 +30,7 @@ const company = (state = initialState, action) => {
         case ADD_MENU:
             return {
                 ...state,
-                menu: action.payload,
+                menu: action.payload.length == 0 ? null : action.payload,
             };
         case RENAME_MENU:
             return {

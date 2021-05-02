@@ -5,8 +5,9 @@ import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
 import CardActionArea from "@material-ui/core/CardActionArea";
+import IconButton from "@material-ui/core/IconButton";
 import BankIcon from "@material-ui/icons/AccountBalance";
-import ContactSupport from "@material-ui/icons/ContactSupport";
+import EditIcon from "@material-ui/icons/Edit";
 import SpeedIcon from "@material-ui/icons/Speed";
 import { blue, green, pink } from "@material-ui/core/colors";
 
@@ -36,12 +37,28 @@ function CompanyCard(props) {
     const classes = useStyles();
     const {
         company: { name, description, logo_url, website_url, id, email },
+        setEditCompany,
     } = props;
 
     return (
         <>
             <>
                 <CardActionArea>
+                    <CardHeader
+                        onClick={() => setEditCompany(true)}
+                        avatar={
+                            <Avatar
+                                aria-label="recipe"
+                                className={classes.green}
+                                src={logo_url}
+                            />
+                        }
+                        action={
+                            <IconButton aria-label="settings">
+                                <EditIcon />
+                            </IconButton>
+                        }
+                    />
                     <CardContent>
                         <Typography
                             variant="body2"

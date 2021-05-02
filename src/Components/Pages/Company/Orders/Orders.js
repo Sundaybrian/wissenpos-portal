@@ -1,7 +1,48 @@
 import React from "react";
+import PropTypes from "prop-types";
+import Content from "../../../Layout/Content/Content";
+import OrderTable from "./OrderTable";
+import OrderDetail from "./OrderDetail";
 
-function Orders() {
-    return <div>orders</div>;
+import { connect } from "react-redux";
+//mui
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: "flex",
+    },
+}));
+
+function Orders(props) {
+    const {
+        order: { loading, currentOrder },
+    } = props;
+
+    const classes = useStyles();
+
+    return (
+        <Content>
+            <div className={classes.root}>
+                <OrderTable />
+                {currentOrder && (
+                    <OrderDetail
+                        currentOrder={currentOrder}
+                        loading={loading}
+                    />
+                )}
+            </div>
+        </Content>
+    );
 }
 
-export default Orders;
+const mapStateToProps = (state) => ({
+    order: state.order,
+});
+
+const mapActionsToProps = {};
+
+Orders.propTypes = {
+    order: PropTypes.object.isRequired,
+};
+export default connect(mapStateToProps, mapActionsToProps)(Orders);

@@ -30,9 +30,9 @@ const dashboardRoutes = [
 
 export const companyRoutes = [
     {
-        path: "metrics",
+        path: "reports",
         component: Metric,
-        text: "metrics",
+        text: "reports",
         icon: DataUsageIcon,
         layout:"/company"
     },

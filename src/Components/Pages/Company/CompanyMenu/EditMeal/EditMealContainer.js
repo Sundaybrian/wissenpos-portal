@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
-        backgroundColor: "red",
     },
     mealForm: {
         display: "flex",
