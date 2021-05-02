@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: "460px",
         height: "100%",
         borderRight: "3px solid rgb(221, 227, 227)",
+        borderLeft: "3px solid rgb(221, 227, 227)",
     },
     children: {
         overflowY: "scroll",
