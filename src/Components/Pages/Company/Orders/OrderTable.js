@@ -16,7 +16,7 @@ import useTable from "../../../Base/Table/useTable";
 import { DeletePopUpDialog as ConfirmDialog } from "../../../Base/DeleteDialog";
 // redux
 import { connect } from "react-redux";
-import { loadOrders } from "../../../../Redux/actions/orderAction";
+import { loadOrders, fetchCart } from "../../../../Redux/actions/orderAction";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
     grow: {
         flexGrow: 1,
+        flexShrink: 0.6,
     },
     deleteButton: {
         marginLeft: theme.spacing(1),
@@ -93,6 +94,7 @@ function OrderTable(props) {
         order: { orders },
         company,
         loadOrders,
+        fetchCart,
     } = props;
 
     useEffect(() => {
@@ -218,7 +220,11 @@ function OrderTable(props) {
                                                         ) {
                                                             return;
                                                         }
-                                                        // openInPopup(row); // to open order details card
+                                                        fetchCart({
+                                                            companyID:
+                                                                company.id,
+                                                            cartID: row.cart_id,
+                                                        }); // to open order details card
                                                     }}
                                                     key={`order-${row.id}`}
                                                     selected={isItemSelected}
@@ -306,6 +312,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     loadOrders,
+    fetchCart,
 };
 
 OrderTable.propTypes = {
@@ -313,6 +320,7 @@ OrderTable.propTypes = {
     ui: PropTypes.object.isRequired,
     order: PropTypes.object.isRequired,
     company: PropTypes.object.isRequired,
+    fetchCart: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(OrderTable);

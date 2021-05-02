@@ -8,19 +8,30 @@ import { connect } from "react-redux";
 //mui
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: "flex",
+    },
+}));
 
 function Orders(props) {
     const {
         order: { loading, currentOrder },
     } = props;
 
+    const classes = useStyles();
+
     return (
         <Content>
-            <OrderTable />
-            {currentOrder && (
-                <OrderDetail currentOrder={currentOrder} loading={loading} />
-            )}
+            <div className={classes.root}>
+                <OrderTable />
+                {currentOrder && (
+                    <OrderDetail
+                        currentOrder={currentOrder}
+                        loading={loading}
+                    />
+                )}
+            </div>
         </Content>
     );
 }
