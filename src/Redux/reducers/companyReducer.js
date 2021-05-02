@@ -14,10 +14,14 @@ const company = (state = initialState, action) => {
                 company: action.payload,
             };
         case EDIT_COMPANY:
+            console.log(state.company);
+            console.log(action.payload);
             return {
                 ...state,
-                compay: state.company.map((company) =>
-                    company.id == action.payload.id ? action.payload : company
+                company: state.company.map((company) =>
+                    company.id == action.payload.id
+                        ? { ...company, ...action.payload }
+                        : company
                 ),
             };
 
