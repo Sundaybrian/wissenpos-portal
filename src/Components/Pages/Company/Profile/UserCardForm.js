@@ -11,23 +11,30 @@ import ProgressBar from "../../../Base/ProgressBarImages";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        display: "flex",
-        flexDirection: "column",
+        // display: "flex",
+        // maxWidth: 345,
 
         // color: theme.palette.text.secondary,
         "& .MuiFormControl-root": {
-            // width: "80%",
-            margin: theme.spacing(1),
+            margin: theme.spacing(3),
+            width: 200,
         },
     },
 
     form: {
-        maxWidth: 345,
+        // maxWidth: 345,
         width: "100%",
-        marginLeft: theme.spacing(8),
+        // marginLeft: theme.spacing(8),
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        "& .MuiFormControl-root": {
+            margin: theme.spacing(3),
+            width: 2000,
+        },
+    },
+    UploadButton: {
+        margin: theme.spacing(1.5),
     },
     submit: {
         margin: theme.spacing(0.5),
@@ -65,6 +72,12 @@ function UserCardForm(props) {
         imageChangeHandler,
     } = useImageHandler();
 
+    React.useEffect(() => {
+        if (imageUrl !== null) {
+            user.image_url = imageUrl;
+        }
+    }, [imageUrl]);
+
     return (
         <div className={classes.root}>
             <Formik
@@ -80,91 +93,85 @@ function UserCardForm(props) {
                 }
             >
                 <Form className={classes.form}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <Field
-                                name="firstName"
-                                type="text"
-                                label="First Name"
-                                variant="outlined"
-                                component={TextField}
-                                fullWidth
-                            />
+                    <Field
+                        name="firstName"
+                        type="text"
+                        label="First Name"
+                        component={TextField}
+                        fullWidth
+                    />
 
-                            <Field
-                                name="lastName"
-                                type="text"
-                                label="Last Name"
-                                variant="outlined"
-                                component={TextField}
-                                fullWidth
-                            />
+                    <Field
+                        name="lastName"
+                        type="text"
+                        label="Last Name"
+                        component={TextField}
+                        fullWidth
+                    />
 
-                            <Field
-                                name="phoneNumber"
-                                type="text"
-                                label="PhoneNumber"
-                                variant="outlined"
-                                component={TextField}
-                                fullWidth
-                            />
+                    <Field
+                        name="phoneNumber"
+                        type="text"
+                        label="PhoneNumber"
+                        component={TextField}
+                        fullWidth
+                    />
 
-                            <Field
-                                variant="outlined"
-                                component={TextField}
-                                fullWidth
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
+                    <Field
+                        component={TextField}
+                        fullWidth
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                    />
+                    <div className={classes.UploadButton}>
+                        {file == null && (
+                            <UploadButton
+                                imageChangeHandler={imageChangeHandler}
+                                title={
+                                    file == null
+                                        ? "Edit Profile Picture"
+                                        : "Profile Image Uploaded Successfully"
+                                }
                             />
-                            {file == null && (
-                                <UploadButton
-                                    imageChangeHandler={imageChangeHandler}
-                                    title={
-                                        file == null
-                                            ? "Edit Profile Picture"
-                                            : "Profile Image Uploaded Successfully"
-                                    }
+                        )}
+
+                        {file && (
+                            <ProgressBar
+                                file={file}
+                                setFile={setFile}
+                                setImageUrl={setImageUrl}
+                            />
+                        )}
+                    </div>
+
+                    <div className={classes.actionButtons}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            disabled={loading}
+                            className={classes.submit}
+                            type="submit"
+                        >
+                            Ok
+                            {loading && (
+                                <CircularProgress
+                                    size={30}
+                                    className={classes.progress}
                                 />
                             )}
+                        </Button>
 
-                            {file && (
-                                <ProgressBar
-                                    file={file}
-                                    setFile={setFile}
-                                    setImageUrl={setImageUrl}
-                                />
-                            )}
-
-                            <div className={classes.actionButtons}>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    disabled={loading}
-                                    className={classes.submit}
-                                    type="submit"
-                                >
-                                    Ok
-                                    {loading && (
-                                        <CircularProgress
-                                            size={30}
-                                            className={classes.progress}
-                                        />
-                                    )}
-                                </Button>
-
-                                <Button
-                                    variant="contained"
-                                    color="default"
-                                    className={classes.submit}
-                                    onClick={handleCancel}
-                                >
-                                    Cancel
-                                </Button>
-                            </div>
-                        </Grid>
-                    </Grid>
+                        <Button
+                            variant="contained"
+                            color="default"
+                            className={classes.submit}
+                            onClick={handleCancel}
+                        >
+                            Cancel
+                        </Button>
+                    </div>
                 </Form>
             </Formik>
         </div>
