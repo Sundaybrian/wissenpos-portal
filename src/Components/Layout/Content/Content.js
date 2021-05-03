@@ -1,6 +1,4 @@
-import React from "react";
 import Container from "@material-ui/core/Container";
-import { drawerWidth } from "../AppBarAndDrawer/AppBarAndDrawer";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({

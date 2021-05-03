@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { blue, pink } from "@material-ui/core/colors";
 
 const defaultTheme = {
     palette: {

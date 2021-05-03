@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link as RouterLink } from "react-router-dom";
-
 //mui stuff
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -18,10 +16,8 @@ import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { createStyles } from "@material-ui/core/styles";
 import withStyles from "@material-ui/core/styles/withStyles";
-
 // components
 import Copyright from "../../../Base/Copyright";
-
 // redux
 import { connect } from "react-redux";
 import { loginUser } from "../../../../Redux/actions/authActions";

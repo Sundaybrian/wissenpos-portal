@@ -92,10 +92,6 @@ const validationSchemaOwner = Yup.object({
 });
 
 class Register extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         if (this.props.auth.authenticated) {
             this.props.history.push("/dashboard");

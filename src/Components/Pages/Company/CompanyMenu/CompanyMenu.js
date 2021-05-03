@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { useRouteMatch } from "react-router-dom";
-import { drawerWidth } from "../../../Layout/AppBarAndDrawer/AppBarAndDrawer";
 import { connect } from "react-redux";
 
 import {
@@ -40,7 +39,6 @@ function CompanyMenu(props) {
     const [toggleMenuView, setToogleMenuView] = useState(false);
 
     const {
-        auth,
         ui: { loading },
         loadMenu,
         Menu: { menu: companyMenu },
@@ -49,6 +47,7 @@ function CompanyMenu(props) {
 
     const { url } = useRouteMatch();
 
+    /* eslint-disable eqeqeq */
     useEffect(() => {
         if (companyMenu == null) {
             loadMenu(company[0].id);

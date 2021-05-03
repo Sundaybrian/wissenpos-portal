@@ -9,6 +9,7 @@ import {
     LOADING_CART,
     CLEAR_LOADING_CART,
     CLEAR_CURRENT_ORDER,
+    STOP_LOADING_DATA,
 } from "../types";
 import axios from "axios";
 
@@ -34,6 +35,30 @@ export const loadOrders = ({
             dispatch({ type: CLEAR_ERRORS });
         })
         .catch((error) => {
+            dispatch({
+                type: SET_ERRORS,
+                payload: error.response.data,
+            });
+        });
+};
+
+// load order stats
+export const loadOrderStats = ({ companyID }) => (dispatch) => {
+    dispatch({ type: LOADING_DATA });
+
+    const url = `/company/${companyID}/order/orderStats`;
+    axios
+        .get(url)
+        .then((res) => {
+            dispatch({
+                type: LOAD_ORDER_STATS,
+                payload: res.data,
+            });
+
+            dispatch({ type: STOP_LOADING_DATA });
+        })
+        .catch((error) => {
+            dispatch({ type: STOP_LOADING_DATA });
             dispatch({
                 type: SET_ERRORS,
                 payload: error.response.data,
