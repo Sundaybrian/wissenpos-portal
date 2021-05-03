@@ -37,7 +37,8 @@
         "yup": "^0.32.9"
     },
     "scripts": {
-        "start": "BROWSER=none react-scripts start",
+        "start": "REACT_APP_STAGE=develop react-scripts start",
+        "build": "react-scripts build",
         "start:develop": "BROWSER=none env-cmd -f ./.env.development.local react-scripts start",
         "start:local": "BROWSER=none env-cmd -f ./.env.local  react-scripts start",
         "build:develop": "env-cmd -f ./.env.development.local react-scripts build",

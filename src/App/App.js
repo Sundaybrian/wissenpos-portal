@@ -22,7 +22,7 @@ import axios from "axios";
 import Alert from "../Components/Base/Alert";
 
 // decidin on the backend service to use
-axios.defaults.baseURL = config["BACKEND_SERVICE"];
+axios.defaults.baseURL = config.BACKEND_SERVICE;
 
 function App() {
     const [currentTheme] = useTheme();
