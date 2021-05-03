@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import SummaryCard from "../../../Base/SummaryCard";
 import Loader from "../../../Base/Loader";
+import { loadOrderStats } from "../../../../Redux/actions/orderAction";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     summaryCards: {
@@ -17,6 +20,17 @@ const useStyles = makeStyles((theme) => ({
 
 function OrderSummary(props) {
     const classes = useStyles();
+    const {
+        company: { id },
+        loadOrderStats,
+        loadingData,
+        stats,
+    } = props;
+
+    useEffect(() => {
+        loadOrderStats({ companyID: id });
+    }, []);
+
     if (loadingData) {
         return (
             <>
@@ -28,26 +42,30 @@ function OrderSummary(props) {
     }
     return (
         <div className={classes.summaryCards}>
-            {loadingData ? (
-                <Loader />
-            ) : (
+            {stats && (
                 <>
-                    <SummaryCard
-                        title={"Jobs Posted"}
-                        value={currentFreelancerStats.jobsPosted}
-                    />
-                    <SummaryCard
-                        title={"Job Completed"}
-                        value={currentFreelancerStats.completed}
-                    />
-                    <SummaryCard
-                        title={"Rating"}
-                        value={currentFreelancerStats.rating}
-                    />
+                    <SummaryCard title={"InCart"} value={stats.inCart} />
+                    <SummaryCard title={"Paid"} value={stats.paid} />
+                    <SummaryCard title={"Returns"} value={stats.returns} />
                 </>
             )}
         </div>
     );
 }
 
-export default OrderSummary;
+const mapStateToProps = (state) => ({
+    loadingData: state.ui.loadingData,
+    company: state.company.company[0],
+    stats: state.order.stats,
+});
+
+const mapActionsToProps = {
+    loadOrderStats,
+};
+
+OrderSummary.propTypes = {
+    loadingData: PropTypes.bool.isRequired,
+    company: PropTypes.object.isRequired,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(OrderSummary);
