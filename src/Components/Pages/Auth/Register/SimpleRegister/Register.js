@@ -103,7 +103,7 @@ class Register extends Component {
         };
 
         this.props.registerUser(user, this.props.history);
-        // actions.resetForm();
+        actions.resetForm();
     };
 
     render() {

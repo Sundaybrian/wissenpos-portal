@@ -203,7 +203,7 @@ class CompanyReg extends Component {
 
                             <Grid container mt={5}>
                                 <Grid item xs>
-                                    <Link to="/" variant="body2">
+                                    <Link to="/login" variant="body2">
                                         Forgot password?
                                     </Link>
                                 </Grid>
