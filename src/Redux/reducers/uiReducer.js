@@ -32,6 +32,9 @@ const ui = (state = initialState, action) => {
         case SET_SUCCESS:
             return {
                 ...state,
+                loading: false,
+                errors: null,
+                successMessage: action.payload,
                 errors: {
                     message: action.payload,
                 },
