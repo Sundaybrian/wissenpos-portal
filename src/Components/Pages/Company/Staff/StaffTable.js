@@ -18,16 +18,13 @@ import Loader from "../../../Base/Loader";
 import DeletePeopleDialog, {
     DeletePopUpDialog as ConfirmDialog,
 } from "../../../Base/DeleteDialog";
-// import Content from "../../../Container/Content";
-// redux
 import { connect } from "react-redux";
-import { compose } from "redux";
-import { firebaseConnect, isLoaded, isEmpty } from "react-redux-firebase";
-import DriverActions from "./DriverActions";
+import { isLoaded, isEmpty } from "react-redux-firebase";
+import StaffActions from "./StaffActions";
 import PeopleDialog from "../../../Base/People/PeopleDialog";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import DriverCreate from "./DriverCreate";
+import StaffCreate from "./StaffCreate";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -58,7 +55,7 @@ const headCells = [
         id: "",
         numeric: false,
         disablePadding: true,
-        label: "Driver ID",
+        label: "Staff ID",
     },
     {
         id: "fullName",
@@ -67,12 +64,6 @@ const headCells = [
         label: "Full Name",
     },
 
-    // {
-    //     id: "subscriptionStatus",
-    //     numeric: false,
-    //     disablePadding: true,
-    //     label: "subscription status",
-    // },
     {
         id: "email",
         numeric: false,
@@ -80,30 +71,17 @@ const headCells = [
         label: "Email",
     },
 
-    // { id: "email", numeric: false, disablePadding: false, label: "Email" },
     {
-        id: "phoneNumber",
+        id: "role",
         numeric: false,
         disablePadding: false,
-        label: "PhoneNumber",
+        label: "role",
     },
     {
         id: "isActive",
         numeric: false,
         disablePadding: false,
         label: "Account Status",
-    },
-    // {
-    //     id: "category",
-    //     numeric: false,
-    //     disablePadding: false,
-    //     label: "Vehicle Category",
-    // },
-    {
-        id: "numberPlate",
-        numeric: false,
-        disablePadding: false,
-        label: "Vehicle Registration",
     },
 
     {
@@ -117,8 +95,14 @@ const headCells = [
 function StaffTable(props) {
     const classes = useStyles();
 
-    const { drivers, openInPopup, onDelete, confirmDialog, setConfirmDialog } =
-        props;
+    const {
+        staff,
+        openInPopup,
+        onDelete,
+        confirmDialog,
+        setConfirmDialog,
+        handleCreateStaff,
+    } = props;
 
     /* eslint-disable no-unused-vars */
     const [filterFn, setFilterFn] = useState({
@@ -135,7 +119,7 @@ function StaffTable(props) {
         TblHead,
         TblPagination,
         recordsAfterPagingAndSorting,
-    } = useTable(drivers, drivers, headCells, filterFn);
+    } = useTable(staff, staff, headCells, filterFn);
 
     const [snackOpen, setSnackOpen] = React.useState(false);
 
@@ -148,12 +132,12 @@ function StaffTable(props) {
         setSnackOpen(false);
     };
 
-    if (!isLoaded(drivers)) {
+    if (!isLoaded(staff)) {
         return <Loader />;
     }
 
-    if (isEmpty(drivers)) {
-        return <SummaryCard title="No riders found" />;
+    if (isEmpty(staff)) {
+        return <SummaryCard title="No staff found, create one" />;
     }
 
     return (
@@ -171,7 +155,7 @@ function StaffTable(props) {
                 <Toolbar>
                     <div edge="start" className={classes.grow} />
                     <PeopleDialog
-                        title="Create Rider"
+                        title="Create Staff"
                         edge="end"
                         onSave={() => {
                             setSnackOpen("Person added");
@@ -188,7 +172,7 @@ function StaffTable(props) {
                             </Button>
                         )}
                     >
-                        <DriverCreate />
+                        <StaffCreate handleCreateStaff={handleCreateStaff} />
                     </PeopleDialog>
                     {selected.length > 0 && (
                         <div>
@@ -199,7 +183,7 @@ function StaffTable(props) {
                                     onDelete(selected);
 
                                     setSnackOpen(
-                                        `${selected.length} Driver${
+                                        `${selected.length} Staff${
                                             selected.length > 1 ? "s" : ""
                                         } Deleted`
                                     );
@@ -222,7 +206,7 @@ function StaffTable(props) {
                     )}
                 </Toolbar>
                 <SummaryCard
-                    title={"Riders"}
+                    title={"Staff"}
                     value={
                         <>
                             <TblContainer>
@@ -232,7 +216,7 @@ function StaffTable(props) {
                                     {recordsAfterPagingAndSorting().map(
                                         (row, index) => {
                                             const isItemSelected = isSelected(
-                                                row.key
+                                                row.id
                                             );
                                             const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -255,7 +239,7 @@ function StaffTable(props) {
                                                             return;
                                                         }
                                                     }}
-                                                    key={`person-${row.key}`}
+                                                    key={`person-${row.id}`}
                                                     selected={isItemSelected}
                                                     style={{
                                                         cursor: "pointer",
@@ -265,7 +249,7 @@ function StaffTable(props) {
                                                         padding="checkbox"
                                                         onClick={(e) => {
                                                             selectTableRow(
-                                                                row.key
+                                                                row.id
                                                             );
                                                         }}
                                                     >
@@ -286,11 +270,8 @@ function StaffTable(props) {
                                                     </TableCell>
                                                     <TableCell>
                                                         <Avatar
-                                                            alt={row.value.name}
-                                                            src={
-                                                                row.value
-                                                                    .profileImage
-                                                            }
+                                                            alt={row.firstName}
+                                                            src={row.image_url}
                                                         />
                                                     </TableCell>
                                                     <TableCell
@@ -305,40 +286,28 @@ function StaffTable(props) {
                                                         align="left"
                                                         padding="none"
                                                     >
-                                                        {row.value.first_name}
+                                                        {row.firstName}
                                                         {""}
-                                                        {row.value.last_name}
+                                                        {row.lastName}
                                                     </TableCell>
                                                     <TableCell
                                                         align="left"
                                                         padding="none"
                                                     >
-                                                        {row.value.email}
-                                                    </TableCell>
-                                                    {/* <TableCell
-                                                        scope="row"
-                                                        padding="none"
-                                                    >
-                                                        {
-                                                            row.value
-                                                                .subscriptionStatus
-                                                        }
-                                                    </TableCell> */}
-                                                    <TableCell>
-                                                        {row.value.phone_number}
+                                                        {row.email}
                                                     </TableCell>
                                                     <TableCell>
-                                                        {row.value.is_active
+                                                        {row.role}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {row.is_active
                                                             ? "Active"
                                                             : "Suspended"}
                                                     </TableCell>
-                                                    <TableCell>
-                                                        {row.value.number_plate}
-                                                    </TableCell>
 
                                                     <TableCell padding="none">
-                                                        <DriverActions
-                                                            viewRider={() =>
+                                                        <StaffActions
+                                                            viewStaff={() =>
                                                                 openInPopup(row)
                                                             }
                                                         />
@@ -364,8 +333,7 @@ function StaffTable(props) {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.firebase, "kwa drivers tables");
-    return { drivers: state.firebase.ordered["All Riders"] };
+    return { staff: state.staffManagement.staff };
 };
 
 const mapActionsToProps = {};
@@ -374,11 +342,9 @@ StaffTable.propTypes = {
     ui: PropTypes.object.isRequired,
     openInPopup: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    confirmDialog: PropTypes.object.isRequired,
+    setConfirmDialog: PropTypes.func.isRequired,
+    handleCreateStaff: PropTypes.func.isRequired,
 };
 
-const enhance = compose(
-    connect(mapStateToProps, mapActionsToProps),
-    firebaseConnect(["All Riders"])
-);
-
-export default enhance(StaffTable);
+export default connect(mapStateToProps, mapActionsToProps)(StaffTable);

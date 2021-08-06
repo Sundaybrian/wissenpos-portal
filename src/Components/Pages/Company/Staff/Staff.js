@@ -67,7 +67,7 @@ function Staff(props) {
 
     return (
         <Content>
-            <StaffSummaryCards />
+            {/* <StaffSummaryCards /> */}
             <StaffTable
                 openInPopup={openInPopup}
                 onDelete={onDelete}
