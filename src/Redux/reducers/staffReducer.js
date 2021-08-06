@@ -50,7 +50,7 @@ export default function (state = initialState, action) {
         case ADD_STAFF:
             return {
                 ...state,
-                staff: [...action.payload, ...state.staff],
+                staff: [action.payload, ...state.staff],
             };
         case UPDATE_STAFF:
             return {
