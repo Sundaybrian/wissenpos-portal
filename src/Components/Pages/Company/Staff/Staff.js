@@ -9,6 +9,7 @@ import {
     deleteStaff,
 } from "../../../../Redux/actions/staffManagementActions";
 import StaffTable from "./StaffTable";
+import StaffProfile from "./StaffProfile";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,6 +35,7 @@ function Staff(props) {
         staff: { rows },
         addStaff,
         deleteStaff,
+        ui: { loading },
     } = props;
 
     const [confirmDialog, setConfirmDialog] = useState({
@@ -56,14 +58,6 @@ function Staff(props) {
         setRecord(rider);
         setOpenPopup(true);
     };
-
-    if (loading) {
-        return (
-            <Content>
-                <CircularProgress />
-            </Content>
-        );
-    }
 
     return (
         <Content>

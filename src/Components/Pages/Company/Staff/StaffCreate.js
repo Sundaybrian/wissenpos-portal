@@ -7,6 +7,7 @@ import { Grid } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import * as Yup from "yup";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = makeStyles((theme) => ({
     root: {
@@ -80,22 +81,23 @@ function StaffCreate(props) {
         const staff = {
             user: {
                 ...values,
+                role: "staff",
             },
             company_id: company[0].id,
         };
 
-        handleCreateStaff({ staff, closeModal: handleClose });
+        handleCreateStaff({ staffData: staff, closeModal: handleClose });
     };
 
     return (
         <Formik
             initialValues={{
-                firstName: "",
-                lastName: "",
-                email: "",
-                phoneNumber: "",
-                password: "",
-                confirmPassword: "",
+                firstName: "dol",
+                lastName: "cample",
+                email: "dol@gmail.com",
+                phoneNumber: "7143823667",
+                password: "S@leysha2013",
+                confirmPassword: "S@leysha2013",
             }}
             validationSchema={validationSchema}
             onSubmit={createStaff}
@@ -193,7 +195,7 @@ const mapActionsToProps = {};
 const mapStateToProps = (state) => {
     return {
         loading: state.ui.loading,
-        company: state.company,
+        company: state.company.company,
     };
 };
 
