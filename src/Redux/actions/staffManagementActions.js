@@ -11,6 +11,7 @@ import {
     CLEAR_ERRORS,
     SET_ERRORS,
     LOADING_DATA,
+    SET_SUCCESS,
 } from "../types";
 
 //addstaff
@@ -27,7 +28,10 @@ export const addStaff =
                 const staff = res.data;
                 closeModal();
                 dispatch({ type: ADD_STAFF, payload: staff });
-                dispatch({ type: CLEAR_ERRORS });
+                dispatch({
+                    type: SET_SUCCESS,
+                    payload: `${staffData.user.firstName} created successfully`,
+                });
             })
             .catch((err) => {
                 dispatch({
