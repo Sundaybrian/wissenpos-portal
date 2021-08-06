@@ -1,33 +1,14 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-// mui
-import Checkbox from "@material-ui/core/Checkbox";
-import Snackbar from "@material-ui/core/Snackbar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
-import Tooltip from "@material-ui/core/Tooltip";
-import Avatar from "@material-ui/core/Avatar";
-import DeleteIcon from "@material-ui/icons/Delete";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import TableBody from "@material-ui/core/TableBody";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-// component
-import Alert from "../../../Base/Alert";
-import DeletePeopleDialog from "../../../Base/People/DeletePeopleDialog";
-
-import SummaryCard from "../../../Base/SummaryCard";
 import Content from "../../../Layout/Content/Content";
-import useTable from "../../../Base/Table/useTable";
-// redux
-import { useSelector, useDispatch, connect } from "react-redux";
+import { connect } from "react-redux";
 import {
     addStaff,
     deleteStaff,
 } from "../../../../Redux/actions/staffManagementActions";
+import StaffTable from "./StaffTable";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,58 +27,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const headCells = [
-    {
-        id: "avatar",
-        numeric: false,
-        disablePadding: true,
-        label: "",
-    },
-    {
-        id: "name",
-        numeric: false,
-        disablePadding: true,
-        label: "Name",
-    },
-    { id: "id", numeric: true, disablePadding: false, label: "ID" },
-
-    {
-        id: "department",
-        numeric: false,
-        disablePadding: true,
-        label: "Department",
-    },
-
-    { id: "email", numeric: false, disablePadding: false, label: "Email" },
-    {
-        id: "phoneNumber",
-        numeric: false,
-        disablePadding: false,
-        label: "PhoneNumber",
-    },
-];
-
-const records = [
-    {
-        id: 1,
-        department: "finance",
-        firstName: "sunday",
-        lastName: "brian",
-        email: "sundaypriest@outlook.com",
-        img:
-            "https://media3.s-nbcnews.com/j/newscms/2019_41/3047866/191010-japan-stalker-mc-1121_06b4c20bbf96a51dc8663f334404a899.fit-760w.JPG",
-    },
-    {
-        id: 2,
-        department: "finance",
-        firstName: "sunday",
-        lastName: "brian",
-        email: "sundaypriest@outlook.com",
-        img:
-            "https://media3.s-nbcnews.com/j/newscms/2019_41/3047866/191010-japan-stalker-mc-1121_06b4c20bbf96a51dc8663f334404a899.fit-760w.JPG",
-    },
-];
-
 function Staff(props) {
     const classes = useStyles();
 
@@ -107,32 +36,26 @@ function Staff(props) {
         deleteStaff,
     } = props;
 
-    const [filterFn, setFilterFn] = useState({
-        fn: (items) => {
-            return items;
-        },
+    const [confirmDialog, setConfirmDialog] = useState({
+        isOpen: false,
+        title: "",
+        subTitle: "",
     });
 
-    const {
-        handleSelectAllClick,
-        selected,
-        setSelected,
-        selectTableRow,
-        TblContainer,
-        TblHead,
-        TblPagination,
-        recordsAfterPagingAndSorting,
-    } = useTable(records, rows, headCells, filterFn);
-    const [snackOpen, setSnackOpen] = React.useState(false);
+    const [openPopup, setOpenPopup] = useState(false);
+    const [record, setRecord] = useState(null);
 
-    const [loading, setLoading] = useState(false);
-    const error = false;
-    // todo with snacks
+    const onDelete = (ids) => {
+        // deleted selected drivers
+        // handleDelete(ids, job_id);
+        console.log(ids);
+    };
 
-    const dispatch = useDispatch();
-
-    let history = useHistory();
-    console.log(history);
+    // modal for driver data
+    const openInPopup = (rider) => {
+        setRecord(rider);
+        setOpenPopup(true);
+    };
 
     if (loading) {
         return (
@@ -142,187 +65,26 @@ function Staff(props) {
         );
     }
 
-    if (error) return `Error! ${error.message}`;
-
-    const isSelected = (id) => selected.indexOf(id) !== -1;
-    const snackClose = (event, reason) => {
-        if (reason === "clickaway") {
-            return;
-        }
-
-        setSnackOpen(false);
-    };
-
     return (
         <Content>
-            <Snackbar
-                open={snackOpen}
-                autoHideDuration={2000}
-                onClose={snackClose}
-            >
-                <Alert onClose={snackClose} severity="success">
-                    {snackOpen}
-                </Alert>
-            </Snackbar>
-            <div className={classes.root}>
-                <Toolbar>
-                    <div edge="start" className={classes.grow} />
-                    {/* <PeopleDialog
-                        edge="end"
-                        onSave={() => {
-                            setSnackOpen("Person added");
-                        }}
-                        render={(open) => (
-                            <Button
-                                edge="end"
-                                color="primary"
-                                variant="contained"
-                                startIcon={<AddIcon />}
-                                onClick={open}
-                            >
-                                Add Person
-                            </Button>
-                        )}
-                    /> */}
-                    {selected.length > 0 && (
-                        <Tooltip title={"Delete"}>
-                            <DeletePeopleDialog
-                                ids={selected}
-                                onSave={() => {
-                                    // delete user
-                                    deleteStaff(selected);
-                                    // dispatch(remove(selected));
-
-                                    setSnackOpen(
-                                        `${selected.length} User${
-                                            selected.length > 1 ? "s" : ""
-                                        } Deleted`
-                                    );
-                                    setSelected([]);
-                                }}
-                                render={(open) => (
-                                    <Button
-                                        className={classes.deleteButton}
-                                        variant="contained"
-                                        color="secondary"
-                                        startIcon={<DeleteIcon />}
-                                        onClick={open}
-                                    >
-                                        {" "}
-                                        Delete {selected.length} selected
-                                    </Button>
-                                )}
-                            />
-                        </Tooltip>
-                    )}
-                </Toolbar>
-                <SummaryCard
-                    title={"Staff"}
-                    value={
-                        <>
-                            <TblContainer>
-                                <TblHead />
-
-                                <TableBody>
-                                    {recordsAfterPagingAndSorting().map(
-                                        (row, index) => {
-                                            const isItemSelected = isSelected(
-                                                row.id
-                                            );
-                                            const labelId = `enhanced-table-checkbox-${index}`;
-
-                                            return (
-                                                <TableRow
-                                                    hover
-                                                    role="checkbox"
-                                                    aria-checked={
-                                                        isItemSelected
-                                                    }
-                                                    tabIndex={-1}
-                                                    onClick={(e) => {
-                                                        if (
-                                                            e.target.type ===
-                                                                "checkbox" ||
-                                                            e.target.className.indexOf(
-                                                                "Checkbox"
-                                                            ) > 0
-                                                        ) {
-                                                            return;
-                                                        }
-                                                        history.push(
-                                                            `staff-management/${row.id}/profile`
-                                                        );
-                                                    }}
-                                                    key={`person-${row.id}`}
-                                                    selected={isItemSelected}
-                                                    style={{
-                                                        cursor: "pointer",
-                                                    }}
-                                                >
-                                                    <TableCell
-                                                        padding="checkbox"
-                                                        onClick={(e) => {
-                                                            selectTableRow(
-                                                                row.id
-                                                            );
-                                                        }}
-                                                    >
-                                                        <Checkbox
-                                                            checked={
-                                                                isItemSelected
-                                                            }
-                                                            inputProps={{
-                                                                "aria-labelledby": labelId,
-                                                            }}
-                                                            onChange={(e) => {
-                                                                selectTableRow(
-                                                                    row.id
-                                                                );
-                                                            }}
-                                                        />
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <Avatar
-                                                            alt={row.firstName}
-                                                            src={row.img}
-                                                        />
-                                                    </TableCell>
-                                                    <TableCell
-                                                        component="th"
-                                                        id={labelId}
-                                                        scope="row"
-                                                        padding="none"
-                                                    >
-                                                        {row.firstName}
-                                                        {""}
-                                                        {row.firstName}
-                                                    </TableCell>
-                                                    <TableCell align="right">
-                                                        {row.id}
-                                                    </TableCell>
-                                                    <TableCell
-                                                        scope="row"
-                                                        padding="none"
-                                                    >
-                                                        {row.department}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {row.email}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {row.phoneNumber}
-                                                    </TableCell>
-                                                </TableRow>
-                                            );
-                                        }
-                                    )}
-                                </TableBody>
-                            </TblContainer>
-                            <TblPagination />
-                        </>
-                    }
+            <StaffSummaryCards />
+            <StaffTable
+                openInPopup={openInPopup}
+                onDelete={onDelete}
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
+                handleCreateStaff={addStaff}
+            />
+            {record && (
+                <StaffProfile
+                    record={record}
+                    openPopup={openPopup}
+                    setOpenPopup={setOpenPopup}
+                    setRecord={setRecord}
+                    handleDelete={deleteStaff}
+                    handleSuspend={props.suspendUser}
                 />
-            </div>
+            )}
         </Content>
     );
 }
