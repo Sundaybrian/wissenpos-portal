@@ -35,7 +35,11 @@ export default function PeopleDialog({
                 maxWidth="md"
             >
                 <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-                <DialogContent dividers>{children}</DialogContent>
+                <DialogContent dividers>
+                    {React.cloneElement(children, {
+                        handleClose,
+                    })}
+                </DialogContent>
                 {/* <DialogActions>
                     <Button onClick={handleClose} color="primary">
                         {data ? "Close" : "Cancel"}
