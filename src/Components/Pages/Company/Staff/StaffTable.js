@@ -271,7 +271,7 @@ function StaffTable(props) {
                                                     <TableCell>
                                                         <Avatar
                                                             alt={row.firstName}
-                                                            src={row.image_url}
+                                                            src={""}
                                                         />
                                                     </TableCell>
                                                     <TableCell
@@ -280,7 +280,7 @@ function StaffTable(props) {
                                                         scope="row"
                                                         padding="none"
                                                     >
-                                                        {row.value.id_number}
+                                                        {row.id}
                                                     </TableCell>
                                                     <TableCell
                                                         align="left"
