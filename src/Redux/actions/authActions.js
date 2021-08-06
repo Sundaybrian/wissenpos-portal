@@ -28,6 +28,7 @@ export const loginUser = (userData, history) => (dispatch) => {
             history.push("/dashboard");
         })
         .catch((err) => {
+            console.log("Auth Erros", err);
             dispatch({
                 type: SET_ERRORS,
                 payload: err.response.data,
@@ -60,26 +61,28 @@ export const registerUser = (userData, history) => (dispatch) => {
 };
 
 // update user profile
-export const updateUserProfile = ({ userID, userData }) => (dispatch) => {
-    dispatch({ type: LOADING_UI });
+export const updateUserProfile =
+    ({ userID, userData }) =>
+    (dispatch) => {
+        dispatch({ type: LOADING_UI });
 
-    axios
-        .put(`/accounts/${userID}`, userData)
-        .then((res) => {
-            dispatch({ type: UPDATE_PROFILE, payload: res.data });
-            dispatch({
-                type: SET_SUCCESS,
-                payload: `Account updated successfully`,
+        axios
+            .put(`/accounts/${userID}`, userData)
+            .then((res) => {
+                dispatch({ type: UPDATE_PROFILE, payload: res.data });
+                dispatch({
+                    type: SET_SUCCESS,
+                    payload: `Account updated successfully`,
+                });
+                dispatch({ type: CLEAR_ERRORS });
+            })
+            .catch((err) => {
+                dispatch({
+                    type: SET_ERRORS,
+                    payload: err.response.data,
+                });
             });
-            dispatch({ type: CLEAR_ERRORS });
-        })
-        .catch((err) => {
-            dispatch({
-                type: SET_ERRORS,
-                payload: err.response.data,
-            });
-        });
-};
+    };
 
 const setUserData = (user) => (dispatch) => {
     dispatch({

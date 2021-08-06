@@ -18,6 +18,7 @@ import {
 export const addStaff =
     ({ staffData, closeModal }) =>
     (dispatch) => {
+        console.log(staffData.company_id);
         dispatch({ type: LOADING_UI });
 
         const url = `/company/${staffData.company_id}/accounts`;
@@ -34,10 +35,8 @@ export const addStaff =
                 });
             })
             .catch((err) => {
-                dispatch({
-                    type: SET_ERRORS,
-                    payload: err.response.data,
-                });
+                console.log(err, "Staff create error");
+                dispatch(setErrors(err));
             });
     };
 
@@ -48,7 +47,12 @@ export const fetchStaff = () => (dispatch) => {
 };
 
 // get staff by id
+
 // edit staff
+export const editStaff = () => (dispatch) => {
+    dispatch({ type: LOADING_DATA });
+    axios.get("/");
+};
 
 // delete staff
 export const deleteStaff = (staffData) => (dispatch) => {
@@ -62,9 +66,21 @@ export const deleteStaff = (staffData) => (dispatch) => {
             dispatch({ type: CLEAR_ERRORS });
         })
         .catch((err) => {
-            dispatch({
-                type: SET_ERRORS,
-                payload: err.response.data,
-            });
+            dispatch(setErrors(err));
         });
+};
+
+// helper function
+export const setErrors = (err) => (dispatch) => {
+    if (err.response) {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data,
+        });
+    } else {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err,
+        });
+    }
 };
