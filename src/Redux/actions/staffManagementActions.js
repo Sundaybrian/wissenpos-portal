@@ -14,33 +14,39 @@ import {
 } from "../types";
 
 //addstaff
-export const addStaff = (staffData) => (dispatch) => {
-    dispatch({ type: LOADING_UI });
+export const addStaff =
+    ({ staffData, closeModal }) =>
+    (dispatch) => {
+        dispatch({ type: LOADING_UI });
 
-    axios
-        .post("/account/create-staff", staffData)
-        .then((res) => {
-            const staff = res.data;
-            dispatch({ type: ADD_STAFF, payload: staff });
-            dispatch({ type: CLEAR_ERRORS });
-        })
-        .catch((err) => {
-            dispatch({
-                type: SET_ERRORS,
-                payload: err.response.data,
+        const url = `/company/${staffData.company_id}/accounts`;
+
+        axios
+            .post(url, staffData)
+            .then((res) => {
+                const staff = res.data;
+                closeModal();
+                dispatch({ type: ADD_STAFF, payload: staff });
+                dispatch({ type: CLEAR_ERRORS });
+            })
+            .catch((err) => {
+                dispatch({
+                    type: SET_ERRORS,
+                    payload: err.response.data,
+                });
             });
-        });
-};
-// fetch staff
+    };
 
+// fetch staff
 export const fetchStaff = () => (dispatch) => {
     dispatch({ type: LOADING_DATA });
     axios.get("/");
 };
 
 // get staff by id
+// edit staff
+
 // delete staff
-//addstaff
 export const deleteStaff = (staffData) => (dispatch) => {
     dispatch({ type: LOADING_UI });
 
@@ -58,4 +64,3 @@ export const deleteStaff = (staffData) => (dispatch) => {
             });
         });
 };
-// edit staff
