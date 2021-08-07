@@ -8,6 +8,7 @@ import {
     SET_SUCCESS,
 } from "../types";
 import axios from "axios";
+import { setErrors } from "./staffManagementActions";
 
 export const loadCompany = () => (dispatch) => {
     dispatch({ type: LOADING_UI });
@@ -24,10 +25,7 @@ export const loadCompany = () => (dispatch) => {
             dispatch({ type: CLEAR_ERRORS });
         })
         .catch((err) => {
-            dispatch({
-                type: SET_ERRORS,
-                payload: err.response.data,
-            });
+            dispatch(setErrors(err));
         });
 };
 
@@ -46,34 +44,30 @@ export const registerCompany = (companyData, history) => (dispatch) => {
             history.push("/dashboard");
         })
         .catch((err) => {
-            return dispatch({
-                type: SET_ERRORS,
-                payload: err.response.data,
-            });
+            dispatch(setErrors(err));
         });
 };
 
-export const updateCompany = ({ id, companyData }) => (dispatch) => {
-    dispatch({ type: LOADING_UI });
-    console.log("hereeeeeeeeeeeeeee");
+export const updateCompany =
+    ({ id, companyData }) =>
+    (dispatch) => {
+        dispatch({ type: LOADING_UI });
+        console.log("hereeeeeeeeeeeeeee");
 
-    axios
-        .patch(`/company/${id}`, companyData)
-        .then((res) => {
-            dispatch({ type: EDIT_COMPANY, payload: res.data });
-            dispatch({
-                type: SET_SUCCESS,
-                payload: `${res.data.name} updated successfully`,
+        axios
+            .patch(`/company/${id}`, companyData)
+            .then((res) => {
+                dispatch({ type: EDIT_COMPANY, payload: res.data });
+                dispatch({
+                    type: SET_SUCCESS,
+                    payload: `${res.data.name} updated successfully`,
+                });
+                dispatch({ type: CLEAR_ERRORS });
+            })
+            .catch((err) => {
+                dispatch(setErrors(err));
             });
-            dispatch({ type: CLEAR_ERRORS });
-        })
-        .catch((err) => {
-            return dispatch({
-                type: SET_ERRORS,
-                payload: err.response.data,
-            });
-        });
-};
+    };
 // set current
 // clear current
 // delete company soon enough
