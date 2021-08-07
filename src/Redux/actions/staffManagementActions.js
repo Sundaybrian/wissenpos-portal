@@ -41,9 +41,24 @@ export const addStaff =
     };
 
 // fetch staff
-export const fetchStaff = () => (dispatch) => {
+export const fetchStaff = (company_id) => (dispatch) => {
     dispatch({ type: LOADING_DATA });
-    axios.get("/");
+
+    const url = `/company/${company_id}/accounts`;
+
+    axios
+        .get(url)
+        .then((res) => {
+            const payload = res.data;
+            dispatch({ type: LOAD_STAFF, payload });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `Accounts fetched successfully`,
+            });
+        })
+        .catch((err) => {
+            dispatch(setErrors(err));
+        });
 };
 
 // get staff by id

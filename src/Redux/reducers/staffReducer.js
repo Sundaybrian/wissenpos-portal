@@ -39,6 +39,7 @@ export default function (state = initialState, action) {
         case LOAD_STAFF:
             return {
                 ...state,
+                staff: [...action.payload, ...state.staff],
                 loading: true,
             };
         case SET_STAFF:
