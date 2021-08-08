@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 // mui
 import Checkbox from '@material-ui/core/Checkbox';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
-import DeleteIcon from '@material-ui/icons/Delete';
 import TableBody from '@material-ui/core/TableBody';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TableRow from '@material-ui/core/TableRow';
@@ -17,6 +14,8 @@ import { DeletePopUpDialog as ConfirmDialog } from '../../../Base/DeleteDialog';
 // redux
 import { connect } from 'react-redux';
 import { loadOrders, fetchCart } from '../../../../Redux/actions/orderAction';
+import { isEmpty, isLoaded } from 'react-redux-firebase';
+import Loader from '../../../Base/Loader';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -62,14 +61,6 @@ const headCells = [
     disablePadding: true,
     label: 'order status',
   },
-
-  // { id: "email", numeric: false, disablePadding: false, label: "Email" },
-  // {
-  //     id: "phoneNumber",
-  //     numeric: false,
-  //     disablePadding: false,
-  //     label: "PhoneNumber",
-  // },
   {
     id: 'date created',
     numeric: false,
@@ -90,7 +81,7 @@ function OrderTable(props) {
   const classes = useStyles();
 
   const {
-    ui,
+    ui: { loading },
     order: { orders },
     company,
     loadOrders,
@@ -139,7 +130,11 @@ function OrderTable(props) {
     setSnackOpen(false);
   };
 
-  if (orders == null) {
+  if (!isLoaded(orders)) {
+    return <SummaryCard component={<Loader />} />;
+  }
+
+  if (isEmpty(orders)) {
     return <SummaryCard title="No orders found" />;
   }
 

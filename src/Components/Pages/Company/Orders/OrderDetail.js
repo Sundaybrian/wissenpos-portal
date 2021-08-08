@@ -132,7 +132,7 @@ function OrderDetail(props) {
   return (
     <div className={classes.root1}>
       <SummaryCard
-        title={cart.cart_id}
+        title="cart Items"
         component={<AlignItemsList items={cart.items} clearCurrentOrder={clearCurrentOrder} />}
       />
     </div>
