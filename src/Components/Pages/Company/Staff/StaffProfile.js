@@ -112,9 +112,7 @@ function StaffProfile(props) {
                 <CloseIcon />
               </IconButton>
               <Typography variant="h6" className={classes.title}>
-                {record.user_id}{' '}
-                {/* {record.value.last_name}{" "}
-                                {record.current_proposal_status_id} */}
+                {record.user.firstName} {record.user.lastName}
               </Typography>
               <Button autoFocus color="inherit" onClick={handleClose}>
                 Close
@@ -134,7 +132,7 @@ function StaffProfile(props) {
             <div className={classes.headerContainer}>
               <div className={classes.header}>
                 <Avatar
-                  alt={record.firstName}
+                  alt={record.user.firstName}
                   src={''}
                   classes={{
                     root: classes.avatar,

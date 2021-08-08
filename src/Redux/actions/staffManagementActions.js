@@ -65,10 +65,11 @@ export const fetchStaff = company_id => dispatch => {
 // edit staff
 export const editStaff =
   ({ staff, handleClose, user_id }) =>
-  dispatch => {
+  (dispatch, getState) => {
     dispatch({ type: LOADING_DATA });
 
-    const url = `/accounts/${user_id}`;
+    const { id: company_id } = getState().company.company[0];
+    const url = `/company/${company_id}/accounts/${user_id}`;
 
     axios
       .put(url, staff)
