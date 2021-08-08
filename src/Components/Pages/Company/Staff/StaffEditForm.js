@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import * as Yup from "yup";
 import { editStaff } from "../../../../Redux/actions/staffManagementActions";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { Grid } from "@material-ui/core";
 
 const styles = makeStyles((theme) => ({
     root: {
@@ -62,6 +63,7 @@ const validationSchema = Yup.object({
 });
 
 function StaffEditForm(props) {
+    /* eslint-disable no-unused-vars */
     const classes = styles();
     const {
         closeModal,
@@ -69,13 +71,19 @@ function StaffEditForm(props) {
         editStaff,
         loading,
         record: {
-            firstName,
-            lastName,
-            role,
             company_id,
-            phoneNumber,
-            user_id,
-            email,
+            staff_id,
+            user: {
+                firstName,
+                lastName,
+                role,
+                active,
+                image_url,
+                phoneNumber,
+                id: user_id,
+                email,
+                isVerified,
+            },
         },
     } = props;
 
@@ -98,71 +106,82 @@ function StaffEditForm(props) {
             onSubmit={editCurrentStaff}
         >
             <Form>
-                <Field
-                    name="firstName"
-                    type="text"
-                    label="First Name"
-                    variant="outlined"
-                    component={TextField}
-                    fullWidth
-                />
-
-                <Field
-                    name="lastName"
-                    type="text"
-                    label="Last Name"
-                    variant="outlined"
-                    component={TextField}
-                    fullWidth
-                />
-
-                <Field
-                    name="phoneNumber"
-                    type="text"
-                    label="PhoneNumber"
-                    variant="outlined"
-                    component={TextField}
-                    fullWidth
-                />
-
-                <Field
-                    variant="outlined"
-                    component={TextField}
-                    fullWidth
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                />
-
-                <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    disabled={loading}
-                    className={classes.submit}
-                    type="submit"
-                >
-                    Ok
-                    {loading && (
-                        <CircularProgress
-                            size={30}
-                            className={classes.progress}
+                <Grid container spacing={4}>
+                    <Grid item xs={12}>
+                        <Field
+                            name="firstName"
+                            type="text"
+                            label="First Name"
+                            variant="outlined"
+                            component={TextField}
+                            fullWidth
                         />
-                    )}
-                </Button>
+                    </Grid>
 
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    size="medium"
-                    onClick={handleClose}
-                    style={{
-                        marginLeft: "10px",
-                    }}
-                >
-                    Cancel
-                </Button>
+                    <Grid item xs={12}>
+                        <Field
+                            name="lastName"
+                            type="text"
+                            label="Last Name"
+                            variant="outlined"
+                            component={TextField}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Field
+                            name="phoneNumber"
+                            type="text"
+                            label="PhoneNumber"
+                            variant="outlined"
+                            component={TextField}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Field
+                            variant="outlined"
+                            component={TextField}
+                            fullWidth
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                        />
+                    </Grid>
+
+                    <Grid item xs={8}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="medium"
+                            disabled={loading}
+                            className={classes.submit}
+                            type="submit"
+                        >
+                            Ok
+                            {loading && (
+                                <CircularProgress
+                                    size={30}
+                                    className={classes.progress}
+                                />
+                            )}
+                        </Button>
+
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            size="medium"
+                            className={classes.submit}
+                            onClick={handleClose}
+                            style={{
+                                marginLeft: "10px",
+                            }}
+                        >
+                            Cancel
+                        </Button>
+                    </Grid>
+                </Grid>
             </Form>
         </Formik>
     );
