@@ -35,9 +35,6 @@ const ui = (state = initialState, action) => {
                 loading: false,
                 errors: null,
                 successMessage: action.payload,
-                errors: {
-                    message: action.payload,
-                },
                 severity: "success",
             };
         default:
