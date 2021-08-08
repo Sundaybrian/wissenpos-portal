@@ -78,7 +78,7 @@ function StaffEditForm(props) {
     const staff = {
       ...values,
     };
-    editStaff({ staff, closeModal, handleClose, user_id });
+    editStaff({ staff, handleClose, user_id });
   };
 
   return (

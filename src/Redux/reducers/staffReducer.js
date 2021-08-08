@@ -39,21 +39,17 @@ export default function (state = initialState, action) {
     case UPDATE_STAFF:
       return {
         ...state,
-        staff: state.staff.map(staff => (staff.id == action.payload.id ? action.payload : staff)),
+        staff: state.staff.map(staff =>
+          staff.user.id == action.payload.id ? { ...staff, user: { ...staff.user, ...action.payload } } : staff,
+        ),
         loading: false,
       };
     case DELETE_STAFF:
       return {
         ...state,
-        // staff: [
-        //     ...state.staff.filter(
-        //         (staff) => staff.id !== action.payload
-        //     ),
-        // ],
-
         staff: [
           ...state.staff.filter(person => {
-            return !action.payload.includes(person.id);
+            return person.user.id !== action.payload.id;
           }),
         ],
         loading: false,

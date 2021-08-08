@@ -12,6 +12,7 @@ import {
   SET_ERRORS,
   LOADING_DATA,
   SET_SUCCESS,
+  UPDATE_STAFF,
 } from '../types';
 
 //addstaff
@@ -61,20 +62,32 @@ export const fetchStaff = company_id => dispatch => {
     });
 };
 
-// get staff by id
-
 // edit staff
-export const editStaff = () => dispatch => {
-  dispatch({ type: LOADING_DATA });
-  axios.get('/');
-};
+export const editStaff =
+  ({ staff, handleClose, user_id }) =>
+  dispatch => {
+    dispatch({ type: LOADING_DATA });
+
+    const url = `/accounts/${user_id}`;
+
+    axios
+      .put(url, staff)
+      .then(res => {
+        dispatch({ type: UPDATE_STAFF, payload: res.data });
+        dispatch({ type: SET_SUCCESS, payload: `${res.data.firstName} updated successfully` });
+        handleClose();
+      })
+      .catch(err => {
+        dispatch(setErrors(err));
+      });
+  };
 
 // delete staff
 export const deleteStaff = staffData => dispatch => {
   dispatch({ type: LOADING_UI });
 
   axios
-    .post('/account/delete-staff', staffData)
+    .post('/accounts/delete-staff', staffData)
     .then(res => {
       const staff = res.data;
       dispatch({ type: DELETE_STAFF, payload: staffData });
