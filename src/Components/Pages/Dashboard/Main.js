@@ -11,14 +11,12 @@ export class Main extends Component {
 
     goHome = () => {
         console.log(
-            `${this.props.location.pathname}/${this.props.routes[0].path}`
+            `${this.props.location.pathname}/${this.props.routes[2].path}`
         );
 
-        console.log(`${this.props.match.path}/${this.props.routes[0].path}`);
-
-        // /dashboard/metrics
+        // /dashboard/menus
         this.props.history.push({
-            pathname: `${this.props.matchPath}/${this.props.routes[0].path}`,
+            pathname: `${this.props.matchPath}/${this.props.routes[1].path}`,
         });
     };
 

@@ -101,19 +101,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResponsiveDrawer(props) {
-    const {
-        container,
-        setCurrentTheme,
-        currentTheme,
-        routes,
-        matchPath,
-    } = props;
+    const { routes, matchPath } = props;
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const theme = useTheme();
     const { pathname } = useLocation();
-    const isHome = false; // pathname === "/";
-    const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -149,7 +141,7 @@ function ResponsiveDrawer(props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap>
-                        Urady
+                        Wissenpos
                     </Typography>
                 </Toolbar>
             </AppBar>

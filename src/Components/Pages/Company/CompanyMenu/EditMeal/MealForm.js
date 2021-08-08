@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import { clearCurrentMeal } from "../../../../../Redux/actions/menuActions";
 import { connect } from "react-redux";
@@ -6,7 +5,7 @@ import { connect } from "react-redux";
 import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
 import { TextField } from "formik-material-ui";
-import { Grid, Typography, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import ProgressBar from "./ProgressBar";
 import UploadButton from "./uploadButton";
 
@@ -57,7 +56,7 @@ function MealForm(props) {
     } = props;
 
     const onKeyUpText = (e) => {
-        // customing handler for getting onChange value for previes
+        // customing handler for getting from changes to update meal preview
         setAddMeal((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value,

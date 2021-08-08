@@ -7,10 +7,12 @@ import OrderDetail from "./OrderDetail";
 import { connect } from "react-redux";
 //mui
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import OrderSummary from "./OrderSummary";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
+        flexDirection: "column",
     },
 }));
 
@@ -24,6 +26,7 @@ function Orders(props) {
     return (
         <Content>
             <div className={classes.root}>
+                <OrderSummary />
                 <OrderTable />
                 {currentOrder && (
                     <OrderDetail

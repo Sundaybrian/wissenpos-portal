@@ -9,7 +9,6 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import MealPreview from "../MealPreview";
 import MealForm from "./MealForm";
 import { useLocation } from "react-router-dom";
-import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     dualPanel: {
@@ -50,9 +49,10 @@ function EditMealContainer(props) {
         } else {
             setAddMeal(null);
         }
-    }, []);
+    }, [currentMeal]);
 
     // image upload related
+    // TODO use imagechangehandler
     const [file, setFile] = React.useState(null);
     const [imageUrl, setImageUrl] = React.useState(null); //once we have an image, we will duplicate it here
     const types = ["image/png", "image/jpeg", "image/jpg"];

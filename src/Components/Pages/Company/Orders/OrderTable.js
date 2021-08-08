@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     grow: {
-        flexGrow: 1,
+        flexGrow: 0.6,
         flexShrink: 0.6,
     },
     deleteButton: {

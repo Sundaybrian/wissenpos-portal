@@ -3,6 +3,8 @@ import {
     LOAD_CART,
     LOADING_CART,
     CLEAR_LOADING_CART,
+    CLEAR_CURRENT_ORDER,
+    LOAD_ORDER_STATS,
 } from "../types";
 
 const initialState = {
@@ -11,6 +13,7 @@ const initialState = {
     filteredOrders: null,
     currentOrder: null,
     loading: false,
+    stats: null,
 };
 
 export default function (state = initialState, action) {
@@ -20,6 +23,11 @@ export default function (state = initialState, action) {
                 ...state,
                 orders: action.payload.results,
                 pagingInfo: action.payload.pageInfo,
+            };
+        case LOAD_ORDER_STATS:
+            return {
+                ...state,
+                stats: action.payload,
             };
         case LOADING_CART:
             return {
@@ -31,6 +39,12 @@ export default function (state = initialState, action) {
                 ...state,
                 laoding: false,
                 currentOrder: action.payload,
+            };
+        case CLEAR_CURRENT_ORDER:
+            return {
+                ...state,
+                loading: false,
+                currentOrder: null,
             };
         case CLEAR_LOADING_CART:
             return {

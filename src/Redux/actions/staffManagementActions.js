@@ -11,36 +11,65 @@ import {
     CLEAR_ERRORS,
     SET_ERRORS,
     LOADING_DATA,
+    SET_SUCCESS,
 } from "../types";
 
 //addstaff
-export const addStaff = (staffData) => (dispatch) => {
-    dispatch({ type: LOADING_UI });
+export const addStaff =
+    ({ staffData, closeModal }) =>
+    (dispatch) => {
+        console.log(staffData.company_id);
+        dispatch({ type: LOADING_UI });
+
+        const url = `/company/${staffData.company_id}/accounts`;
+
+        axios
+            .post(url, staffData)
+            .then((res) => {
+                const staff = res.data;
+                closeModal();
+                dispatch({ type: ADD_STAFF, payload: staff });
+                dispatch({
+                    type: SET_SUCCESS,
+                    payload: `${staffData.user.firstName} created successfully`,
+                });
+            })
+            .catch((err) => {
+                console.log(err, "Staff create error");
+                dispatch(setErrors(err));
+            });
+    };
+
+// fetch staff
+export const fetchStaff = (company_id) => (dispatch) => {
+    dispatch({ type: LOADING_DATA });
+
+    const url = `/company/${company_id}/accounts`;
 
     axios
-        .post("/account/create-staff", staffData)
+        .get(url)
         .then((res) => {
-            const staff = res.data;
-            dispatch({ type: ADD_STAFF, payload: staff });
-            dispatch({ type: CLEAR_ERRORS });
+            const payload = res.data;
+            dispatch({ type: LOAD_STAFF, payload });
+            dispatch({
+                type: SET_SUCCESS,
+                payload: `Accounts fetched successfully`,
+            });
         })
         .catch((err) => {
-            dispatch({
-                type: SET_ERRORS,
-                payload: err.response.data,
-            });
+            dispatch(setErrors(err));
         });
 };
-// fetch staff
 
-export const fetchStaff = () => (dispatch) => {
+// get staff by id
+
+// edit staff
+export const editStaff = () => (dispatch) => {
     dispatch({ type: LOADING_DATA });
     axios.get("/");
 };
 
-// get staff by id
 // delete staff
-//addstaff
 export const deleteStaff = (staffData) => (dispatch) => {
     dispatch({ type: LOADING_UI });
 
@@ -52,10 +81,21 @@ export const deleteStaff = (staffData) => (dispatch) => {
             dispatch({ type: CLEAR_ERRORS });
         })
         .catch((err) => {
-            dispatch({
-                type: SET_ERRORS,
-                payload: err.response.data,
-            });
+            dispatch(setErrors(err));
         });
 };
-// edit staff
+
+// helper function
+export const setErrors = (err) => (dispatch) => {
+    if (err.response) {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data,
+        });
+    } else {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err,
+        });
+    }
+};
