@@ -2,6 +2,7 @@
     "name": "wissenpos-portal",
     "version": "0.1.0",
     "private": true,
+    "author": "Sunday Brian",
     "dependencies": {
         "@date-io/date-fns": "^2.10.8",
         "@material-ui/core": "^4.11.1",
@@ -44,7 +45,9 @@
         "start:local": "BROWSER=none env-cmd -f ./.env.local  react-scripts start",
         "build:develop": "env-cmd -f ./.env.development.local react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "lint": "eslint '*/**/*.{ts,js,jsx,tsx}' --quiet --fix --no-error-on-unmatched-pattern",
+        "format": "prettier --config .prettierrc 'src/**/*.{t,j}s' --write"
     },
     "eslintConfig": {
         "extends": [
@@ -52,6 +55,16 @@
             "react-app/jest"
         ]
     },
+    "husky": {
+        "hooks": {
+          "pre-commit": "lint-staged"
+        }
+      },
+      "lint-staged": {
+        "*.{ts,tsx,js,jsx}": [
+            "yarn run format"
+        ]
+      },
     "browserslist": {
         "production": [
             ">0.2%",

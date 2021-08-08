@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment';
 export default function formatDate(someDate) {
-    return moment(someDate).format("MMM Do YY");
+  return moment(someDate).format('MMM Do YY');
 }

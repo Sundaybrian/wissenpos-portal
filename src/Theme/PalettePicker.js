@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import colors from "./colors";
+import React from 'react';
+import styled from 'styled-components';
+import colors from './colors';
 
 const Color = styled.div`
   width: 20px;
@@ -20,13 +20,13 @@ const Color = styled.div`
 const Flex = styled.div`
   display: flex;
   margin-right: 20px;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 `;
 
 export default function PalettePicker({ currentTheme, setCurrentTheme }) {
   return (
     <Flex>
-      {colors.map((color) => (
+      {colors.map(color => (
         <Color
           onClick={() =>
             setCurrentTheme({
