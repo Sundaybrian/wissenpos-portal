@@ -8,7 +8,9 @@ import Loader from '../../../Base/Loader';
 import ViewMenuContainer from './ViewMeal/ViewMenuContainer';
 import EditMenuContainer from './EditMeal/EditMealContainer';
 import SummaryCard from '../../../Base/SummaryCard';
-import { isLoaded } from 'react-redux-firebase';
+import { isEmpty, isLoaded } from 'react-redux-firebase';
+import { first } from 'lodash';
+import Content from '../../../Layout/Content/Content';
 
 const useStyles = makeStyles(theme => ({
   dualPanel: {
@@ -40,30 +42,36 @@ function CompanyMenu(props) {
     ui: { loading },
     loadMenu,
     Menu: { menu: companyMenu },
-    company: { company },
+    company,
   } = props;
 
   const { url } = useRouteMatch();
 
   /* eslint-disable eqeqeq */
   useEffect(() => {
-    if (companyMenu == null) {
-      loadMenu(company[0].id);
+    if (isEmpty(companyMenu) && !isEmpty(company)) {
+      loadMenu(company.id);
     } else {
       return;
     }
-  }, []);
+  }, [companyMenu, company]);
 
-  if (!isLoaded(companyMenu)) {
-    return <SummaryCard component={<Loader />} />;
+  console.log(company, '---------------------------');
+
+  if (!isLoaded(company) || loading) {
+    return (
+      <Content>
+        <SummaryCard component={<Loader />} />;
+      </Content>
+    );
   }
 
   return (
     <div className={classes.menuContainer}>
       {toggleMenuView == true ? (
         <EditMenuContainer
-          title={company[0].name}
-          companyID={company[0].id}
+          title={company.name}
+          companyID={company.id}
           menuID={companyMenu.id}
           setToogleMenuView={setToogleMenuView}
         />
@@ -83,7 +91,7 @@ function CompanyMenu(props) {
 const mapStateToProps = state => ({
   auth: state.auth,
   ui: state.ui,
-  company: state.company,
+  company: first(state.company.company),
   Menu: state.menu,
 });
 
