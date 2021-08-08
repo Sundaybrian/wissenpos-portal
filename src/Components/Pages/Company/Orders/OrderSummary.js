@@ -33,11 +33,11 @@ function OrderSummary(props) {
 
     if (loadingData) {
         return (
-            <>
+            <div className={classes.summaryCards}>
                 <SummaryCard title={"InCart"} value={0} />
                 <SummaryCard title={"All"} value={0} />
                 <SummaryCard title={"Paid"} value={0} />
-            </>
+            </div>
         );
     }
     return (
