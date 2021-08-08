@@ -29,7 +29,7 @@ export function DeletePopUpDialog({ title, message, onSave, open, handleClose })
   );
 }
 
-export default function DeleteDialog({ ids, render, title, onSave }) {
+export default function DeleteDialog({ ids, render, title, onSave, content }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -49,13 +49,13 @@ export default function DeleteDialog({ ids, render, title, onSave }) {
     <div>
       {render(handleClickOpen)}
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Delete User</DialogTitle>
-        <DialogContent>{title}</DialogContent>
+        <DialogTitle id="form-dialog-title">{title}</DialogTitle>
+        <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleSave} color="primary">
+          <Button onClick={handleSave} color="secondary">
             Delete
           </Button>
         </DialogActions>
