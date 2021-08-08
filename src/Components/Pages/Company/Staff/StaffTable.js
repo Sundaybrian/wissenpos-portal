@@ -25,6 +25,7 @@ import PeopleDialog from "../../../Base/People/PeopleDialog";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import StaffCreate from "./StaffCreate";
+import { fetchStaff } from "../../../../Redux/actions/staffManagementActions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -83,6 +84,12 @@ const headCells = [
         disablePadding: false,
         label: "Account Status",
     },
+    {
+        id: "phoneNumber",
+        numeric: false,
+        disablePadding: false,
+        label: "Phone Number",
+    },
 
     {
         id: "Actions",
@@ -97,12 +104,20 @@ function StaffTable(props) {
 
     const {
         staff,
+        company,
         openInPopup,
         onDelete,
         confirmDialog,
         setConfirmDialog,
         handleCreateStaff,
+        fetchStaff,
     } = props;
+
+    React.useEffect(() => {
+        if (company !== null && company.id) {
+            fetchStaff(company.id);
+        }
+    }, []);
 
     /* eslint-disable no-unused-vars */
     const [filterFn, setFilterFn] = useState({
@@ -131,14 +146,6 @@ function StaffTable(props) {
 
         setSnackOpen(false);
     };
-
-    if (!isLoaded(staff)) {
-        return <Loader />;
-    }
-
-    if (isEmpty(staff)) {
-        return <SummaryCard title="No staff found, create one" />;
-    }
 
     return (
         <>
@@ -205,123 +212,147 @@ function StaffTable(props) {
                         </div>
                     )}
                 </Toolbar>
-                <SummaryCard
-                    title={"Staff"}
-                    value={
-                        <>
-                            <TblContainer>
-                                <TblHead />
 
-                                <TableBody>
-                                    {recordsAfterPagingAndSorting().map(
-                                        (row, index) => {
-                                            const isItemSelected = isSelected(
-                                                row.id
-                                            );
-                                            const labelId = `enhanced-table-checkbox-${index}`;
+                {isEmpty(staff) ? (
+                    <SummaryCard title="No staff found, create one" />
+                ) : (
+                    <SummaryCard
+                        title={"Staff"}
+                        value={
+                            <>
+                                <TblContainer>
+                                    <TblHead />
 
-                                            return (
-                                                <TableRow
-                                                    hover
-                                                    role="checkbox"
-                                                    aria-checked={
-                                                        isItemSelected
-                                                    }
-                                                    tabIndex={-1}
-                                                    onClick={(e) => {
-                                                        if (
-                                                            e.target.type ===
-                                                                "checkbox" ||
-                                                            e.target.className.indexOf(
-                                                                "Checkbox"
-                                                            ) > 0
-                                                        ) {
-                                                            return;
+                                    <TableBody>
+                                        {recordsAfterPagingAndSorting().map(
+                                            (row, index) => {
+                                                const isItemSelected =
+                                                    isSelected(row.user.id);
+                                                const labelId = `enhanced-table-checkbox-${index}`;
+
+                                                return (
+                                                    <TableRow
+                                                        hover
+                                                        role="checkbox"
+                                                        aria-checked={
+                                                            isItemSelected
                                                         }
-                                                    }}
-                                                    key={`person-${row.id}`}
-                                                    selected={isItemSelected}
-                                                    style={{
-                                                        cursor: "pointer",
-                                                    }}
-                                                >
-                                                    <TableCell
-                                                        padding="checkbox"
+                                                        tabIndex={-1}
                                                         onClick={(e) => {
-                                                            selectTableRow(
-                                                                row.id
-                                                            );
+                                                            if (
+                                                                e.target
+                                                                    .type ===
+                                                                    "checkbox" ||
+                                                                e.target.className.indexOf(
+                                                                    "Checkbox"
+                                                                ) > 0
+                                                            ) {
+                                                                return;
+                                                            }
+                                                        }}
+                                                        key={`person-${row.user.id}`}
+                                                        selected={
+                                                            isItemSelected
+                                                        }
+                                                        style={{
+                                                            cursor: "pointer",
                                                         }}
                                                     >
-                                                        <Checkbox
-                                                            checked={
-                                                                isItemSelected
-                                                            }
-                                                            inputProps={{
-                                                                "aria-labelledby":
-                                                                    labelId,
-                                                            }}
-                                                            onChange={(e) => {
+                                                        <TableCell
+                                                            padding="checkbox"
+                                                            onClick={(e) => {
                                                                 selectTableRow(
-                                                                    row.id
+                                                                    row.user.id
                                                                 );
                                                             }}
-                                                        />
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <Avatar
-                                                            alt={row.firstName}
-                                                            src={""}
-                                                        />
-                                                    </TableCell>
-                                                    <TableCell
-                                                        component="th"
-                                                        id={labelId}
-                                                        scope="row"
-                                                        padding="none"
-                                                    >
-                                                        {row.id}
-                                                    </TableCell>
-                                                    <TableCell
-                                                        align="left"
-                                                        padding="none"
-                                                    >
-                                                        {row.firstName}
-                                                        {""}
-                                                        {row.lastName}
-                                                    </TableCell>
-                                                    <TableCell
-                                                        align="left"
-                                                        padding="none"
-                                                    >
-                                                        {row.email}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {row.role}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {row.is_active
-                                                            ? "Active"
-                                                            : "Suspended"}
-                                                    </TableCell>
-
-                                                    <TableCell padding="none">
-                                                        <StaffActions
-                                                            viewStaff={() =>
-                                                                openInPopup(row)
+                                                        >
+                                                            <Checkbox
+                                                                checked={
+                                                                    isItemSelected
+                                                                }
+                                                                inputProps={{
+                                                                    "aria-labelledby":
+                                                                        labelId,
+                                                                }}
+                                                                onChange={(
+                                                                    e
+                                                                ) => {
+                                                                    selectTableRow(
+                                                                        row.user
+                                                                            .id
+                                                                    );
+                                                                }}
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Avatar
+                                                                alt={
+                                                                    row.user
+                                                                        .firstName
+                                                                }
+                                                                src={
+                                                                    row.user
+                                                                        .image_url
+                                                                }
+                                                            />
+                                                        </TableCell>
+                                                        <TableCell
+                                                            component="th"
+                                                            id={labelId}
+                                                            scope="row"
+                                                            padding="none"
+                                                        >
+                                                            {row.user.id}
+                                                        </TableCell>
+                                                        <TableCell
+                                                            align="left"
+                                                            padding="none"
+                                                        >
+                                                            {row.user.firstName}
+                                                            {""}
+                                                            {row.user.lastName}
+                                                        </TableCell>
+                                                        <TableCell
+                                                            align="left"
+                                                            padding="none"
+                                                        >
+                                                            {row.user.email}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {row.user.role}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {row.user.active
+                                                                ? "Active"
+                                                                : "Suspended"}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                row.user
+                                                                    .phoneNumber
                                                             }
-                                                        />
-                                                    </TableCell>
-                                                </TableRow>
-                                            );
-                                        }
-                                    )}
-                                </TableBody>
-                            </TblContainer>
-                            <TblPagination />
-                        </>
-                    }
-                />
+                                                        </TableCell>
+
+                                                        <TableCell padding="none">
+                                                            <StaffActions
+                                                                viewStaff={() =>
+                                                                    openInPopup(
+                                                                        row
+                                                                    )
+                                                                }
+                                                            />
+                                                        </TableCell>
+                                                    </TableRow>
+                                                );
+                                            }
+                                        )}
+                                    </TableBody>
+                                </TblContainer>
+                                <TblPagination />
+                            </>
+                        }
+                    />
+                )}
 
                 <ConfirmDialog
                     confirmDialog={confirmDialog}
@@ -336,7 +367,9 @@ const mapStateToProps = (state) => {
     return { staff: state.staffManagement.staff };
 };
 
-const mapActionsToProps = {};
+const mapActionsToProps = {
+    fetchStaff,
+};
 
 StaffTable.propTypes = {
     ui: PropTypes.object.isRequired,
