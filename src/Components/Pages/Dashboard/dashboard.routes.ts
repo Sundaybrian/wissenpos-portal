@@ -29,13 +29,13 @@ const dashboardRoutes = [
 ];
 
 export const companyRoutes = [
-  {
-    path: 'reports',
-    component: Metric,
-    text: 'reports',
-    icon: DataUsageIcon,
-    layout: '/company',
-  },
+  // {
+  //   path: 'reports',
+  //   component: Metric,
+  //   text: 'reports',
+  //   icon: DataUsageIcon,
+  //   layout: '/company',
+  // },
   {
     path: 'staff-management',
     component: Staff,
