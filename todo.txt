@@ -1,23 +1,24 @@
 // profile page
-[] edit company
-[] edit user
+[*] edit company
+[*] edit user
 [*] render company
 [*] render user profile
 
 
 // styles
-[] minivariant sidebar
-    [] with tooltip
-[] fix colors
-[] twitter flex for meal page
+[*] minivariant sidebar
+    [*] with tooltip
+[*] fix colors
+[*] twitter flex for meal page
 
 
 // metrics page
-[] rename to reports
+[*] rename to reports
+[] hide for now
 
 // orders page
 [] websocket to push new order items???
-[] order table
+[*] order table
 [] handle orders
     [] reject
     [] accept
@@ -35,25 +36,36 @@
 [*] delete cat
 [*] add meal to cat
 [*] edit meal
-[] delete meal
+[*] delete meal
 
 // staff management
 [] tank it for now
+[*] create staff
+[*] staff profile
+[*] staff table
+[] edit staff
+[] delete staff
+[] suspend staff
 
 // auth
 [] forgot password
+[] fix portal login out on refresh
 [] register stepper
 [*] login
 [*] register
 [*] company register
+[] migrate auth to firebase?
+
 
 // cleanup & AOB
 [] clean up unsued vars
+[] add linters and formatters
 [] typescript migrate
-[] more reusable components
-[] fix alert
-    [] it is rendering all the timw
-    [] not showing messages success
-[] fix heroku react dev    
+[*] more reusable components
+[*] fix alert
+    [*] it is rendering all the timw
+    [*] not showing messages success
+[*] fix heroku react dev    
+[] preview images before upload
 [] delete images from storage on edit/account deletion
 [] add report a bug/suggestion
