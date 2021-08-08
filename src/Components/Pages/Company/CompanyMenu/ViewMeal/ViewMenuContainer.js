@@ -12,6 +12,8 @@ import MenuButton from './MenuButton';
 import { createMenu, addCategoryMenu } from '../../../../../Redux/actions/menuActions';
 import { connect } from 'react-redux';
 import Loader from '../../../../Base/Loader';
+import { isLoaded } from 'react-redux-firebase';
+import SummaryCard from '../../../../Base/SummaryCard';
 
 const useStyles = makeStyles(theme => ({
   dualPanel: {
@@ -45,18 +47,18 @@ function ViewMenuContainer(props) {
       ...values,
     };
 
-    createMenu(company[0].id, menuData);
+    createMenu(company.id, menuData);
     actions.resetForm();
     setOpenPopup(false);
   };
 
-  if (loading) {
-    <Loader />;
+  if (!isLoaded(company)) {
+    return <SummaryCard component={<Loader />} />;
   }
 
   return (
     <>
-      <MenuSidebar title={company[0].name || ''}>
+      <MenuSidebar title={company.name || ''}>
         <div>
           {companyMenu !== null ? (
             <MenuButton companyMenu={companyMenu} />
@@ -84,7 +86,7 @@ function ViewMenuContainer(props) {
           <div className={classes.dualPanel}>
             {companyMenu && (
               <MenuCategoriesList
-                companyID={company[0].id}
+                companyID={company.id}
                 addCategoryMenu={addCategoryMenu}
                 menuID={companyMenu.id}
                 categories={companyMenu.categories || []}

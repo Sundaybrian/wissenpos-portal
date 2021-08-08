@@ -13,8 +13,6 @@ export const loadCompany = () => dispatch => {
         type: SET_SUCCESS,
         payload: `company fetched successfully`,
       });
-
-      dispatch({ type: CLEAR_ERRORS });
     })
     .catch(err => {
       dispatch(setErrors(err));
