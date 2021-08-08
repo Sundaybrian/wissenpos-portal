@@ -84,20 +84,26 @@ export const editStaff =
   };
 
 // delete staff
-export const deleteStaff = staffData => dispatch => {
-  dispatch({ type: LOADING_UI });
+export const deleteStaff =
+  ({ id: user_id, closeModal }) =>
+  (dispatch, getState) => {
+    dispatch({ type: LOADING_UI });
+    const { id: company_id } = getState().company.company[0];
+    const url = `/company/${company_id}/accounts/${user_id}`;
 
-  axios
-    .post('/accounts/delete-staff', staffData)
-    .then(res => {
-      const staff = res.data;
-      dispatch({ type: DELETE_STAFF, payload: staffData });
-      dispatch({ type: CLEAR_ERRORS });
-    })
-    .catch(err => {
-      dispatch(setErrors(err));
-    });
-};
+    console.log(url);
+
+    axios
+      .delete(url)
+      .then(res => {
+        dispatch({ type: DELETE_STAFF, payload: res.data });
+        dispatch({ type: SET_SUCCESS, payload: 'user deleted successfully' });
+        closeModal();
+      })
+      .catch(err => {
+        dispatch(setErrors(err));
+      });
+  };
 
 // helper function
 export const setErrors = err => dispatch => {

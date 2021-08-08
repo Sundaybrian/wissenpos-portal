@@ -139,7 +139,7 @@ function StaffProfile(props) {
                     circle: classes.circle,
                   }}
                 />
-                <Typography variant={'h5'}>{record.firstName}</Typography>
+                <Typography variant={'h5'}>{record.user.firstName}</Typography>
                 <Chip variant={'outlined'} icon={<DriveIcon />} label="Staff" />
                 <Rating name="read-only" value={4.3} readOnly />
                 <div className={classes.spacer} />
@@ -163,12 +163,12 @@ function StaffProfile(props) {
                   <PeopleDialog
                     onSave={() => {
                       handleDelete({
-                        id: record.user_id,
+                        id: record.user.id,
                         closeModal: handleClose,
                       });
                     }}
                     title="Delete Staff"
-                    content={`This action is not reversible. Are you sure you wish delete ${record.firstName} to proceed ?`}
+                    content={`This action is not reversible. Are you sure you wish delete ${record.user.firstName} ?`}
                     render={open => (
                       <Button color="primary" variant="outlined" startIcon={<DeleteIcon />} onClick={open}>
                         Delete

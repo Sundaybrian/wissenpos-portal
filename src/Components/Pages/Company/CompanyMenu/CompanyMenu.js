@@ -7,6 +7,8 @@ import { loadMenu, editMealCategory, addMealCategory } from '../../../../Redux/a
 import Loader from '../../../Base/Loader';
 import ViewMenuContainer from './ViewMeal/ViewMenuContainer';
 import EditMenuContainer from './EditMeal/EditMealContainer';
+import SummaryCard from '../../../Base/SummaryCard';
+import { isLoaded } from 'react-redux-firebase';
 
 const useStyles = makeStyles(theme => ({
   dualPanel: {
@@ -52,8 +54,8 @@ function CompanyMenu(props) {
     }
   }, []);
 
-  if (loading) {
-    <Loader />;
+  if (!isLoaded(companyMenu)) {
+    return <SummaryCard component={<Loader />} />;
   }
 
   return (
