@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import StaffSummaryCards from "./StaffSummary";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Content from "../../../Layout/Content/Content";
 import { connect } from "react-redux";
 import {
     addStaff,
     deleteStaff,
+    fetchStaff,
 } from "../../../../Redux/actions/staffManagementActions";
 import StaffTable from "./StaffTable";
 import StaffProfile from "./StaffProfile";
+import { first } from "lodash";
+import { isEmpty, isLoaded } from "react-redux-firebase";
+import Loader from "../../../Base/Loader";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,12 +35,7 @@ const useStyles = makeStyles((theme) => ({
 function Staff(props) {
     const classes = useStyles();
 
-    const {
-        staff: { rows },
-        addStaff,
-        deleteStaff,
-        ui: { loading },
-    } = props;
+    const { company, addStaff, deleteStaff, fetchStaff } = props;
 
     const [confirmDialog, setConfirmDialog] = useState({
         isOpen: false,
@@ -61,23 +60,30 @@ function Staff(props) {
 
     return (
         <Content>
-            {/* <StaffSummaryCards /> */}
-            <StaffTable
-                openInPopup={openInPopup}
-                onDelete={onDelete}
-                confirmDialog={confirmDialog}
-                setConfirmDialog={setConfirmDialog}
-                handleCreateStaff={addStaff}
-            />
-            {record && (
-                <StaffProfile
-                    record={record}
-                    openPopup={openPopup}
-                    setOpenPopup={setOpenPopup}
-                    setRecord={setRecord}
-                    handleDelete={deleteStaff}
-                    handleSuspend={props.suspendUser}
-                />
+            {!isLoaded(company) ? (
+                <Loader />
+            ) : (
+                <>
+                    <StaffSummaryCards />
+                    <StaffTable
+                        openInPopup={openInPopup}
+                        company={company}
+                        onDelete={onDelete}
+                        confirmDialog={confirmDialog}
+                        setConfirmDialog={setConfirmDialog}
+                        handleCreateStaff={addStaff}
+                    />
+                    {record && (
+                        <StaffProfile
+                            record={record}
+                            openPopup={openPopup}
+                            setOpenPopup={setOpenPopup}
+                            setRecord={setRecord}
+                            handleDelete={deleteStaff}
+                            handleSuspend={props.suspendUser}
+                        />
+                    )}
+                </>
             )}
         </Content>
     );
@@ -86,18 +92,19 @@ function Staff(props) {
 Staff.propTypes = {
     addStaff: PropTypes.func.isRequired,
     deleteStaff: PropTypes.func.isRequired,
-    ui: PropTypes.object.isRequired,
     staff: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-    ui: state.ui,
-    staff: state.staffManagement,
-});
+const mapStateToProps = (state) => {
+    return {
+        company: first(state.company.company),
+    };
+};
 
 const mapActionsToProps = {
     addStaff,
     deleteStaff,
+    fetchStaff,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(Staff);
